@@ -18,7 +18,7 @@ public class Encomenda {
         lista = new ArrayList<>();
     }
 
-    public Encomenda(Double preco, String dimensao, String estado, Date data, List<Artigos> lista){
+    public Encomenda(double preco, String dimensao, String estado, Date data, List<Artigos> lista){
         this.preco = preco;
         this.dimensao = dimensao;
         this.estado = estado;
@@ -54,7 +54,7 @@ public class Encomenda {
         return this.lista.stream().map(e -> e.clone()).collect(Collectors.toList());
     }
 
-    public void setPrecoE(Double preco){
+    public void setPrecoE(double preco){
         this.preco = preco;
     }
 
