@@ -145,7 +145,7 @@ public class Utilizador {
                 le.getPreco_vendidos() == this.preco_vendidos &&
                 this.venda.equals(le.getVenda()) &&
                 this.vendeu.equals(le.getVendeu()) &&
-                this.venda.equals(le.getComprou());
+                this.comprou.equals(le.getComprou());
     }
 
     public String toString() {
