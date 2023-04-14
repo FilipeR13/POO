@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 
 public class Sapatilhas {
     private int tamanho;
-    private int atacador;
+    private int atacador;  //enum
     private String cor;
     private LocalDate date;
 

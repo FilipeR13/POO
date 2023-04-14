@@ -1,6 +1,6 @@
 public class Artigos {
     private String tipo;
-    private String estado;
+    private String estado;  // enum??
     private String danos;
     private String descricao;
     private String marca;

@@ -3,7 +3,7 @@ import java.time.LocalDate;
 public class TShirt {
 
     private int tamanho;
-    private int padrao;
+    private int padrao; //enum
 
     public TShirt() {
         tamanho = 0;
@@ -12,7 +12,7 @@ public class TShirt {
 
     public TShirt(int tamanho, int padrao) {
         this.tamanho = tamanho;
-        this.padrao = padrao
+        this.padrao = padrao;
     }
 
     public int getTamanho() {
