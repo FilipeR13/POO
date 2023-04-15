@@ -71,7 +71,7 @@ public class TShirt {
         sb.append("T-Shirt:: {");
         sb.append("Tamanho: ").append(this.tamanho);
         sb.append("Padrão: ").append(this.padrao);
-        sb.append("Date: ").append(this.date).append("}")
+        sb.append("Date: ").append(this.date).append("}");
         return sb.toString();
     }
 
