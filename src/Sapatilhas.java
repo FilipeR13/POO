@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class Sapatilhas {
     private int tamanho;
@@ -85,5 +86,14 @@ public class Sapatilhas {
         sb.append("Cor: ").append(this.cor);
         sb.append("Date: ").append(this.date).append("}");
         return sb.toString();
+    }
+
+    public boolean discountAvailable(Sapatilhas s){
+        long days = ChronoUnit.DAYS.between(s.getDate(), LocalDate.now());
+        if(days >= 365) return true;
+        else{
+            if(s.getTamanho() > 45) return true;
+        }
+        return false;
     }
 }

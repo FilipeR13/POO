@@ -1,6 +1,6 @@
 public class Artigos {
     private String tipo;
-    private String estado;  // enum??
+    private int estado;  // enum??
     private String danos;
     private String descricao;
     private String marca;
@@ -10,7 +10,7 @@ public class Artigos {
 
     public Artigos() {
         tipo = null;
-        estado = null;
+        estado = 0;
         danos = null;
         descricao = null;
         marca = null;
@@ -19,7 +19,7 @@ public class Artigos {
         preco_desconto = 0;
     }
 
-    public Artigos(String tipo, String estado, String danos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
+    public Artigos(String tipo, int estado, String danos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
         this.tipo = tipo;
         this.estado = estado;
         this.danos = danos;
@@ -34,7 +34,7 @@ public class Artigos {
         return tipo;
     }
 
-    public String getEstado() {
+    public int getEstado() {
         return estado;
     }
 
@@ -78,7 +78,7 @@ public class Artigos {
         this.tipo = tipo;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
     public void setDanos(String danos) {
@@ -116,7 +116,7 @@ public class Artigos {
             return false;
         Artigos le = (Artigos) obj;
         return le.getTipo().equals(this.tipo) &&
-                le.getEstado().equals(this.estado) &&
+                le.getEstado() == this.estado &&
                 le.getDanos().equals(this.danos) &&
                 le.getDescricao().equals(this.descricao) &&
                 le.getMarca().equals(this.marca) &&
@@ -138,4 +138,5 @@ public class Artigos {
         sb.append("Preço com Desconto: ").append(this.preco_desconto).append("}");
         return sb.toString();
     }
+
 }
