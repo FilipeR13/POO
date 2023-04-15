@@ -23,7 +23,7 @@ public class Encomenda {
         this.dimensao = dimensao;
         this.estado = estado;
         this.data = data;
-        this.lista = new ArrayList<>(lista);
+        this.lista = lista.stream().map(e -> e.clone()).collect(Collectors.toList());
     }
 
     public Encomenda(Encomenda x){
