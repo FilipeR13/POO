@@ -1,10 +1,11 @@
-public class Artigos {
+public abstract class Artigos {
     private String tipo;
     private int estado;  // enum??
     private String danos;
     private String descricao;
     private String marca;
     private int codigo;
+    private int nDonos;
     private double preco;
     private double preco_desconto;
 
@@ -14,22 +15,35 @@ public class Artigos {
         danos = null;
         descricao = null;
         marca = null;
+        nDonos = 0;
         codigo = 0;
         preco = 0;
         preco_desconto = 0;
     }
 
-    public Artigos(String tipo, int estado, String danos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
+    public Artigos(String tipo, int estado, String danos, String descricao, String marca, int codigo, double preco, int nDonos) {
         this.tipo = tipo;
         this.estado = estado;
         this.danos = danos;
         this.descricao = descricao;
         this.marca = marca;
         this.codigo = codigo;
+        this.nDonos = nDonos;
         this.preco = preco;
-        this.preco_desconto = preco_desconto;
+        this.preco_desconto = 0;
     }
 
+    public Artigos( Artigos a) {
+        this.tipo = a.getTipo();
+        this.estado = a.getEstado();
+        this.danos = a.getDanos();
+        this.descricao = a.getDescricao();
+        this.marca = a.getMarca();
+        this.codigo = a.getCodigo();
+        this.nDonos = a.getnDonos();
+        this.preco = a.getPreco();
+        this.preco_desconto = a.getPrecoDesconto();
+    }
     public String getTipo() {
         return tipo;
     }
@@ -62,17 +76,9 @@ public class Artigos {
         return preco_desconto;
     }
 
-    public Artigos( Artigos a) {
-        this.tipo = a.getTipo();
-        this.estado = a.getEstado();
-        this.danos = a.getDanos();
-        this.descricao = a.getDescricao();
-        this.marca = a.getMarca();
-        this.codigo = a.getCodigo();
-        this.preco = a.getPreco();
-        this.preco_desconto = a.getPrecoDesconto();
+    public int getnDonos() {
+        return nDonos;
     }
-
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
@@ -105,9 +111,11 @@ public class Artigos {
         this.preco_desconto = preco_desconto;
     }
 
-    public Artigos clone() {
-        return new Artigos(this);
+    public void setnDonos(int nDonos) {
+        this.nDonos = nDonos;
     }
+
+    public abstract Artigos clone();
 
     public boolean equals(Object obj) {
         if(obj==this)
@@ -122,7 +130,8 @@ public class Artigos {
                 le.getMarca().equals(this.marca) &&
                 le.getCodigo() == this.codigo &&
                 le.getPreco() == this.preco &&
-                le.getPrecoDesconto() == this.preco_desconto;
+                le.getPrecoDesconto() == this.preco_desconto &&
+                le.getnDonos() == this.nDonos;
     }
 
     public String toString() {
@@ -135,8 +144,10 @@ public class Artigos {
         sb.append("Marca: ").append(this.marca);
         sb.append("Código: ").append(this.codigo);
         sb.append("Preço: ").append(this.preco);
-        sb.append("Preço com Desconto: ").append(this.preco_desconto).append("}");
+        sb.append("Preço com Desconto: ").append(this.preco_desconto);
+        sb.append("Número de Donos: ").append(this.nDonos).append("}");
         return sb.toString();
     }
 
+    public abstract void calculaDesconto ();
 }

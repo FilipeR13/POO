@@ -2,24 +2,34 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-public class Sapatilhas {
+public class Sapatilhas extends Artigos{
     private int tamanho;
     private int atacador;  //enum
     private String cor;
     private LocalDate date;
 
     public Sapatilhas() {
+        super ();
         tamanho = 0;
         atacador = 0;
         cor = null;
         date = null;
     }
 
-    public Sapatilhas(int tamanho, int atacador, String cor, LocalDate date) {
+    public Sapatilhas(int tamanho, int atacador, String cor, LocalDate date, String tipo, int estado, String danos, String descricao, String marca, int codigo, double preco, int nDonos) {
+        super (tipo, estado, danos, descricao, marca, codigo,preco, nDonos);
         this.tamanho = tamanho;
         this.atacador = atacador;
         this.cor = cor;
         this.date = date;
+    }
+
+    public Sapatilhas(Sapatilhas s) {
+        super (s);
+        this.tamanho = s.getTamanho();
+        this.atacador = s.getAtacador();
+        this.cor = s.getCor();
+        this.date = s.getDate();
     }
 
     public int getTamanho() {
@@ -37,14 +47,6 @@ public class Sapatilhas {
     public LocalDate getDate() {
         return date;
     }
-
-    public Sapatilhas(Sapatilhas s) {
-        this.tamanho = s.getTamanho();
-        this.atacador = s.getAtacador();
-        this.cor = s.getCor();
-        this.date = s.getDate();
-    }
-
 
     public void setTamanho(int tamanho) {
         this.tamanho = tamanho;
@@ -72,7 +74,8 @@ public class Sapatilhas {
         if(obj==null || obj.getClass() != this.getClass())
             return false;
         Sapatilhas le = (Sapatilhas) obj;
-        return  le.getTamanho() == this.tamanho &&
+        return  super.equals(le) &&
+                le.getTamanho() == this.tamanho &&
                 le.getAtacador() == this.atacador &&
                 le.getCor().equals(this.cor) &&
                 le.getDate().equals(this.date);
@@ -85,15 +88,11 @@ public class Sapatilhas {
         sb.append("Atacador: ").append(this.atacador);
         sb.append("Cor: ").append(this.cor);
         sb.append("Date: ").append(this.date).append("}");
-        return sb.toString();
+        return super.toString() + sb.toString();
     }
 
-    public boolean discountAvailable(Sapatilhas s){
-        long days = ChronoUnit.DAYS.between(s.getDate(), LocalDate.now());
-        if(days >= 365) return true;
-        else{
-            if(s.getTamanho() > 45) return true;
-        }
-        return false;
+    public void calculaDesconto (){
+        long days = ChronoUnit.DAYS.between(this.date, LocalDate.now());
+        if(days >= 365 || this.getTamanho() > 45 || this.getnDonos() > 0) this.setPrecoDesconto( this.getPreco() / this.getnDonos() * this.getEstado());
     }
 }
