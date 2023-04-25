@@ -3,20 +3,26 @@ import java.time.Year;
 import java.time.temporal.ChronoUnit;
 
 public class Malas extends Artigos{
-    private double dimensao;
+
+    public enum Dimensao {
+        Pequena,
+        Media,
+        Grande
+    }
+    private Dimensao dimensao;
     private String material;
     private Year ano;
 
     public Malas () {
         super();
-        dimensao = -1;
+        dimensao = Dimensao.Grande;
         material = null;
         ano = Year.now();
     }
 
-    public Malas (double dimensao1, String materia1, Year ano1,String tipo, int estado, String danos, String descricao, String marca, int codigo, double preco, int nDonos) {
-        super (tipo, estado, danos, descricao, marca, codigo,preco, nDonos);
-        dimensao = dimensao1;
+    public Malas (Dimensao dimensao, String materia1, Year ano1, Estado estado, String danos, int nDonos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
+        super (estado, danos, nDonos, descricao, marca, codigo, preco, preco_desconto);
+        dimensao = dimensao;
         material = materia1;
         ano = Year.of (ano1.getValue());
     }
@@ -32,7 +38,7 @@ public class Malas extends Artigos{
         return ano;
     }
 
-    public double getDimensao() {
+    public Dimensao getDimensao() {
         return dimensao;
     }
 
@@ -44,7 +50,7 @@ public class Malas extends Artigos{
         this.ano = ano;
     }
 
-    public void setDimensao(double dimensao) {
+    public void setDimensao(Dimensao dimensao) {
         this.dimensao = dimensao;
     }
 
@@ -78,7 +84,8 @@ public class Malas extends Artigos{
     }
 
     public void calculaDesconto () {
-        long days = ChronoUnit.DAYS.between(this.ano, LocalDate.now());
-        if(days >= 365 || this.getnDonos() > 0) this.setPrecoDesconto(1/this.dimensao + 1 / ChronoUnit.YEARS.between(this.ano, LocalDate.now()));
+        if(this.dimensao == Dimensao.Pequena) this.setPrecoDesconto(this.getPreco() * (0.3 + 0.05 * (ChronoUnit.YEARS.between(this.ano, LocalDate.now()))));
+        if(this.dimensao == Dimensao.Media) this.setPrecoDesconto(this.getPreco() * (0.2 + 0.05 * (ChronoUnit.YEARS.between(this.ano, LocalDate.now()))));
+        if(this.dimensao == Dimensao.Grande) this.setPrecoDesconto(this.getPreco() * (0.1 + 0.05 * (ChronoUnit.YEARS.between(this.ano, LocalDate.now()))));
     }
 }

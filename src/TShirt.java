@@ -3,19 +3,32 @@ import java.time.temporal.ChronoUnit;
 
 public class TShirt extends Artigos{
 
-    private int tamanho;
-    private int padrao; //enum
+    public enum Tamanho {
+        S,
+        M,
+        L,
+        XL
+    }
+
+    public enum Padrao {
+        Liso,
+        Riscas,
+        Palmeiras
+    }
+
+    private Tamanho tamanho;
+    private Padrao padrao; //enum
     private LocalDate date;
 
     public TShirt() {
         super ();
-        tamanho = 0;
-        padrao = 0;
+        tamanho = Tamanho.M;
+        padrao = Padrao.Liso;
         date = null;
     }
 
-    public TShirt(int tamanho, int padrao, LocalDate date, String tipo, int estado, String danos, String descricao, String marca, int codigo, double preco, int nDonos) {
-        super (tipo, estado, danos, descricao, marca, codigo,preco, nDonos);
+    public TShirt(Tamanho tamanho, Padrao padrao, LocalDate date, String tipo, Estado estado, String danos, int nDonos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
+        super (estado, danos, nDonos, descricao, marca, codigo, preco, preco_desconto);
         this.tamanho = tamanho;
         this.padrao = padrao;
         this.date = date;
@@ -28,11 +41,11 @@ public class TShirt extends Artigos{
         this.date = t.getDate();
     }
 
-    public int getTamanho() {
+    public Tamanho getTamanho() {
         return tamanho;
     }
 
-    public int getPadrao() {
+    public Padrao getPadrao() {
         return padrao;
     }
 
@@ -40,11 +53,11 @@ public class TShirt extends Artigos{
         return date;
     }
 
-    public void setTamanho(int tamanho) {
+    public void setTamanho(Tamanho tamanho) {
         this.tamanho = tamanho;
     }
 
-    public void setPadrao(int padrao) {
+    public void setPadrao(Padrao padrao) {
         this.padrao = padrao;
     }
 
@@ -79,7 +92,6 @@ public class TShirt extends Artigos{
     }
 
     public void calculaDesconto (){
-        long days = ChronoUnit.DAYS.between(this.date, LocalDate.now());
-        if(this.getPadrao() != 1 /*(PADRAO LISO)*/ && (days >= 365 || this.getnDonos() > 0)) this.setPrecoDesconto(this.getPreco() * 0.5);
+        if(this.getPadrao() != Padrao.Liso && this.getEstado() == Estado.Usado) this.setPrecoDesconto(this.getPreco() * 0.5);
     }
 }

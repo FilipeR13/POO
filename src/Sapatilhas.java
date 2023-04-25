@@ -16,8 +16,8 @@ public class Sapatilhas extends Artigos{
         date = null;
     }
 
-    public Sapatilhas(int tamanho, int atacador, String cor, LocalDate date, String tipo, int estado, String danos, String descricao, String marca, int codigo, double preco, int nDonos) {
-        super (tipo, estado, danos, descricao, marca, codigo,preco, nDonos);
+    public Sapatilhas(int tamanho, int atacador, String cor, LocalDate date, Estado estado, String danos, int nDonos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
+        super (estado, danos, nDonos, descricao, marca, codigo, preco, preco_desconto);
         this.tamanho = tamanho;
         this.atacador = atacador;
         this.cor = cor;
@@ -93,6 +93,12 @@ public class Sapatilhas extends Artigos{
 
     public void calculaDesconto (){
         long days = ChronoUnit.DAYS.between(this.date, LocalDate.now());
-        if(days >= 365 || this.getTamanho() > 45 || this.getnDonos() > 0) this.setPrecoDesconto( this.getPreco() / this.getnDonos() * this.getEstado());
+        if(days >= 365 || this.getTamanho() > 45){
+            if(getnDonos() > 0){ //preco - (preco/nºdonos * estado)
+                if(getEstado() == Estado.Usado) this.setPrecoDesconto( this.getPreco() - (this.getPreco()/this.getnDonos() * 0.40));
+                if(getEstado() == Estado.Novo) this.setPrecoDesconto( this.getPreco() - (this.getPreco()/this.getnDonos() * 0.20));
+            }
+            else this.setPrecoDesconto(this.getPreco());
+        }
     }
 }

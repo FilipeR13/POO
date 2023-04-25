@@ -1,17 +1,20 @@
 public abstract class Artigos {
-    private String tipo;
-    private int estado;  // enum??
+
+    public enum Estado{
+        Novo,
+        Usado
+    }
+    private Estado estado;
     private String danos;
+    private int nDonos;
     private String descricao;
     private String marca;
     private int codigo;
-    private int nDonos;
     private double preco;
     private double preco_desconto;
 
     public Artigos() {
-        tipo = null;
-        estado = 0;
+        estado = Estado.Novo;
         danos = null;
         descricao = null;
         marca = null;
@@ -21,8 +24,7 @@ public abstract class Artigos {
         preco_desconto = 0;
     }
 
-    public Artigos(String tipo, int estado, String danos, String descricao, String marca, int codigo, double preco, int nDonos) {
-        this.tipo = tipo;
+    public Artigos(Estado estado, String danos,int nDonos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
         this.estado = estado;
         this.danos = danos;
         this.descricao = descricao;
@@ -30,11 +32,10 @@ public abstract class Artigos {
         this.codigo = codigo;
         this.nDonos = nDonos;
         this.preco = preco;
-        this.preco_desconto = 0;
+        this.preco_desconto = preco_desconto;
     }
 
     public Artigos( Artigos a) {
-        this.tipo = a.getTipo();
         this.estado = a.getEstado();
         this.danos = a.getDanos();
         this.descricao = a.getDescricao();
@@ -44,11 +45,8 @@ public abstract class Artigos {
         this.preco = a.getPreco();
         this.preco_desconto = a.getPrecoDesconto();
     }
-    public String getTipo() {
-        return tipo;
-    }
 
-    public int getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
@@ -80,11 +78,7 @@ public abstract class Artigos {
         return nDonos;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public void setEstado(int estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
     public void setDanos(String danos) {
@@ -123,8 +117,7 @@ public abstract class Artigos {
         if(obj==null || obj.getClass() != this.getClass())
             return false;
         Artigos le = (Artigos) obj;
-        return le.getTipo().equals(this.tipo) &&
-                le.getEstado() == this.estado &&
+        return  le.getEstado() == this.estado &&
                 le.getDanos().equals(this.danos) &&
                 le.getDescricao().equals(this.descricao) &&
                 le.getMarca().equals(this.marca) &&
@@ -137,15 +130,14 @@ public abstract class Artigos {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Artigo:: {");
-        sb.append("Tipo: ").append(this.tipo);
         sb.append("Estado: ").append(this.estado);
         sb.append("Danos: ").append(this.danos);
+        sb.append("NºDonos: ").append(this.nDonos);
         sb.append("Descrição: ").append(this.descricao);
         sb.append("Marca: ").append(this.marca);
         sb.append("Código: ").append(this.codigo);
         sb.append("Preço: ").append(this.preco);
-        sb.append("Preço com Desconto: ").append(this.preco_desconto);
-        sb.append("Número de Donos: ").append(this.nDonos).append("}");
+        sb.append("Preço com Desconto: ").append(this.preco_desconto).append("}");
         return sb.toString();
     }
 
