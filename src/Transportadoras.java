@@ -19,6 +19,14 @@ public class Transportadoras  {
         this.transportadora = transportadora1;
     }
 
+    public Transportadoras(Transportadoras t) {
+        this.id = t.getId();
+        this.valorBaseMed = t.getValorBaseMed();
+        this.valorBaseGra = t.getValorBaseGra();
+        this.valorBasePeq = t.getValorBasePeq();
+        this.transportadora = t.getTransportadora();
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -57,6 +65,10 @@ public class Transportadoras  {
 
     public String getTransportadora() {
         return transportadora;
+    }
+
+    public Transportadoras clone() {
+        return new Transportadoras(this);
     }
 
     public boolean equals(Object obj) {
