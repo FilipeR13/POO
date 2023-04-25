@@ -4,9 +4,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Encomenda {
+    public enum Dimensao {
+        Pequena,
+        Media,
+        Grande
+    }
+    public enum Estado {
+        Pendente,
+        Finalizada,
+        Expedida
+    }
     private double preco;
-    private String dimensao;
-    private String estado;
+    private Dimensao dimensao;
+    private Estado estado;
     private Date data;
     private List<Artigos> lista;
 
@@ -18,7 +28,7 @@ public class Encomenda {
         lista = new ArrayList<>();
     }
 
-    public Encomenda(double preco, String dimensao, String estado, Date data, List<Artigos> lista){
+    public Encomenda(double preco, Dimensao dimensao, Estado estado, Date data, List<Artigos> lista){
         this.preco = preco;
         this.dimensao = dimensao;
         this.estado = estado;
@@ -38,11 +48,11 @@ public class Encomenda {
         return preco;
     }
 
-    public String getDimensao(){
+    public Dimensao getDimensao(){
         return dimensao;
     }
 
-    public String getEstadoE(){
+    public Estado getEstadoE(){
         return estado;
     }
 
@@ -58,11 +68,11 @@ public class Encomenda {
         this.preco = preco;
     }
 
-    public void setDimensao(String dimensao){
+    public void setDimensao(Dimensao dimensao){
         this.dimensao = dimensao;
     }
 
-    public void setEstadoE(String estado){
+    public void setEstadoE(Estado estado){
         this.estado = estado;
     }
 
@@ -102,6 +112,17 @@ public class Encomenda {
         sb.append("Data: ").append(this.data);
         sb.append("Lista de Artigos:").append(this.lista).append("}");
         return sb.toString();
+    }
+
+    public double calculaPreco(){
+        int r = 0;
+        for (Artigos a : this.lista){
+            if(a.getEstado().equals(Artigos.Estado.Novo)){
+                r += a.getPrecoDesconto() + 0.5; // + taxa da transportadora
+            }
+            else r += a.getPrecoDesconto() + 0.25; // + taxa da transportadora
+        }
+        return r;
     }
 }
 
