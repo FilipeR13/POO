@@ -11,31 +11,31 @@ public class Malas extends Artigos{
     }
     private Dimensao dimensao;
     private String material;
-    private Year ano;
+    private LocalDate date;
 
     public Malas () {
         super();
-        dimensao = Dimensao.Grande;
+        dimensao = null;
         material = null;
-        ano = Year.now();
+        date = null;
     }
 
-    public Malas (Dimensao dimensao, String materia1, Year ano1, Estado estado, String danos, int nDonos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
+    public Malas (Dimensao dimensao, String materia1, LocalDate date, Estado estado, String danos, int nDonos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
         super (estado, danos, nDonos, descricao, marca, codigo, preco, preco_desconto);
-        dimensao = dimensao;
-        material = materia1;
-        ano = Year.of (ano1.getValue());
+        this.dimensao = dimensao;
+        this.material = materia1;
+        this.date = date;
     }
 
     public Malas (Malas a) {
         super (a);
         dimensao = a.getDimensao();
         material = a.getMaterial();
-        ano = a.getAno();
+        date = a.getDate();
     }
 
-    public Year getAno() {
-        return ano;
+    public LocalDate getDate() {
+        return date;
     }
 
     public Dimensao getDimensao() {
@@ -46,8 +46,8 @@ public class Malas extends Artigos{
         return material;
     }
 
-    public void setAno(Year ano) {
-        this.ano = ano;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public void setDimensao(Dimensao dimensao) {
@@ -67,7 +67,7 @@ public class Malas extends Artigos{
         return  super.equals(le) &&
                 le.getDimensao() == this.dimensao &&
                 le.getMaterial().equals(this.material) &&
-                le.getAno() == this.getAno();
+                le.getDate().equals(this.getDate());
     }
 
     public String toString() {
@@ -75,7 +75,7 @@ public class Malas extends Artigos{
         sb.append("Mala:: {");
         sb.append("Dimensao: ").append(this.dimensao);
         sb.append("Material: ").append(this.material);
-        sb.append("Ano:").append(this.ano).append("}");
+        sb.append("Ano:").append(this.date).append("}");
         return super.toString() + sb.toString();
     }
 
@@ -84,8 +84,8 @@ public class Malas extends Artigos{
     }
 
     public void calculaDesconto () {
-        if(this.dimensao == Dimensao.Pequena) this.setPrecoDesconto(this.getPreco() * (0.3 + 0.05 * (ChronoUnit.YEARS.between(this.ano, LocalDate.now()))));
-        if(this.dimensao == Dimensao.Media) this.setPrecoDesconto(this.getPreco() * (0.2 + 0.05 * (ChronoUnit.YEARS.between(this.ano, LocalDate.now()))));
-        if(this.dimensao == Dimensao.Grande) this.setPrecoDesconto(this.getPreco() * (0.1 + 0.05 * (ChronoUnit.YEARS.between(this.ano, LocalDate.now()))));
+        if(this.dimensao == Dimensao.Pequena) this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.3 + 0.05 * (ChronoUnit.YEARS.between(this.date, LocalDate.now()))));
+        if(this.dimensao == Dimensao.Media) this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.2 + 0.05 * (ChronoUnit.YEARS.between(this.date, LocalDate.now()))));
+        if(this.dimensao == Dimensao.Grande) this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.1 + 0.05 * (ChronoUnit.YEARS.between(this.date, LocalDate.now()))));
     }
 }

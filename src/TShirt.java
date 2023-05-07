@@ -22,8 +22,8 @@ public class TShirt extends Artigos{
 
     public TShirt() {
         super ();
-        tamanho = Tamanho.M;
-        padrao = Padrao.Liso;
+        tamanho = null;
+        padrao = null;
         date = null;
     }
 

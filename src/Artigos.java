@@ -14,7 +14,7 @@ public abstract class Artigos {
     private double preco_desconto;
 
     public Artigos() {
-        estado = Estado.Novo;
+        estado = null;
         danos = null;
         descricao = null;
         marca = null;
@@ -130,14 +130,14 @@ public abstract class Artigos {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Artigo:: {");
-        sb.append("Estado: ").append(this.estado);
-        sb.append("Danos: ").append(this.danos);
-        sb.append("NºDonos: ").append(this.nDonos);
-        sb.append("Descrição: ").append(this.descricao);
-        sb.append("Marca: ").append(this.marca);
-        sb.append("Código: ").append(this.codigo);
-        sb.append("Preço: ").append(this.preco);
-        sb.append("Preço com Desconto: ").append(this.preco_desconto).append("}");
+        sb.append(" Estado: ").append(this.estado);
+        sb.append(" Danos: ").append(this.danos);
+        sb.append(" NºDonos: ").append(this.nDonos);
+        sb.append(" Descrição: ").append(this.descricao);
+        sb.append(" Marca: ").append(this.marca);
+        sb.append(" Código: ").append(this.codigo);
+        sb.append(" Preço: ").append(this.preco);
+        sb.append(" Preço com Desconto: ").append(this.preco_desconto).append("}");
         return sb.toString();
     }
 
