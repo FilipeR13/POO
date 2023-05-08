@@ -20,7 +20,7 @@ public class Malas extends Artigos{
         date = null;
     }
 
-    public Malas (Dimensao dimensao, String materia1, LocalDate date, Estado estado, String danos, int nDonos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
+    public Malas (Dimensao dimensao, String materia1, LocalDate date, Estado estado, String danos, int nDonos, String descricao, String marca, String codigo, double preco, double preco_desconto) {
         super (estado, danos, nDonos, descricao, marca, codigo, preco, preco_desconto);
         this.dimensao = dimensao;
         this.material = materia1;

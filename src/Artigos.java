@@ -9,7 +9,7 @@ public abstract class Artigos {
     private int nDonos;
     private String descricao;
     private String marca;
-    private int codigo;
+    private String codigo;
     private double preco;
     private double preco_desconto;
 
@@ -19,12 +19,12 @@ public abstract class Artigos {
         descricao = null;
         marca = null;
         nDonos = 0;
-        codigo = 0;
+        codigo = "";
         preco = 0;
         preco_desconto = 0;
     }
 
-    public Artigos(Estado estado, String danos,int nDonos, String descricao, String marca, int codigo, double preco, double preco_desconto) {
+    public Artigos(Estado estado, String danos,int nDonos, String descricao, String marca, String codigo, double preco, double preco_desconto) {
         this.estado = estado;
         this.danos = danos;
         this.descricao = descricao;
@@ -62,7 +62,7 @@ public abstract class Artigos {
         return marca;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
@@ -93,7 +93,7 @@ public abstract class Artigos {
         this.marca = marca;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -121,7 +121,7 @@ public abstract class Artigos {
                 le.getDanos().equals(this.danos) &&
                 le.getDescricao().equals(this.descricao) &&
                 le.getMarca().equals(this.marca) &&
-                le.getCodigo() == this.codigo &&
+                le.getCodigo().equals(this.codigo) &&
                 le.getPreco() == this.preco &&
                 le.getPrecoDesconto() == this.preco_desconto &&
                 le.getnDonos() == this.nDonos;

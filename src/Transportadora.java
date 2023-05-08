@@ -1,17 +1,17 @@
-public class Transportadoras  {
+public class Transportadora {
     private double valorBasePeq, valorBaseMed, valorBaseGra;
-    private int id;
+    private String id;
     private String transportadora;
 
-    public Transportadoras() {
+    public Transportadora() {
         valorBaseGra = -1;
         valorBasePeq = -1;
         valorBaseMed = -1;
-        id = -1;
+        id = "";
         transportadora = null;
     }
 
-    public Transportadoras (double valorBaseGra1, double valorBaseMed1, double valorBasePeq1, int id, String transportadora1) {
+    public Transportadora(double valorBaseGra1, double valorBaseMed1, double valorBasePeq1, String id, String transportadora1) {
         this.id = id;
         this.valorBaseMed = valorBaseMed1;
         this.valorBaseGra = valorBaseGra1;
@@ -19,7 +19,7 @@ public class Transportadoras  {
         this.transportadora = transportadora1;
     }
 
-    public Transportadoras(Transportadoras t) {
+    public Transportadora(Transportadora t) {
         this.id = t.getId();
         this.valorBaseMed = t.getValorBaseMed();
         this.valorBaseGra = t.getValorBaseGra();
@@ -27,7 +27,7 @@ public class Transportadoras  {
         this.transportadora = t.getTransportadora();
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -59,7 +59,7 @@ public class Transportadoras  {
         return valorBasePeq;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -67,8 +67,8 @@ public class Transportadoras  {
         return transportadora;
     }
 
-    public Transportadoras clone() {
-        return new Transportadoras(this);
+    public Transportadora clone() {
+        return new Transportadora(this);
     }
 
     public boolean equals(Object obj) {
@@ -76,8 +76,8 @@ public class Transportadoras  {
             return true;
         if(obj==null || obj.getClass() != this.getClass())
             return false;
-        Transportadoras x = (Transportadoras) obj;
-        return  x.getId() == this.id &&
+        Transportadora x = (Transportadora) obj;
+        return  x.getId().equals(this.id) &&
                 x.getValorBaseGra() == this.valorBaseGra &&
                 x.getValorBaseMed() == this.valorBaseMed &&
                 x.getValorBasePeq() == this.valorBasePeq &&
