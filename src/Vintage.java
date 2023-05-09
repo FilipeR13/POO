@@ -1,9 +1,11 @@
-import javax.swing.event.MouseInputListener;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Vintage {
+public class Vintage implements Serializable {
+    LocalDate currentDate;
     private Map<String,Utilizador> utilizadores;
     private Map<String,Artigos> artigos;
     private Map<String,Transportadora> transportadoras;
@@ -12,6 +14,14 @@ public class Vintage {
         utilizadores = new HashMap<>();
         artigos = new HashMap<>();
         transportadoras = new HashMap<>();
+        currentDate = LocalDate.now();
+    }
+
+    public Vintage (LocalDate date) {
+        utilizadores = new HashMap<>();
+        artigos = new HashMap<>();
+        transportadoras = new HashMap<>();
+        currentDate = date;
     }
 
     public Map<String, Utilizador> getUtilizadores() {
@@ -25,6 +35,10 @@ public class Vintage {
         return transportadoras.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
     }
 
+    public LocalDate getCurrentDate() {
+        return currentDate;
+    }
+
     public void setUtilizadores(Map<String, Utilizador> utilizadores) {
         this.artigos = artigos.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
     }
@@ -35,6 +49,10 @@ public class Vintage {
 
     public void setTransportadoras (Map<String, Transportadora> transportadoras) {
         this.transportadoras = transportadoras.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
+    }
+
+    public void setCurrentDate(LocalDate currentDate) {
+        this.currentDate = currentDate;
     }
 
     public void addUtilizador (Utilizador u) {

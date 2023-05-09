@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Encomenda {
+public class Encomenda implements Serializable {
     public enum Dimensao {
         Pequena,
         Media,

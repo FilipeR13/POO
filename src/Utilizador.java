@@ -1,10 +1,11 @@
 import jdk.jshell.execution.Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Utilizador {
+public class Utilizador implements Serializable {
     private int id,nif;
     private String nome,morada,email;
     private double preco_vendidos;

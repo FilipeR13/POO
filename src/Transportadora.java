@@ -1,4 +1,6 @@
-public class Transportadora {
+import java.io.Serializable;
+
+public class Transportadora implements Serializable {
     private double valorBasePeq, valorBaseMed, valorBaseGra;
     private String id;
     private String transportadora;

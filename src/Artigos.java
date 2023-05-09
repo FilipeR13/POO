@@ -1,4 +1,6 @@
-public abstract class Artigos {
+import java.io.Serializable;
+
+public abstract class Artigos implements Serializable {
 
     public enum Estado{
         Novo,
