@@ -27,6 +27,7 @@ public class Vintage implements Serializable {
     public Map<String, Utilizador> getUtilizadores() {
         return utilizadores.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
     }
+
     public Map<String, Artigos> getArtigos() {
         return artigos.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
     }

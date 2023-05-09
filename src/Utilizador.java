@@ -1,35 +1,43 @@
-import jdk.jshell.execution.Util;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Utilizador implements Serializable {
-    private int id,nif;
-    private String nome,morada,email;
+    private int nif;
+    private String id,nome,morada,email;
     private double preco_vendidos;
-    private List <Artigos> venda,vendeu,comprou;
+    private Map <String, Artigos> venda,vendeu;
+    private List <Artigos> carrinho;
+    private Map <String, Encomenda> encomendas;
 
     public Utilizador() {
-        id = -1;
+        id = "";
         nif = -1;
         nome = morada = email = null;
 
         preco_vendidos = 0;
-        venda = vendeu = comprou = new ArrayList<>();
+        venda = new HashMap<>();
+        vendeu = new HashMap<>();
+        carrinho = new ArrayList<>();
+        encomendas = new HashMap<>();
     }
 
-    public Utilizador (int id) {
+    public Utilizador (String id) {
         this.id = id;
         nif = -1;
         nome = morada = email = null;
 
         preco_vendidos = 0;
-        venda = vendeu = comprou = new ArrayList<>();
+        venda = new HashMap<>();
+        vendeu = new HashMap<>();
+        carrinho = new ArrayList<>();
+        encomendas = new HashMap<>();
     }
 
-    public Utilizador (int id, int nif, String nome,String morada, String email) {
+    public Utilizador (String id, int nif, String nome,String morada, String email) {
         this.id = id;
         this.nif = nif;
         this.nome = nome;
@@ -37,7 +45,10 @@ public class Utilizador implements Serializable {
         this.email = email;
 
         preco_vendidos = 0;
-        venda = vendeu = comprou = new ArrayList<>();
+        venda = new HashMap<>();
+        vendeu = new HashMap<>();
+        carrinho = new ArrayList<>();
+        encomendas = new HashMap<>();
     }
 
     public Utilizador (Utilizador a) {
@@ -50,14 +61,15 @@ public class Utilizador implements Serializable {
         this.preco_vendidos = a.getPreco_vendidos();
         this.vendeu = a.getVendeu();
         this.venda = a.getVenda();
-        this.comprou = a.getComprou();
+        this.carrinho = a.getCarrinho();
+        this.encomendas = a.getEncomendas();
     }
 
     public double getPreco_vendidos() {
         return preco_vendidos;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -77,6 +89,10 @@ public class Utilizador implements Serializable {
         return nome;
     }
 
+    public List<Artigos> getCarrinho () {
+        return this.carrinho.stream().map(a -> a.clone()).collect(Collectors.toList());
+    }
+
     public void setNome (String nome1) {
         nome = nome1;
     }
@@ -85,7 +101,7 @@ public class Utilizador implements Serializable {
         this.email = email;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -101,31 +117,35 @@ public class Utilizador implements Serializable {
         this.morada = morada;
     }
 
-    public void setVenda(List<Artigos> venda) {
-        for (Artigos a : venda)
-            this.venda.add(a.clone());
+    public void setVenda(Map<String,Artigos> venda) {
+        for (Map.Entry<String, Artigos> a : venda.entrySet())
+            this.venda.put(a.getKey(),a.getValue().clone());
     }
 
-    public void setVendeu(List<Artigos> vendeu) {
-        for (Artigos a : vendeu)
-            this.vendeu.add (a.clone());
+    public void setVendeu(Map<String,Artigos> vendeu) {
+        for (Map.Entry<String, Artigos> a : vendeu.entrySet())
+            this.venda.put(a.getKey(),a.getValue().clone());
     }
 
-    public void setComprou(List<Artigos> comprou) {
-        for (Artigos a : comprou)
-            this.comprou.add(a.clone());
+    private void setCarrinho (List<Artigos> carrinho) {
+        this.carrinho = carrinho.stream().map(a -> a.clone()).collect(Collectors.toList());
     }
 
-    public List<Artigos> getComprou() {
-        return this.comprou.stream().map (e -> e.clone()).collect(Collectors.toList());
+    public void setComprou(Map<String,Artigos> comprou) {
+        for (Map.Entry<String, Encomenda> a : encomendas.entrySet())
+            this.encomendas.put(a.getKey(),a.getValue().clone());
     }
 
-    public List<Artigos> getVenda() {
-        return this.venda.stream().map (e -> e.clone()).collect(Collectors.toList());
+    public Map<String,Encomenda> getEncomendas() {
+        return this.encomendas.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
     }
 
-    public List<Artigos> getVendeu() {
-        return this.vendeu.stream().map (e -> e.clone()).collect(Collectors.toList());
+    public Map<String,Artigos> getVenda() {
+        return this.venda.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
+    }
+
+    public Map<String,Artigos> getVendeu() {
+        return this.vendeu.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
     }
 
     public Utilizador clone() {
@@ -138,7 +158,7 @@ public class Utilizador implements Serializable {
         if(obj==null || obj.getClass() != this.getClass())
             return false;
         Utilizador le = (Utilizador) obj;
-        return le.getId() == this.id &&
+        return le.getId().equals(this.id) &&
                 le.getEmail().equals(this.email) &&
                 le.getMorada().equals(this.morada) &&
                 le.getNome().equals(this.nome) &&
@@ -146,7 +166,8 @@ public class Utilizador implements Serializable {
                 le.getPreco_vendidos() == this.preco_vendidos &&
                 this.venda.equals(le.getVenda()) &&
                 this.vendeu.equals(le.getVendeu()) &&
-                this.comprou.equals(le.getComprou());
+                this.carrinho.equals(le.getCarrinho()) &&
+                this.encomendas.equals(le.getEncomendas());
     }
 
     public String toString() {
@@ -160,7 +181,8 @@ public class Utilizador implements Serializable {
         sb.append("Preco Total Vendido: ").append(this.preco_vendidos);
         sb.append("Lista de Artigos em Venda:").append(this.venda);
         sb.append("Lista de Artigos Vendidos:").append(this.vendeu);
-        sb.append("Lista de Artigos que Comprou:").append(this.comprou).append("}");
+        sb.append("Lista de Artigos no Carrinho:").append(this.carrinho);
+        sb.append("Lista de Artigos que Comprou:").append(this.encomendas).append("}");
 
         return sb.toString();
     }

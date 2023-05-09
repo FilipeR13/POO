@@ -1,15 +1,32 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 
-public class Main {
+public class Main extends Exception{
     public static void main(String args[]) {
-        LocalDate date = LocalDate.of(2010, Month.DECEMBER,12);
-        Artigos a = new Malas(Malas.Dimensao.Grande,"Couro",date,Artigos.Estado.Novo,"Nao tem danos",0,"Mala preta de couro","Gucci","000001",109.90,80);
-        a.calculaDesconto();
-        String[] options = {"Adicionar um Utilizador!", "Remover um Utilizador!"};
-        Menu mainMenu = new Menu(options);
-        mainMenu.run();
+        EstadoPrograma e = new EstadoPrograma();
+        Vintage v = null;
+        try {
+            v = e.carregaEstado(args[1]);
+        } catch (FileNotFoundException ex) {
+            System.out.println ("Ficheiro nao existe: " + ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Não conseguiu aceder o ficheiro: " + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Não encontrou a classe :" + ex.getMessage());
+        }
 
+        //executa views.......
+
+
+        try {
+            e.guardaEstado(args[1], v);
+        } catch (FileNotFoundException ex) {
+        System.out.println ("Ficheiro nao existe: " + ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Não conseguiu aceder o ficheiro: " + ex.getMessage());
+        }
     }
 }
 
