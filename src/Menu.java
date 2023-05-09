@@ -1,31 +1,57 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class Menu {
+    public interface Handler {
+        public void execute();
+    }
+
+    public interface PreCondition {
+        public boolean condition();
+    }
+
+    private List<Handler> handlers;
+    private List<PreCondition> preConditions;
     private List<String> options;
-    private int choice;
 
     public Menu(String[] options) {
         this.options = Arrays.asList(options);
-        this.choice = 0;
+        this.handlers = new ArrayList<>();
+        this.preConditions = new ArrayList<>();
+        this.options.forEach(s -> {
+            this.preConditions.add(() -> true);
+            this.handlers.add(() -> System.out.println("\nATENÇÃO: Opção não implementada!"));
+        });
     }
 
-    public int getChoice() {
-        return choice;
-    }
-
-    public void executeMenu() {
+    public void run() {
+        int choice;
         do {
             showMenu();
-            this.choice = readChoice();
-        } while(this.choice == -1);
+            choice = readChoice();
+            if (choice > 0 && !this.preConditions.get(choice - 1).condition()) {
+                System.out.println("Opção indisponível! Tente novamente.");
+            } else if (choice > 0) {
+                this.handlers.get(choice - 1).execute();
+            }
+        } while (choice != 0);
+    }
+
+    public void setHandler(int i, Handler h) {
+        this.handlers.set(i - 1, h);
+    }
+
+    public void setPreCondition(int i, PreCondition b) {
+        this.preConditions.set(i - 1, b);
     }
 
     public void showMenu() {
         System.out.println("-----MENU-----");
-        for(int i = 0; i < this.options.size(); i++) {
-            System.out.println(i+1 + " - " + this.options.get(i));
+        for (int i = 0; i < this.options.size(); i++) {
+            System.out.println(i + 1 + " - " + this.options.get(i));
         }
         System.out.println("0 - EXIT");
     }
@@ -34,30 +60,15 @@ public class Menu {
         int choice;
         Scanner sc = new Scanner(System.in);
         System.out.print("Choice: ");
-        try{
+        try {
             choice = sc.nextInt();
-        } catch(Exception e) {
+        } catch (NumberFormatException e) {
             choice = -1;
         }
-        if(choice < 0 || choice > this.options.size()){
+        if (choice < 0 || choice > this.options.size()) {
             choice = -1;
             System.out.println("INVALID CHOICE!");
         }
         return choice;
     }
-
-    public void run() {
-        do {
-            executeMenu();
-            switch (getChoice()) {
-                case 1:
-                    System.out.println("Escolheu adicionar!");
-                    break;
-                case 2:
-                    System.out.println("Escolheu remover!");
-                    break;
-            }
-        } while (choice != 0);
-    }
-
 }
