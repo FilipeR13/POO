@@ -15,6 +15,7 @@ public class Encomenda implements Serializable {
         Finalizada,
         Expedida
     }
+    private String codigo;
     private double preco;
     private Dimensao dimensao;
     private Estado estado;
@@ -22,6 +23,7 @@ public class Encomenda implements Serializable {
     private List<Artigos> lista;
 
     public Encomenda(){
+        codigo = "";
         preco = 0;
         dimensao = null;
         estado = null;
@@ -29,7 +31,8 @@ public class Encomenda implements Serializable {
         lista = new ArrayList<>();
     }
 
-    public Encomenda(double preco, Dimensao dimensao, Estado estado, Date data, List<Artigos> lista){
+    public Encomenda(String codigo, double preco, Dimensao dimensao, Estado estado, Date data, List<Artigos> lista){
+        this.codigo = codigo;
         this.preco = preco;
         this.dimensao = dimensao;
         this.estado = estado;
@@ -38,12 +41,15 @@ public class Encomenda implements Serializable {
     }
 
     public Encomenda(Encomenda x){
+        this.codigo = x.getCodigo();
         this.preco = x.getPrecoE();
         this.dimensao = x.getDimensao();
         this.estado = x.getEstadoE();
         this.data = x.getData();
         this.lista = x.getLista();
     }
+
+    public String getCodigo() { return codigo; }
 
     public double getPrecoE(){
         return preco;
@@ -64,6 +70,8 @@ public class Encomenda implements Serializable {
     public List<Artigos> getLista(){
         return this.lista.stream().map(e -> e.clone()).collect(Collectors.toList());
     }
+
+    public void setCodigo(String codigo) { this.codigo = codigo; }
 
     public void setPrecoE(double preco){
         this.preco = preco;
@@ -97,7 +105,8 @@ public class Encomenda implements Serializable {
         if(obj==null || obj.getClass() != this.getClass())
             return false;
         Encomenda x = (Encomenda) obj;
-        return x.getPrecoE() == this.preco &&
+        return x.getCodigo().equals(this.codigo) &&
+                x.getPrecoE() == this.preco &&
                 x.getDimensao().equals(this.dimensao) &&
                 x.getEstadoE().equals(this.estado) &&
                 x.getData().equals(this.data) &&
@@ -107,6 +116,7 @@ public class Encomenda implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Encomenda:: {");
+        sb.append("Código: ").append(this.codigo);
         sb.append("Preço: ").append(this.preco);
         sb.append("Dimensão: ").append(this.dimensao);
         sb.append("Estado: ").append(this.estado);
