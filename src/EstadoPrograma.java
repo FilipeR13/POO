@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class EstadoPrograma {
+public class EstadoPrograma implements Serializable {
     public static Vintage carregaEstado (String nomeFichiero) throws FileNotFoundException, IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream(nomeFichiero);
         ObjectInputStream ois = new ObjectInputStream(fis);
@@ -9,7 +9,7 @@ public class EstadoPrograma {
         return v;
     }
 
-    public void guardaEstado(String nomeFicheiro, Vintage v) throws  FileNotFoundException, IOException {
+    public static void guardaEstado(String nomeFicheiro, Vintage v) throws  FileNotFoundException, IOException {
         FileOutputStream fos = new FileOutputStream(nomeFicheiro);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(v);

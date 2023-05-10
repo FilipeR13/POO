@@ -6,34 +6,30 @@ import java.time.Month;
 public class Main {
 
     public static void main(String args[]) {
-        EstadoPrograma e = new EstadoPrograma();
         Vintage v = null;
         try {
-            v = e.carregaEstado(args[1]);
+            v = EstadoPrograma.carregaEstado(args[0] + "/log.txt");
         } catch (FileNotFoundException ex) {
             System.out.println ("Ficheiro nao existe: " + ex.getMessage());
         } catch (IOException ex) {
             System.out.println("Não conseguiu aceder o ficheiro: " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
             System.out.println("Não encontrou a classe :" + ex.getMessage());
-        }finally {
-            v = new Vintage();
         }
 
+        UtilizadorController user = new UtilizadorController(v.getUtilizadores());
+        AdminController admin = new AdminController(v.getTransportadoras());
+        VintageController mainController = new VintageController(v,user,admin);
+        ViewClient client = new ViewClient(mainController);
+        client.run();
+
         try {
-            e.guardaEstado(args[1], v);
+            EstadoPrograma.guardaEstado(args[0] + "/log.txt", v);
         } catch (FileNotFoundException ex) {
             System.out.println ("Ficheiro nao existe: " + ex.getMessage());
         } catch (IOException ex) {
             System.out.println("Não conseguiu aceder o ficheiro: " + ex.getMessage());
         }
-        Utilizador u = new Utilizador("wjwokdwojd",1093103910,"Joao Coelho","Ruilhe","joaoerineu@gmail.com");
-        v.addUtilizador(u);
-        UtilizadorController user = new UtilizadorController(v.getUtilizadores());
-        VintageController mainController = new VintageController(v,user);
-        ViewClient client = new ViewClient(mainController);
-        client.run();
-
     }
 }
 

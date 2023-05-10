@@ -25,15 +25,15 @@ public class Vintage implements Serializable {
     }
 
     public Map<String, Utilizador> getUtilizadores() {
-        return utilizadores.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
+        return utilizadores;
     }
 
     public Map<String, Artigos> getArtigos() {
-        return artigos.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
+        return artigos;
     }
 
     public Map<String, Transportadora> getTransportadoras() {
-        return transportadoras.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
+        return transportadoras;
     }
 
     public LocalDate getCurrentDate() {
@@ -56,9 +56,12 @@ public class Vintage implements Serializable {
         this.currentDate = currentDate;
     }
 
-    public void addUtilizador (Utilizador u) {
+    public void addUtilizador (Utilizador u) throws VintageException {
         if (!utilizadores.containsKey(u.getEmail()))
             utilizadores.put(u.getEmail(), u.clone());
+        else {
+            throw new VintageException("O email "+ u.getEmail() + "já foi usado");
+        }
     }
 
     public void addArtigo (Artigos a) {
@@ -67,22 +70,26 @@ public class Vintage implements Serializable {
     }
 
     public void addTransportadora (Transportadora t) {
-        if (!transportadoras.containsKey(t.getId()))
-            transportadoras.put(t.getId(), t.clone());
+        String codigo = Codigos.gerarCodigo();
+        while (transportadoras.containsKey(codigo))
+            codigo = Codigos.gerarCodigo();
+        t.setId(codigo);
+
+        transportadoras.put (codigo,t);
     }
 
     public void removeUtilizador (String email) {
-        if (!utilizadores.containsKey(email))
+        if (utilizadores.containsKey(email))
             utilizadores.remove(email);
     }
 
     public void removeArtigo (String codigo) {
-        if (!utilizadores.containsKey(codigo))
+        if (utilizadores.containsKey(codigo))
             utilizadores.remove(codigo);
     }
 
     public void removeTransportadora (String id) {
-        if (!utilizadores.containsKey(id))
+        if (utilizadores.containsKey(id))
             utilizadores.remove(id);
     }
 }

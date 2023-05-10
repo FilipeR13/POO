@@ -20,10 +20,9 @@ public class UtilizadorController {
         u.setNome(sc.nextLine());
         System.out.print("Morada :: ");
         u.setMorada(sc.nextLine());
-        System.out.print("id :: ");
-        u.setId(sc.nextLine());
         System.out.print("nif :: ");
         u.setNif(sc.nextInt());
+        u.setId(Codigos.gerarCodigo());
         return u;
     }
 
