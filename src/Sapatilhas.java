@@ -12,7 +12,7 @@ public class Sapatilhas extends Artigos{
         super ();
         tamanho = 0;
         atacador = 0;
-        cor = null;
+        cor = "";
         date = null;
     }
 

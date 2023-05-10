@@ -190,5 +190,13 @@ public class Utilizador implements Serializable {
     public void adiconaSapatilhaVenda (Sapatilhas s) {
         venda.put(s.getCodigo(),s);
     }
+
+    public void adiconaMalaVenda(Malas m) {
+        venda.put(m.getCodigo(),m);
+    }
+
+    public void adiconaTshirtVenda(TShirt m) {
+        venda.put(m.getCodigo(),m);
+    }
 }
 

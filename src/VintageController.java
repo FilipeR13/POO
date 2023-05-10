@@ -50,4 +50,8 @@ public class VintageController {
     public void removeTransportadora () {
         admin.removeTransportadora();
     }
+
+    public void verTransportadoras () {
+        admin.verTransportadoras();
+    }
 }

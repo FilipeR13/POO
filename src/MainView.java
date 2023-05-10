@@ -29,10 +29,12 @@ public class MainView {
         Menu menuAdmin = new Menu(new String[] {
                 "Adicionar Transportadora",
                 "Remover Transportadora",
+                "Ver Transportadoras",
                 "Avançar Tempo"
         });
         menuAdmin.setHandler(1, v ::registerTransportadora);
         menuAdmin.setHandler(2, v ::removeTransportadora);
+        menuAdmin.setHandler(3, v ::verTransportadoras);
         menuAdmin.run();
     }
 

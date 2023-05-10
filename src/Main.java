@@ -6,7 +6,7 @@ public class Main {
     public static void main(String args[]) {
         Vintage v = new Vintage();
         try {
-            v = EstadoPrograma.carregaEstado(args[0] + "/log1.txt");
+            v = EstadoPrograma.carregaEstado(args[0]);
         } catch (FileNotFoundException ex) {
             System.out.println ("Ficheiro nao existe: " + ex.getMessage());
         } catch (IOException ex) {
@@ -22,7 +22,7 @@ public class Main {
         client.run();
 
         try {
-            EstadoPrograma.guardaEstado(args[0] + "/log1.txt", v);
+            EstadoPrograma.guardaEstado(args[0], v);
         } catch (FileNotFoundException ex) {
             System.out.println ("Ficheiro nao existe: " + ex.getMessage());
         } catch (IOException ex) {

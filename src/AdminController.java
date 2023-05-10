@@ -10,6 +10,12 @@ public class AdminController {
         this.transportadoras = transportadoras;
     }
 
+    public void verTransportadoras  () {
+        for (Map.Entry<String, Transportadora> a : transportadoras.entrySet()) {
+            Transportadora t = a.getValue();
+            System.out.println(t.getId() + " -> " + t.getTransportadora());
+        }
+    }
     public Transportadora registerTransportadora () {
         Transportadora t = new Transportadora();
         Scanner sc = new Scanner(System.in);
@@ -25,10 +31,7 @@ public class AdminController {
     }
 
     public void removeTransportadora () {
-        for (Map.Entry<String, Transportadora> a : transportadoras.entrySet()) {
-            Transportadora t = a.getValue();
-            System.out.println(t.getId() + " -> " + t.getTransportadora());
-        }
+        this.verTransportadoras();
         Scanner sc = new Scanner(System.in);
         System.out.print("Transportadora a remover (ID): ");
         String codigo = sc.nextLine();

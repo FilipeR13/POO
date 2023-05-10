@@ -50,8 +50,22 @@ public class Malas extends Artigos{
         this.date = date;
     }
 
-    public void setDimensao(Dimensao dimensao) {
-        this.dimensao = dimensao;
+    public void setDimensao(int dimensao) {
+        switch (dimensao) {
+            case 0: {
+                this.dimensao = Dimensao.Pequena;
+                break;
+            }
+            case 1: {
+                this.dimensao = Dimensao.Media;
+                break;
+            }
+
+            case 2: {
+                this.dimensao = Dimensao.Grande;
+                break;
+            }
+        }
     }
 
     public void setMaterial(String material) {

@@ -53,12 +53,41 @@ public class TShirt extends Artigos{
         return date;
     }
 
-    public void setTamanho(Tamanho tamanho) {
-        this.tamanho = tamanho;
+    public void setTamanho(int tamanho) {
+        switch (tamanho) {
+            case 0: {
+                this.tamanho = Tamanho.S;
+                break;
+            }
+            case 1: {
+                this.tamanho = Tamanho.M;
+                break;
+            }
+            case 2: {
+                this.tamanho = Tamanho.L;
+                break;
+            }
+            case 3: {
+                this.tamanho = Tamanho.XL;
+            }
+        }
     }
 
-    public void setPadrao(Padrao padrao) {
-        this.padrao = padrao;
+    public void setPadrao(int padrao) {
+        switch (padrao) {
+            case 0: {
+                this.padrao = Padrao.Liso;
+                break;
+            }
+            case 1: {
+                this.padrao = Padrao.Riscas;
+                break;
+            }
+            case 2: {
+                this.padrao = Padrao.Palmeiras;
+                break;
+            }
+        }
     }
 
     public void setDate(LocalDate date) {
