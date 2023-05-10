@@ -19,12 +19,25 @@ public class AdminController {
         t.setValorBasePeq(sc.nextDouble());
         System.out.print("Valor base para encomendas médias :: ");
         t.setValorBaseMed(sc.nextDouble());
-        System.out.print("Valor base para encomendas grandes:: ");
+        System.out.print("Valor base para encomendas grandes :: ");
         t.setValorBaseGra(sc.nextDouble());
         return t;
     }
 
-    public void removeTransportadora (String id) {
-        transportadoras.remove(id);
+    public void removeTransportadora () {
+        for (Map.Entry<String, Transportadora> a : transportadoras.entrySet()) {
+            Transportadora t = a.getValue();
+            System.out.println(t.getId() + " -> " + t.getTransportadora());
+        }
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Transportadora a remover (ID): ");
+        String codigo = sc.nextLine();
+        while (!transportadoras.containsKey(codigo)) {
+            System.out.println("Codigo não existe");
+            System.out.println("Transportadora a remover (ID): ");
+            codigo = sc.nextLine();
+        }
+
+        transportadoras.remove(codigo);
     }
 }

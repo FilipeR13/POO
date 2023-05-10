@@ -92,8 +92,11 @@ public abstract class Artigos implements Serializable {
         return nDonos;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setEstado(int estado) {
+        switch (estado) {
+            case 0: {this.estado = Estado.Novo;break;}
+            case 1: {this.estado = Estado.Usado;break;}
+        }
     }
     public void setDanos(String danos) {
         this.danos = danos;

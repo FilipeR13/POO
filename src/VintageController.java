@@ -1,3 +1,7 @@
+import java.net.URI;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class VintageController {
     private Vintage v;
     private UtilizadorController user;
@@ -28,7 +32,22 @@ public class VintageController {
         }
     }
 
+    public void login() {
+        try {
+            user.login();
+        } catch (VintageException e) {
+            System.out.println(e.getMessage());
+            this.login();
+        }
+        UtilizadorView account = new UtilizadorView(user);
+        account.run();
+    }
+
     public void registerTransportadora () {
         v.addTransportadora(admin.registerTransportadora());
+    }
+
+    public void removeTransportadora () {
+        admin.removeTransportadora();
     }
 }

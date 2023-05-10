@@ -92,4 +92,14 @@ public class Vintage implements Serializable {
         if (utilizadores.containsKey(id))
             utilizadores.remove(id);
     }
+
+    public void addSapatilha(Sapatilhas s) {
+        String codigo;
+        do {
+            codigo = Codigos.gerarCodigo();
+        } while (this.artigos.containsKey(codigo));
+        s.setCodigo(codigo);
+
+        artigos.put(codigo,s);
+    }
 }

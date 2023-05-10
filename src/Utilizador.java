@@ -186,5 +186,9 @@ public class Utilizador implements Serializable {
 
         return sb.toString();
     }
+
+    public void adiconaSapatilhaVenda (Sapatilhas s) {
+        venda.put(s.getCodigo(),s);
+    }
 }
 

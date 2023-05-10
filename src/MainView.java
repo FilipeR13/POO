@@ -1,11 +1,7 @@
-import jdk.jshell.execution.Util;
-
-import java.util.Map;
-
-public class ViewClient {
+public class MainView {
     private VintageController v;
 
-    public ViewClient(VintageController v) {
+    public MainView(VintageController v) {
         this.v = v;
     }
 
@@ -25,6 +21,7 @@ public class ViewClient {
                 "Login"
         });
         menuUtilizador.setHandler(1, v :: registerUtilizador);
+        menuUtilizador.setHandler(2, v :: login);
         menuUtilizador.run();
     }
 
@@ -35,6 +32,7 @@ public class ViewClient {
                 "Avançar Tempo"
         });
         menuAdmin.setHandler(1, v ::registerTransportadora);
+        menuAdmin.setHandler(2, v ::removeTransportadora);
         menuAdmin.run();
     }
 

@@ -1,14 +1,12 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Month;
 
 public class Main {
 
     public static void main(String args[]) {
-        Vintage v = null;
+        Vintage v = new Vintage();
         try {
-            v = EstadoPrograma.carregaEstado(args[0] + "/log.txt");
+            v = EstadoPrograma.carregaEstado(args[0] + "/log1.txt");
         } catch (FileNotFoundException ex) {
             System.out.println ("Ficheiro nao existe: " + ex.getMessage());
         } catch (IOException ex) {
@@ -17,14 +15,14 @@ public class Main {
             System.out.println("Não encontrou a classe :" + ex.getMessage());
         }
 
-        UtilizadorController user = new UtilizadorController(v.getUtilizadores());
+        UtilizadorController user = new UtilizadorController(v);
         AdminController admin = new AdminController(v.getTransportadoras());
         VintageController mainController = new VintageController(v,user,admin);
-        ViewClient client = new ViewClient(mainController);
+        MainView client = new MainView(mainController);
         client.run();
 
         try {
-            EstadoPrograma.guardaEstado(args[0] + "/log.txt", v);
+            EstadoPrograma.guardaEstado(args[0] + "/log1.txt", v);
         } catch (FileNotFoundException ex) {
             System.out.println ("Ficheiro nao existe: " + ex.getMessage());
         } catch (IOException ex) {
