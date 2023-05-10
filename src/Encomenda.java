@@ -21,6 +21,7 @@ public class Encomenda implements Serializable {
     private Estado estado;
     private Date data;
     private List<Artigos> lista;
+    private Transportadora transportadora;
 
     public Encomenda(){
         codigo = "";
@@ -29,15 +30,17 @@ public class Encomenda implements Serializable {
         estado = null;
         data = null;
         lista = new ArrayList<>();
+        transportadora = null;
     }
 
-    public Encomenda(String codigo, double preco, Dimensao dimensao, Estado estado, Date data, List<Artigos> lista){
+    public Encomenda(String codigo, double preco, Dimensao dimensao, Estado estado, Date data, List<Artigos> lista, Transportadora transportadora){
         this.codigo = codigo;
         this.preco = preco;
         this.dimensao = dimensao;
         this.estado = estado;
         this.data = data;
         this.lista = lista.stream().map(e -> e.clone()).collect(Collectors.toList());
+        this.transportadora = transportadora;
     }
 
     public Encomenda(Encomenda x){
@@ -47,6 +50,7 @@ public class Encomenda implements Serializable {
         this.estado = x.getEstadoE();
         this.data = x.getData();
         this.lista = x.getLista();
+        this.transportadora = x.getTransportadora();
     }
 
     public String getCodigo() { return codigo; }
@@ -70,6 +74,8 @@ public class Encomenda implements Serializable {
     public List<Artigos> getLista(){
         return this.lista.stream().map(e -> e.clone()).collect(Collectors.toList());
     }
+
+    public Transportadora getTransportadora() { return transportadora; }
 
     public void setCodigo(String codigo) { this.codigo = codigo; }
 
@@ -95,6 +101,8 @@ public class Encomenda implements Serializable {
         }
     }
 
+    public void setTransportadora(Transportadora transportadora) { this.transportadora = transportadora; }
+
     public Encomenda clone(){
         return new Encomenda(this);
     }
@@ -110,7 +118,8 @@ public class Encomenda implements Serializable {
                 x.getDimensao().equals(this.dimensao) &&
                 x.getEstadoE().equals(this.estado) &&
                 x.getData().equals(this.data) &&
-                this.lista.equals(x.getLista());
+                this.lista.equals(x.getLista()) &&
+                this.transportadora.equals(x.getTransportadora());
     }
 
     public String toString() {
@@ -121,7 +130,8 @@ public class Encomenda implements Serializable {
         sb.append("Dimensão: ").append(this.dimensao);
         sb.append("Estado: ").append(this.estado);
         sb.append("Data: ").append(this.data);
-        sb.append("Lista de Artigos:").append(this.lista).append("}");
+        sb.append("Lista de Artigos:").append(this.lista);
+        sb.append("Transportadora: ").append(this.transportadora).append("}");
         return sb.toString();
     }
 
@@ -133,6 +143,9 @@ public class Encomenda implements Serializable {
             }
             else r += a.getPrecoDesconto() + 0.25; // + taxa da transportadora
         }
+        if(this.dimensao == Dimensao.Grande) r += this.transportadora.getValorBaseGra();
+        if(this.dimensao == Dimensao.Media) r += this.transportadora.getValorBaseMed();
+        if(this.dimensao == Dimensao.Pequena) r += this.transportadora.getValorBasePeq();
         return r;
     }
 }
