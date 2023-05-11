@@ -74,12 +74,7 @@ public class Vintage implements Serializable {
     }
 
     public void addTransportadora (Transportadora t) {
-        String codigo = Codigos.gerarCodigo();
-        while (transportadoras.containsKey(codigo))
-            codigo = Codigos.gerarCodigo();
-        t.setId(codigo);
-
-        transportadoras.put (codigo,t);
+        transportadoras.put(t.getTransportadora(),t);
     }
 
     public void removeUtilizador (String email) {

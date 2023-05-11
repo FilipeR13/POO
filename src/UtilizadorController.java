@@ -26,6 +26,7 @@ public class UtilizadorController {
         System.out.print("NIF :: ");
         u.setNif(sc.nextInt());
         u.setId(Codigos.gerarCodigo());
+
         return u;
     }
 
@@ -85,15 +86,19 @@ public class UtilizadorController {
         System.out.print("Preço ::");
         s.setPreco(sc.nextDouble());
         System.out.println ("Escolha a Transportadora:");
+        int index = 1;
+        Map<Integer,Transportadora> transp = new HashMap<>();
         for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
             Transportadora t = a.getValue();
-            System.out.println(t.getId() + " -> " + t.getTransportadora());
+            transp.put(index,t);
+            System.out.println(index + " -> " + t.getTransportadora());
+            index++;
         }
-        String transportadora = null;
+        int choice;
         do {
-            transportadora = sc.nextLine();
-        } while (!v.getTransportadoras().containsKey(transportadora));
-        s.setTransportadora(v.getTransportadoras().get(transportadora));
+            choice = sc.nextInt();
+        } while(choice < 1 || choice > index);
+        s.setTransportadora(transp.get(choice));
         s.setUser_id(this.u.getEmail());
 
         v.addArtigo(s);
@@ -143,15 +148,19 @@ public class UtilizadorController {
         System.out.print("Preço ::");
         m.setPreco(sc.nextDouble());
         System.out.println ("Escolha a Transportadora:");
+        int index = 1;
+        Map<Integer,Transportadora> transp = new HashMap<>();
         for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
             Transportadora t = a.getValue();
-            System.out.println(t.getId() + " -> " + t.getTransportadora());
+            transp.put(index,t);
+            System.out.println(index + " -> " + t.getTransportadora());
+            index++;
         }
-        String transportadora = null;
+        int choice;
         do {
-            transportadora = sc.nextLine();
-        } while (!v.getTransportadoras().containsKey(transportadora));
-        m.setTransportadora(v.getTransportadoras().get(transportadora));
+            choice = sc.nextInt();
+        } while(choice < 1 || choice > index);
+        m.setTransportadora(transp.get(choice));
         m.setUser_id(this.u.getEmail());
 
         v.addArtigo(m);
@@ -205,15 +214,19 @@ public class UtilizadorController {
         System.out.print("Preço ::");
         t.setPreco(sc.nextDouble());
         System.out.println ("Escolha a Transportadora:");
+        int index = 1;
+        Map<Integer,Transportadora> transp = new HashMap<>();
         for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
             Transportadora tra = a.getValue();
-            System.out.println(tra.getId() + " -> " + tra.getTransportadora());
+            transp.put(index,tra);
+            System.out.println(index + " -> " + tra.getTransportadora());
+            index++;
         }
-        String transportadora = null;
+        int choice;
         do {
-            transportadora = sc.nextLine();
-        } while (!v.getTransportadoras().containsKey(transportadora));
-        t.setTransportadora(v.getTransportadoras().get(transportadora));
+            choice = sc.nextInt();
+        } while (choice < 1 || choice > index);
+        t.setTransportadora(transp.get(choice));
         t.setUser_id(this.u.getEmail());
 
         v.addArtigo(t);
@@ -228,7 +241,7 @@ public class UtilizadorController {
                 if (!value.getUser_id().equals(this.u.getEmail())) {
                     value.calculaDesconto();
                     System.out.println(value.getCodigo() + " -> "
-                            + value.getClass() + ", " + value.getMarca() + "Descrição: " + value.getDescricao() + "Preço " + value.getPrecoDesconto());
+                            + value.getClass() + ", " + value.getMarca() + " Descrição: " + value.getDescricao() + " Preço " + value.getPrecoDesconto());
                 }
             });
 

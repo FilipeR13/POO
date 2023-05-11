@@ -11,9 +11,11 @@ public class AdminController {
     }
 
     public void verTransportadoras  () {
+        int index = 1;
         for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
             Transportadora t = a.getValue();
-            System.out.println(t.getId() + " -> " + t.getTransportadora());
+            System.out.println(index + " -> " + t.getTransportadora());
+            index++;
         }
     }
     public Transportadora registerTransportadora () {
@@ -27,6 +29,9 @@ public class AdminController {
         t.setValorBaseMed(sc.nextDouble());
         System.out.print("Valor base para encomendas grandes :: ");
         t.setValorBaseGra(sc.nextDouble());
+        System.out.println("Fórmula do preço de expedição :: (ValorBase ∗ margemlucrotransportadora ∗ (1 + Imposto)) ∗ 0.9");
+        System.out.print("Margem de lucro da transportadora :: ");
+        t.setMargemLucro(sc.nextDouble());
         return t;
     }
 

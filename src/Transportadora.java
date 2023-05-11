@@ -1,20 +1,21 @@
 import java.io.Serializable;
 
 public class Transportadora implements Serializable {
-    private double valorBasePeq, valorBaseMed, valorBaseGra;
-    private String id;
+    private double margemLucro, imposto,valorBasePeq, valorBaseMed, valorBaseGra;
     private String transportadora;
 
     public Transportadora() {
+        margemLucro = 0.05;
+        imposto = 0.23;
         valorBaseGra = -1;
         valorBasePeq = -1;
         valorBaseMed = -1;
-        id = "";
         transportadora = null;
     }
 
-    public Transportadora(double valorBaseGra1, double valorBaseMed1, double valorBasePeq1, String id, String transportadora1) {
-        this.id = id;
+    public Transportadora(double margemLucro, double imposto, double valorBaseGra1, double valorBaseMed1, double valorBasePeq1, String transportadora1) {
+        this.margemLucro = margemLucro;
+        this.imposto = imposto;
         this.valorBaseMed = valorBaseMed1;
         this.valorBaseGra = valorBaseGra1;
         this.valorBasePeq = valorBasePeq1;
@@ -22,15 +23,20 @@ public class Transportadora implements Serializable {
     }
 
     public Transportadora(Transportadora t) {
-        this.id = t.getId();
+        this.margemLucro = t.getMargemLucro();
+        this.imposto = t.getImposto();
         this.valorBaseMed = t.getValorBaseMed();
         this.valorBaseGra = t.getValorBaseGra();
         this.valorBasePeq = t.getValorBasePeq();
         this.transportadora = t.getTransportadora();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMargemLucro(double margemLucro) {
+        this.margemLucro = margemLucro;
+    }
+
+    public void setImposto(double imposto) {
+        this.imposto = imposto;
     }
 
     public void setTransportadora(String transportadora) {
@@ -49,6 +55,14 @@ public class Transportadora implements Serializable {
         this.valorBasePeq = valorBasePeq;
     }
 
+    public double getMargemLucro() {
+        return margemLucro;
+    }
+
+    public double getImposto() {
+        return imposto;
+    }
+
     public double getValorBaseMed() {
         return valorBaseMed;
     }
@@ -59,10 +73,6 @@ public class Transportadora implements Serializable {
 
     public double getValorBasePeq() {
         return valorBasePeq;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getTransportadora() {
@@ -79,7 +89,8 @@ public class Transportadora implements Serializable {
         if(obj==null || obj.getClass() != this.getClass())
             return false;
         Transportadora x = (Transportadora) obj;
-        return  x.getId().equals(this.id) &&
+        return  x.getMargemLucro() == this.margemLucro &&
+                x.getImposto() == this.imposto &&
                 x.getValorBaseGra() == this.valorBaseGra &&
                 x.getValorBaseMed() == this.valorBaseMed &&
                 x.getValorBasePeq() == this.valorBasePeq &&
@@ -89,11 +100,16 @@ public class Transportadora implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Transportadora:: {");
-        sb.append("Id: ").append(this.id);
+        sb.append("Margem de lucro: ").append(this.margemLucro);
+        sb.append("Imposto: ").append(this.imposto);
         sb.append("Nome da Transportadora: ").append(this.transportadora);
         sb.append("Preço Base Encomenda Pequena: ").append(this.valorBasePeq);
         sb.append("Preço Base Encomenda Media: ").append(this.valorBaseMed);
         sb.append("Preço Base Encomenda Grande: ").append(this.valorBaseGra).append("}");
         return sb.toString();
+    }
+
+    public double custoExpedicao(double preco) {
+        return (preco *  margemLucro * (1+ imposto)) * 0.9;
     }
 }
