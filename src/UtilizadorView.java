@@ -15,6 +15,7 @@ public class UtilizadorView {
 
         conta.setHandler(1,user :: compraArtigo);
         conta.setHandler(2,this :: adicionaArtigo);
+        conta.setHandler(3,this :: verCarrinho);
         conta.run();
     }
 

@@ -254,6 +254,6 @@ public class UtilizadorController {
     }
 
     public void validaCarrinho() {
-        u.percoreCarrinho();
+        //u.percoreCarrinho();
     }
 }
