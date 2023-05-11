@@ -219,17 +219,6 @@ public class UtilizadorController {
         v.addArtigo(t);
         u.adiconaArtigosVenda(t);
     }
-    public void adicionaArtigo () {
-        Menu tipoArtigo = new Menu(new String[] {
-                "Sapatilha",
-                "Mala",
-                "TShirt"
-        });
-        tipoArtigo.setHandler(1,this :: adicionaSapatilha);
-        tipoArtigo.setHandler(2,this :: adicionaMala);
-        tipoArtigo.setHandler(3,this :: adicionaTshirt);
-        tipoArtigo.run();
-    }
 
     public void compraArtigo () throws VintageException {
         if (this.v.getArtigos().size() == 0)
@@ -239,7 +228,7 @@ public class UtilizadorController {
                 if (!value.getUser_id().equals(this.u.getEmail())) {
                     value.calculaDesconto();
                     System.out.println(value.getCodigo() + " -> "
-                            + value.getClass() + ", " + value.getMarca() + "Preco: " + value.getPrecoDesconto());
+                            + value.getClass() + ", " + value.getMarca() + "Descrição: " + value.getDescricao() + "Preço " + value.getPrecoDesconto());
                 }
             });
 
@@ -257,5 +246,14 @@ public class UtilizadorController {
             v.getUtilizadores().get(a.getUser_id()).vendaArtigo(codigo); // move de venda para vendido no user a qual o artigo pertence
             v.removeArtigo(codigo); // remove da lista de artigos disponiveis
         }
+    }
+
+    public void printCarrinho() {
+        u.getCarrinho().forEach(value -> System.out.println(value.getCodigo() + " -> "
+                + value.getClass() + ", " + value.getMarca() + "Descrição: " + value.getDescricao() + "Preço " + value.getPrecoDesconto()));
+    }
+
+    public void validaCarrinho() {
+        u.percoreCarrinho();
     }
 }
