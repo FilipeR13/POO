@@ -60,13 +60,17 @@ public class Vintage implements Serializable {
         if (!utilizadores.containsKey(u.getEmail()))
             utilizadores.put(u.getEmail(), u.clone());
         else {
-            throw new VintageException("O email "+ u.getEmail() + "já foi usado");
+            throw new VintageException("O email "+ u.getEmail() + " já foi usado");
         }
     }
 
     public void addArtigo (Artigos a) {
-        if (!artigos.containsKey(a.getCodigo()))
-            artigos.put(a.getCodigo(), a.clone());
+        String codigo;
+        do {
+            codigo = Codigos.gerarCodigo();
+        } while (this.artigos.containsKey(codigo));
+        a.setCodigo(codigo);
+        artigos.put(codigo, a.clone());
     }
 
     public void addTransportadora (Transportadora t) {
@@ -91,35 +95,5 @@ public class Vintage implements Serializable {
     public void removeTransportadora (String id) {
         if (utilizadores.containsKey(id))
             utilizadores.remove(id);
-    }
-
-    public void addSapatilha(Sapatilhas s) {
-        String codigo;
-        do {
-            codigo = Codigos.gerarCodigo();
-        } while (this.artigos.containsKey(codigo));
-        s.setCodigo(codigo);
-
-        artigos.put(codigo,s);
-    }
-
-    public void addMala(Malas m) {
-        String codigo;
-        do {
-            codigo = Codigos.gerarCodigo();
-        } while (this.artigos.containsKey(codigo));
-        m.setCodigo(codigo);
-
-        artigos.put(codigo,m);
-    }
-
-    public void addTshirt(TShirt t) {
-        String codigo;
-        do {
-            codigo = Codigos.gerarCodigo();
-        } while (this.artigos.containsKey(codigo));
-        t.setCodigo(codigo);
-
-        artigos.put(codigo,t);
     }
 }

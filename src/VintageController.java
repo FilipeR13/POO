@@ -54,4 +54,7 @@ public class VintageController {
     public void verTransportadoras () {
         admin.verTransportadoras();
     }
+    public void avancarTempo () {
+        admin.avancaTempo();
+    }
 }

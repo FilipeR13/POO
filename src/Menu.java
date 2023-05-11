@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Menu {
     public interface Handler {
-        public void execute();
+        public void execute() throws VintageException;
     }
 
     public interface PreCondition {
@@ -35,7 +35,11 @@ public class Menu {
             if (choice > 0 && !this.preConditions.get(choice - 1).condition()) {
                 System.out.println("Opção indisponível! Tente novamente.");
             } else if (choice > 0) {
-                this.handlers.get(choice - 1).execute();
+                try {
+                    this.handlers.get(choice - 1).execute();
+                } catch (VintageException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         } while (choice != 0);
     }

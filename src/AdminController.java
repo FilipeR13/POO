@@ -4,14 +4,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class AdminController {
-    Map<String, Transportadora> transportadoras;
+    Vintage v;
 
-    public AdminController (Map <String,Transportadora> transportadoras) {
-        this.transportadoras = transportadoras;
+    public AdminController (Vintage v) {
+        this.v = v;
     }
 
     public void verTransportadoras  () {
-        for (Map.Entry<String, Transportadora> a : transportadoras.entrySet()) {
+        for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
             Transportadora t = a.getValue();
             System.out.println(t.getId() + " -> " + t.getTransportadora());
         }
@@ -35,12 +35,19 @@ public class AdminController {
         Scanner sc = new Scanner(System.in);
         System.out.print("Transportadora a remover (ID): ");
         String codigo = sc.nextLine();
-        while (!transportadoras.containsKey(codigo)) {
+        while (!v.getTransportadoras().containsKey(codigo)) {
             System.out.println("Codigo não existe");
             System.out.println("Transportadora a remover (ID): ");
             codigo = sc.nextLine();
         }
 
-        transportadoras.remove(codigo);
+        v.getTransportadoras().remove(codigo);
+    }
+
+    public void avancaTempo () {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Insira o número de dias para avançar");
+        int dias = sc.nextInt();
+        v.setCurrentDate(v.getCurrentDate().plusDays(dias));
     }
 }

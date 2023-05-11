@@ -13,7 +13,9 @@ public class UtilizadorView {
                 "Ver Encomendas"
         });
 
+        conta.setHandler(1,user :: compraArtigo);
         conta.setHandler(2,user :: adicionaArtigo);
+
         conta.run();
     }
 }

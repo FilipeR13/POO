@@ -2,6 +2,7 @@ import javax.swing.plaf.metal.MetalMenuBarUI;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class UtilizadorController {
@@ -95,8 +96,8 @@ public class UtilizadorController {
         s.setTransportadora(v.getTransportadoras().get(transportadora));
         s.setUser_id(this.u.getEmail());
 
-        v.addSapatilha(s);
-        u.adiconaSapatilhaVenda(s);
+        v.addArtigo(s);
+        u.adiconaArtigosVenda(s);
     }
 
     public void adicionaMala () {
@@ -153,8 +154,8 @@ public class UtilizadorController {
         m.setTransportadora(v.getTransportadoras().get(transportadora));
         m.setUser_id(this.u.getEmail());
 
-        v.addMala(m);
-        u.adiconaMalaVenda(m);
+        v.addArtigo(m);
+        u.adiconaArtigosVenda(m);
     }
 
     public void adicionaTshirt () {
@@ -215,8 +216,8 @@ public class UtilizadorController {
         t.setTransportadora(v.getTransportadoras().get(transportadora));
         t.setUser_id(this.u.getEmail());
 
-        v.addTshirt(t);
-        u.adiconaTshirtVenda(t);
+        v.addArtigo(t);
+        u.adiconaArtigosVenda(t);
     }
     public void adicionaArtigo () {
         Menu tipoArtigo = new Menu(new String[] {
@@ -228,5 +229,33 @@ public class UtilizadorController {
         tipoArtigo.setHandler(2,this :: adicionaMala);
         tipoArtigo.setHandler(3,this :: adicionaTshirt);
         tipoArtigo.run();
+    }
+
+    public void compraArtigo () throws VintageException {
+        if (this.v.getArtigos().size() == 0)
+            throw new VintageException("Não existem Artigos disponíveis.");
+        else {
+            this.v.getArtigos().forEach((key, value) -> {
+                if (!value.getUser_id().equals(this.u.getEmail())) {
+                    value.calculaDesconto();
+                    System.out.println(value.getCodigo() + " -> "
+                            + value.getClass() + ", " + value.getMarca() + "Preco: " + value.getPrecoDesconto());
+                }
+            });
+
+            Scanner sc = new Scanner(System.in);
+
+            System.out.print("Escolha o artigo para adicionar ao carrinho: ");
+            String codigo = sc.nextLine();
+            while (!this.v.getArtigos().containsKey(codigo)) {
+                System.out.print("Artigo não existe!");
+                System.out.print("Escolha o artigo para adicionar ao carrinho: ");
+                codigo = sc.nextLine();
+            }
+            Artigos a = v.getArtigos().get(codigo);
+            u.adicionaCarrinho(a); // adiciona ao carrinho do user
+            v.getUtilizadores().get(a.getUser_id()).vendaArtigo(codigo); // move de venda para vendido no user a qual o artigo pertence
+            v.removeArtigo(codigo); // remove da lista de artigos disponiveis
+        }
     }
 }

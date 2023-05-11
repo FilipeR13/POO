@@ -187,16 +187,23 @@ public class Utilizador implements Serializable {
         return sb.toString();
     }
 
-    public void adiconaSapatilhaVenda (Sapatilhas s) {
-        venda.put(s.getCodigo(),s);
+    public void adiconaArtigosVenda (Artigos a) {
+        venda.put(a.getCodigo(),a);
     }
 
-    public void adiconaMalaVenda(Malas m) {
-        venda.put(m.getCodigo(),m);
+    public void vendaArtigo (String codigo) {
+        Artigos a = venda.get(codigo);
+        vendeu.put(codigo,a);
+        venda.remove(codigo);
     }
 
-    public void adiconaTshirtVenda(TShirt m) {
-        venda.put(m.getCodigo(),m);
+    public void adicionaCarrinho (Artigos a) {
+        carrinho.add(a);
     }
+
+    public void removeCarrinho (String a) {
+        carrinho.removeIf(e -> e.getCodigo().equals(a));
+    }
+
 }
 

@@ -35,6 +35,7 @@ public class MainView {
         menuAdmin.setHandler(1, v ::registerTransportadora);
         menuAdmin.setHandler(2, v ::removeTransportadora);
         menuAdmin.setHandler(3, v ::verTransportadoras);
+        menuAdmin.setHandler(4, v ::avancarTempo);
         menuAdmin.run();
     }
 

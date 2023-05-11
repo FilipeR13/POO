@@ -1,10 +1,11 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class Main {
 
     public static void main(String args[]) {
-        Vintage v = new Vintage();
+        Vintage v = null;
         try {
             v = EstadoPrograma.carregaEstado(args[0]);
         } catch (FileNotFoundException ex) {
@@ -15,8 +16,11 @@ public class Main {
             System.out.println("Não encontrou a classe :" + ex.getMessage());
         }
 
+        if (v == null)
+            v = new Vintage (LocalDate.now());
+
         UtilizadorController user = new UtilizadorController(v);
-        AdminController admin = new AdminController(v.getTransportadoras());
+        AdminController admin = new AdminController(v);
         VintageController mainController = new VintageController(v,user,admin);
         MainView client = new MainView(mainController);
         client.run();
