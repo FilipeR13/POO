@@ -189,7 +189,7 @@ public class Utilizador implements Serializable {
         return sb.toString();
     }
 
-    public void adiconaArtigosVenda (Artigos a) {
+    public void adicionaArtigosVenda (Artigos a) {
         venda.put(a.getCodigo(),a);
     }
 
@@ -223,8 +223,7 @@ public class Utilizador implements Serializable {
         Artigos a = vendeu.get(code);
         vendeu.remove(code);
         decrementaValor(a.getPrecoDesconto());
-        adiconaArtigosVenda(a);
-
+        adicionaArtigosVenda(a);
     }
 
     public void decrementaValor (double preco) {
@@ -254,6 +253,7 @@ public class Utilizador implements Serializable {
             e.setLista(l);
             e.setTransportadora(p.getKey());
             this.encomendas.put(e.getCodigo(),e);
+            l.forEach(a -> a.setData_venda(data));
             p.getKey().custoExpedicao(e.getDimensao());
         }
     }

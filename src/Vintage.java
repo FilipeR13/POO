@@ -8,11 +8,13 @@ public class Vintage implements Serializable {
     LocalDate currentDate;
     private Map<String,Utilizador> utilizadores;
     private Map<String,Artigos> artigos;
+    private Map<String,Artigos> artigosDisponiveis;
     private Map<String,Transportadora> transportadoras;
 
     public Vintage () {
         utilizadores = new HashMap<>();
         artigos = new HashMap<>();
+        artigosDisponiveis = new HashMap<>();
         transportadoras = new HashMap<>();
         currentDate = LocalDate.now();
     }
@@ -20,6 +22,7 @@ public class Vintage implements Serializable {
     public Vintage (LocalDate date) {
         utilizadores = new HashMap<>();
         artigos = new HashMap<>();
+        artigosDisponiveis = new HashMap<>();
         transportadoras = new HashMap<>();
         currentDate = date;
     }
@@ -30,6 +33,10 @@ public class Vintage implements Serializable {
 
     public Map<String, Artigos> getArtigos() {
         return artigos;
+    }
+
+    public Map<String, Artigos> getartigosDisponiveis() {
+        return artigosDisponiveis;
     }
 
     public Map<String, Transportadora> getTransportadoras() {
@@ -48,6 +55,10 @@ public class Vintage implements Serializable {
         this.artigos = artigos.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
     }
 
+    public void setartigosDisponiveis(Map<String, Artigos> artigos) {
+        this.artigosDisponiveis = artigos.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
+    }
+
     public void setTransportadoras (Map<String, Transportadora> transportadoras) {
         this.transportadoras = transportadoras.entrySet().stream().collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue().clone()));
     }
@@ -64,6 +75,9 @@ public class Vintage implements Serializable {
         }
     }
 
+    public void addArtigoDisponivel (Artigos a) {
+        artigosDisponiveis.put(a.getCodigo(), a.clone());
+    }
     public void addArtigo (Artigos a) {
         String codigo;
         do {
@@ -78,18 +92,19 @@ public class Vintage implements Serializable {
     }
 
     public void removeUtilizador (String email) {
-        if (utilizadores.containsKey(email))
-            utilizadores.remove(email);
+        utilizadores.remove(email);
     }
 
     public void removeArtigo (String codigo) {
-        if (artigos.containsKey(codigo))
-            artigos.remove(codigo);
+        artigos.remove(codigo);
+    }
+
+    public void removeArtigoDisponiveis (String codigo) {
+        artigosDisponiveis.remove(codigo);
     }
 
     public void removeTransportadora (String id) {
-        if (transportadoras.containsKey(id))
-            transportadoras.remove(id);
+        transportadoras.remove(id);
     }
 
     public void addDays(LocalDate localDate) {

@@ -112,7 +112,8 @@ public class UtilizadorController {
         s.setUser_id(this.u.getEmail());
 
         v.addArtigo(s);
-        u.adiconaArtigosVenda(s);
+        v.addArtigoDisponivel(s);
+        u.adicionaArtigosVenda(s);
     }
 
     public void adicionaMala () {
@@ -183,7 +184,8 @@ public class UtilizadorController {
         m.setUser_id(this.u.getEmail());
 
         v.addArtigo(m);
-        u.adiconaArtigosVenda(m);
+        v.addArtigoDisponivel(m);
+        u.adicionaArtigosVenda(m);
     }
 
     public void adicionaTshirt () {
@@ -249,18 +251,19 @@ public class UtilizadorController {
         t.setUser_id(this.u.getEmail());
 
         v.addArtigo(t);
-        u.adiconaArtigosVenda(t);
+        v.addArtigoDisponivel(t);
+        u.adicionaArtigosVenda(t);
     }
 
     public void compraArtigo () throws VintageException {
-        if (this.v.getArtigos().size() == 0)
+        if (this.v.getartigosDisponiveis().size() == 0)
             throw new VintageException("Não existem Artigos disponíveis.");
         else {
-            this.v.getArtigos().forEach((key, value) -> {
+            this.v.getartigosDisponiveis().forEach((key, value) -> {
                 if (!value.getUser_id().equals(this.u.getEmail())) {
                     value.calculaDesconto(v.getCurrentDate());
                     System.out.println(value.getCodigo() + " -> "
-                            + value.getClass() + ", " + value.getMarca() + " Descrição: " + value.getDescricao() + " Preço " + value.getPrecoDesconto());
+                            + value.getClass().toString() + ", " + value.getMarca() + ", Descrição: " + value.getDescricao() + ", Preço " + value.getPrecoDesconto());
                 }
             });
 
@@ -268,15 +271,15 @@ public class UtilizadorController {
 
             System.out.print("Escolha o artigo para adicionar ao carrinho: ");
             String codigo = sc.nextLine();
-            while (!this.v.getArtigos().containsKey(codigo)) {
-                System.out.print("Artigo não existe!");
+            while (!this.v.getartigosDisponiveis().containsKey(codigo)) {
+                System.out.print("Artigo não Disponível!");
                 System.out.print("Escolha o artigo para adicionar ao carrinho: ");
                 codigo = sc.nextLine();
             }
-            Artigos a = v.getArtigos().get(codigo);
+            Artigos a = v.getartigosDisponiveis().get(codigo);
             u.adicionaCarrinho(a); // adiciona ao carrinho do user
             v.getUtilizadores().get(a.getUser_id()).vendaArtigo(codigo); // move de venda para vendido no user a qual o artigo pertence
-            v.removeArtigo(codigo); // remove da lista de artigos disponiveis
+            v.removeArtigoDisponiveis(codigo); // remove da lista de artigos disponiveis
         }
     }
 
@@ -315,7 +318,7 @@ public class UtilizadorController {
 
             e.getLista().forEach(a-> {
                 v.getUtilizadores().get(a.getUser_id()).removeVendeu(a.getCodigo());
-                v.addArtigo(a);
+                v.addArtigoDisponivel(a);
             });
         }
     }
@@ -334,7 +337,8 @@ public class UtilizadorController {
             removeArtigoCarrinho();
         }
         if (removeu) {
-            v.addArtigo(add);
+            v.getUtilizadores().get(add.getUser_id()).removeVendeu(codigo);
+            v.addArtigoDisponivel(add);
         }
     }
 }

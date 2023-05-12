@@ -17,6 +17,7 @@ public abstract class Artigos implements Serializable {
     private Transportadora transportadora;
     private double preco;
     private double preco_desconto;
+    private LocalDate data_venda;
 
     public Artigos() {
         estado = null;
@@ -29,6 +30,7 @@ public abstract class Artigos implements Serializable {
         transportadora = null;
         preco = 0;
         preco_desconto = 0;
+        data_venda = null;
     }
 
     public Artigos(Estado estado, String danos,int nDonos, String descricao, String marca, String codigo, String user_id, Transportadora transportadora, double preco, double preco_desconto) {
@@ -42,6 +44,7 @@ public abstract class Artigos implements Serializable {
         this.nDonos = nDonos;
         this.preco = preco;
         this.preco_desconto = preco_desconto;
+        this.data_venda = null;
     }
 
     public Artigos( Artigos a) {
@@ -55,6 +58,7 @@ public abstract class Artigos implements Serializable {
         this.nDonos = a.getnDonos();
         this.preco = a.getPreco();
         this.preco_desconto = a.getPrecoDesconto();
+        this.data_venda = null;
     }
 
     public Estado getEstado() {
@@ -93,6 +97,10 @@ public abstract class Artigos implements Serializable {
         return nDonos;
     }
 
+    public LocalDate getData_venda() {
+        return data_venda;
+    }
+
     public void setEstado(int estado) {
         switch (estado) {
             case 0: {this.estado = Estado.Novo;break;}
@@ -129,6 +137,10 @@ public abstract class Artigos implements Serializable {
 
     public void setnDonos(int nDonos) {
         this.nDonos = nDonos;
+    }
+
+    public void setData_venda(LocalDate data_venda) {
+        this.data_venda = data_venda;
     }
 
     public abstract Artigos clone();
