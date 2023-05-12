@@ -14,14 +14,14 @@ public class Transportadora implements Serializable {
         transportadora = null;
     }
 
-    public Transportadora(double margemLucro, double imposto, double valorBaseGra1, double valorBaseMed1, double valorBasePeq1, String transportadora1) {
+    public Transportadora(double margemLucro, double imposto, double valorBaseGra1, double valorBaseMed1, double valorBasePeq1, String transportadora1, double totalObtido) {
         this.margemLucro = margemLucro;
         this.imposto = imposto;
         this.valorBaseMed = valorBaseMed1;
         this.valorBaseGra = valorBaseGra1;
         this.valorBasePeq = valorBasePeq1;
-        this.totalObtido = 0;
         this.transportadora = transportadora1;
+        this.totalObtido = totalObtido;
     }
 
     public Transportadora(Transportadora t) {
@@ -30,8 +30,8 @@ public class Transportadora implements Serializable {
         this.valorBaseMed = t.getValorBaseMed();
         this.valorBaseGra = t.getValorBaseGra();
         this.valorBasePeq = t.getValorBasePeq();
-        this.totalObtido = t.getTotalObtido();
         this.transportadora = t.getTransportadora();
+        this.totalObtido = t.getTotalObtido();
     }
 
     public void setMargemLucro(double margemLucro) {
@@ -135,8 +135,8 @@ public class Transportadora implements Serializable {
                 break;
             }
         }
-
     }
-
-
+    public void addTotalObtido(double value) {
+        this.totalObtido += value;
+    }
 }

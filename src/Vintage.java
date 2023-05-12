@@ -60,7 +60,7 @@ public class Vintage implements Serializable {
         if (!utilizadores.containsKey(u.getEmail()))
             utilizadores.put(u.getEmail(), u.clone());
         else {
-            throw new VintageException("O email "+ u.getEmail() + " já foi usado");
+            throw new VintageException("O email "+ u.getEmail() + " já está a ser utilizado");
         }
     }
 

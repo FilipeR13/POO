@@ -16,11 +16,13 @@ public class UtilizadorController {
         u = null;
     }
 
-    public Utilizador registerUtilizador() {
+    public Utilizador registerUtilizador() throws VintageException {
         Utilizador u = new Utilizador();
         Scanner sc = new Scanner(System.in);
         System.out.print("Email :: ");
-        u.setEmail(sc.nextLine());
+        String email = sc.nextLine();
+        if(!v.getUtilizadores().containsKey(email)) u.setEmail(email);
+        else throw new VintageException("O email "+ email + " já está a ser utilizado");
         System.out.print("Nome :: ");
         u.setNome(sc.nextLine());
         System.out.print("Morada :: ");

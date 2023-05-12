@@ -12,11 +12,14 @@ public class AdminController {
 
     public void verTransportadoras() {
         int index = 1;
-        for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
-            Transportadora t = a.getValue();
-            System.out.println(index + " -> " + t.getTransportadora());
-            index++;
+        if(!v.getTransportadoras().isEmpty()){
+            for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
+                Transportadora t = a.getValue();
+                System.out.println(index + " -> " + t.getTransportadora());
+                index++;
+            }
         }
+        else System.out.println("Não existem transportadoras!");
     }
 
     public void alterarTransportadora () {
@@ -31,14 +34,23 @@ public class AdminController {
         t.setValorBaseMed(sc.nextInt());
         System.out.print("Novo valor base para encomendas grandes :: ");
         t.setValorBaseGra(sc.nextInt());
-        System.out.println("Fórmula do preço de expedição :: (ValorBase ∗ margemlucrotransportadora ∗ (1 + Imposto)) ∗ 0.9");
+        if(t instanceof TransportadoraPremium) System.out.println("Fórmula do preço de expedição :: (ValorBase - (ValorBase * Imposto)) * 0.2 + (margemlucrotransportadora * ValorBase)");
+        else System.out.println("Fórmula do preço de expedição :: (ValorBase ∗ margemlucrotransportadora ∗ (1 + Imposto)) ∗ 0.9");
         System.out.print("Nova margem de lucro da transportadora :: ");
         t.setMargemLucro(sc.nextDouble());
     }
 
     public Transportadora registerTransportadora () {
-        Transportadora t = new Transportadora();
+        int premium = -1;
         Scanner sc = new Scanner(System.in);
+        do {
+            System.out.print("Premium (sim -> 1 ou não -> 0) :: ");
+            premium = sc.nextInt();
+            sc.nextLine();
+        }while(premium != 1 && premium != 0);
+        Transportadora t;
+        if(premium == 1) t = new TransportadoraPremium();
+        else t  = new Transportadora();
         System.out.print("Nome :: ");
         t.setTransportadora(sc.nextLine());
         System.out.print("Valor base para encomendas pequenas :: ");
@@ -47,24 +59,26 @@ public class AdminController {
         t.setValorBaseMed(sc.nextDouble());
         System.out.print("Valor base para encomendas grandes :: ");
         t.setValorBaseGra(sc.nextDouble());
-        System.out.println("Fórmula do preço de expedição :: (ValorBase ∗ margemlucrotransportadora ∗ (1 + Imposto)) ∗ 0.9");
+        if(premium == 1) System.out.println("Fórmula do preço de expedição :: (ValorBase - (ValorBase * Imposto)) * 0.2 + (margemlucrotransportadora * ValorBase)");
+        else System.out.println("Fórmula do preço de expedição :: (ValorBase ∗ margemlucrotransportadora ∗ (1 + Imposto)) ∗ 0.9");
         System.out.print("Margem de lucro da transportadora :: ");
         t.setMargemLucro(sc.nextDouble());
         return t;
     }
 
     public void removeTransportadora () {
-        this.verTransportadoras();
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Transportadora a remover (ID): ");
-        String codigo = sc.nextLine();
-        while (!v.getTransportadoras().containsKey(codigo)) {
-            System.out.println("Codigo não existe");
-            System.out.println("Transportadora a remover (ID): ");
-            codigo = sc.nextLine();
+        if(!v.getTransportadoras().isEmpty()) {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Transportadora a remover (nome) :: ");
+            String nome = sc.nextLine();
+            while (!v.getTransportadoras().containsKey(nome)) {
+                System.out.println("Não existe uma transportadora com esse nome!");
+                System.out.print("Transportadora a remover (nome) :: ");
+                nome = sc.nextLine();
+            }
+            v.getTransportadoras().remove(nome);
         }
-
-        v.getTransportadoras().remove(codigo);
+        else System.out.println("Não existem transportadoras para remover!");
     }
 
     public void avancaTempo () {
