@@ -10,7 +10,7 @@ public class AdminController {
         this.v = v;
     }
 
-    public void verTransportadoras  () {
+    public void verTransportadoras() {
         int index = 1;
         for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
             Transportadora t = a.getValue();
@@ -18,6 +18,24 @@ public class AdminController {
             index++;
         }
     }
+
+    public void alterarTransportadora () {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Transportadora a alterar (nome) :: ");
+        Transportadora t = v.getTransportadoras().get(sc.nextLine());
+        System.out.print("Novo nome :: ");
+        t.setTransportadora(sc.nextLine());
+        System.out.print("Novo valor base para encomendas pequenas :: ");
+        t.setValorBasePeq(sc.nextInt());
+        System.out.print("Novo valor base para encomendas médias :: ");
+        t.setValorBaseMed(sc.nextInt());
+        System.out.print("Novo valor base para encomendas grandes :: ");
+        t.setValorBaseGra(sc.nextInt());
+        System.out.println("Fórmula do preço de expedição :: (ValorBase ∗ margemlucrotransportadora ∗ (1 + Imposto)) ∗ 0.9");
+        System.out.print("Nova margem de lucro da transportadora :: ");
+        t.setMargemLucro(sc.nextDouble());
+    }
+
     public Transportadora registerTransportadora () {
         Transportadora t = new Transportadora();
         Scanner sc = new Scanner(System.in);

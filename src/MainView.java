@@ -29,14 +29,23 @@ public class MainView {
         Menu menuAdmin = new Menu(new String[] {
                 "Adicionar Transportadora",
                 "Remover Transportadora",
-                "Ver Transportadoras",
+                "Gerir Transportadoras",
                 "Avançar Tempo"
         });
         menuAdmin.setHandler(1, v ::registerTransportadora);
         menuAdmin.setHandler(2, v ::removeTransportadora);
-        menuAdmin.setHandler(3, v ::verTransportadoras);
+        menuAdmin.setHandler(3, this ::menuTransportadoras);
         menuAdmin.setHandler(4, v ::avancarTempo);
         menuAdmin.run();
     }
 
+    public void menuTransportadoras() {
+        Menu menuTransportadoras = new Menu(new String[] {
+                "Ver transportadoras",
+                "Alterar transportadora"
+        });
+        menuTransportadoras.setHandler(1, v ::verTransportadoras);
+        menuTransportadoras.setHandler(2, v ::alterarTransportadora);
+        menuTransportadoras.run();
+    }
 }
