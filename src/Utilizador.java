@@ -256,6 +256,7 @@ public class Utilizador implements Serializable {
             this.encomendas.put(e.getCodigo(),e);
             l.forEach(a -> a.setData_venda(data));
             p.getKey().custoExpedicao(e.getDimensao());
+            e.calculaPreco();
         }
     }
 

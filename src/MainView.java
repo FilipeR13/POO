@@ -28,7 +28,7 @@ public class MainView {
     public void ViewAdmin () {
         Menu menuAdmin = new Menu(new String[] {
                 "Gerir Transportadoras",
-                "Queries",
+                "Estatistica",
                 "Avançar Tempo"
         });
         menuAdmin.setHandler(1, this ::menuTransportadoras);
@@ -59,6 +59,7 @@ public class MainView {
                 "Maiores compradores/vendedores do sistema",
                 "Rendimento do Vintage"
         });
-        menuEstatistica.setHandler(1,v :: utilizadorMaisRendeu);
+        menuEstatistica.setHandler(1,v.getAdminController() :: utilizadorMaisRendeu);
+        menuEstatistica.run();
     }
 }

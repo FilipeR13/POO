@@ -115,7 +115,7 @@ public class Vintage implements Serializable {
     }
 
     public String utilizadorMaisRendeu(LocalDate date) {
-        String codigo = null;
+        String email = null;
         double rendeu = 0, max = 0;
         for(Map.Entry<String, Utilizador> u : utilizadores.entrySet()) {
             for(Map.Entry<String, Artigos> a : u.getValue().getVendeu().entrySet()) {
@@ -123,10 +123,10 @@ public class Vintage implements Serializable {
             }
             if(rendeu > max){
                 max = rendeu;
-                codigo = u.getValue().getId();
+                email = u.getValue().getEmail();
             }
             rendeu = 0;
         }
-        return codigo;
+        return email;
     }
 }

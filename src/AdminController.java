@@ -84,8 +84,20 @@ public class AdminController {
 
     public void avancaTempo () {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Insira o número de dias para avançar");
+        System.out.print("Insira o número de dias para avançar :: ");
         int dias = sc.nextInt();
         v.addDays(v.getCurrentDate().plusDays(dias));
+    }
+
+    public void utilizadorMaisRendeu() {
+        Scanner sc = new Scanner(System.in);
+        String email = null;
+        System.out.print("Deseja adicionar uma data limite (1 -> sim ou 0 -> não) :: ");
+        if(sc.nextInt() == 1) {
+            sc.nextLine();
+            LocalDate date = Read_Scanner.getData(sc);
+            email = v.utilizadorMaisRendeu(date);
+        }
+        System.out.println("O utilizador que mais rendeu foi :: " + email);
     }
 }

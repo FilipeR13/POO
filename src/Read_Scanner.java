@@ -35,6 +35,7 @@ public class Read_Scanner {
         LocalDate d = null;
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
         while(true){
+            System.out.print("Data a considerar :: ");
             String input = sc.nextLine();
             try {
                 d = LocalDate.parse(input, formatter);
