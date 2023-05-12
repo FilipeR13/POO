@@ -91,8 +91,8 @@ public class Sapatilhas extends Artigos{
         return super.toString() + sb.toString();
     }
 
-    public void calculaDesconto (){
-        long days = ChronoUnit.DAYS.between(this.date, LocalDate.now());
+    public void calculaDesconto (LocalDate date) {
+        long days = ChronoUnit.DAYS.between(this.date, date);
         if(days >= 365 || this.getTamanho() > 45){
             if(getnDonos() > 0){ //preco - (preco/nºdonos * estado)
                 if(getEstado() == Estado.Usado) this.setPrecoDesconto( this.getPreco() - (this.getPreco()/this.getnDonos() * 0.40));

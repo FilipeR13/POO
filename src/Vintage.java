@@ -83,12 +83,12 @@ public class Vintage implements Serializable {
     }
 
     public void removeArtigo (String codigo) {
-        if (utilizadores.containsKey(codigo))
-            utilizadores.remove(codigo);
+        if (artigos.containsKey(codigo))
+            artigos.remove(codigo);
     }
 
     public void removeTransportadora (String id) {
-        if (utilizadores.containsKey(id))
-            utilizadores.remove(id);
+        if (transportadoras.containsKey(id))
+            transportadoras.remove(id);
     }
 }

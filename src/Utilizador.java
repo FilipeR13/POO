@@ -205,5 +205,17 @@ public class Utilizador implements Serializable {
         carrinho.removeIf(e -> e.getCodigo().equals(a));
     }
 
+    public void removeVendeu (String code) {
+        Artigos a = vendeu.get(code);
+        vendeu.remove(code);
+        decrementaValor(a.getPrecoDesconto());
+        adiconaArtigosVenda(a);
+
+    }
+
+    public void decrementaValor (double preco) {
+        this.preco_vendidos -= preco;
+    }
+
 }
 

@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public abstract class Artigos implements Serializable {
 
@@ -166,5 +167,5 @@ public abstract class Artigos implements Serializable {
         return sb.toString();
     }
 
-    public abstract void calculaDesconto ();
+    public abstract void calculaDesconto (LocalDate date);
 }

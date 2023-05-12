@@ -120,7 +120,7 @@ public class TShirt extends Artigos{
         return super.toString() + sb.toString();
     }
 
-    public void calculaDesconto (){
+    public void calculaDesconto (LocalDate date){
         if(this.getPadrao() != Padrao.Liso && this.getEstado() == Estado.Usado) this.setPrecoDesconto(this.getPreco() * 0.5);
     }
 }

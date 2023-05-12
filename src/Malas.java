@@ -97,9 +97,20 @@ public class Malas extends Artigos{
         return new Malas (this);
     }
 
-    public void calculaDesconto () {
-        if(this.dimensao == Dimensao.Pequena) this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.3 + 0.05 * (ChronoUnit.YEARS.between(this.date, LocalDate.now()))));
-        if(this.dimensao == Dimensao.Media) this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.2 + 0.05 * (ChronoUnit.YEARS.between(this.date, LocalDate.now()))));
-        if(this.dimensao == Dimensao.Grande) this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.1 + 0.05 * (ChronoUnit.YEARS.between(this.date, LocalDate.now()))));
+    public void calculaDesconto (LocalDate date) {
+        switch (this.dimensao) {
+            case Pequena: {
+                this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.3 + 0.05 * (ChronoUnit.YEARS.between(this.date, date))));
+                break;
+            }
+            case Media: {
+                this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.2 + 0.05 * (ChronoUnit.YEARS.between(this.date, date))));
+                break;
+            }
+            case Grande: {
+                this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.1 + 0.05 * (ChronoUnit.YEARS.between(this.date, date))));
+                break;
+            }
+        }
     }
 }

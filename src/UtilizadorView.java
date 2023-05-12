@@ -37,5 +37,14 @@ public class UtilizadorView {
         });
         user.printCarrinho();
         efetuaCompra.setHandler(1,user :: validaCarrinho);
+        efetuaCompra.run();
+    }
+
+    public void verEncomendas () {
+        Menu devolveEncomenda = new Menu (new String[] {
+                "Devolver Encomenda"
+        });
+        devolveEncomenda.setHandler(1,user :: devolveEncomenda);
+        devolveEncomenda.run();
     }
 }

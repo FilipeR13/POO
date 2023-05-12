@@ -1,7 +1,9 @@
 import javax.swing.plaf.metal.MetalMenuBarUI;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -239,7 +241,7 @@ public class UtilizadorController {
         else {
             this.v.getArtigos().forEach((key, value) -> {
                 if (!value.getUser_id().equals(this.u.getEmail())) {
-                    value.calculaDesconto();
+                    value.calculaDesconto(v.getCurrentDate());
                     System.out.println(value.getCodigo() + " -> "
                             + value.getClass() + ", " + value.getMarca() + " Descrição: " + value.getDescricao() + " Preço " + value.getPrecoDesconto());
                 }
@@ -268,5 +270,33 @@ public class UtilizadorController {
 
     public void validaCarrinho() {
         //u.percoreCarrinho();
+    }
+
+
+    public void devolveEncomenda () {
+        AtomicBoolean existe = new AtomicBoolean(false);
+        u.getEncomendas().forEach((key,value) -> {
+            if (value.getEstadoE() == Encomenda.Estado.Finalizada && ChronoUnit.DAYS.between(v.getCurrentDate(),value.getData())<=2) {
+                System.out.println(value.getCodigo() + " -> " + value.getLista());
+                existe.set(true);
+            }
+        });
+        if (existe.get()) {
+            System.out.print("Escolha encomenda a devolver: ");
+            Scanner sc = new Scanner(System.in);
+            String codigo = sc.nextLine();
+            while (!u.getEncomendas().containsKey(codigo)) {
+                System.out.print("O código inserido não corresponde a nenhuma encomenda! ");
+                codigo = sc.nextLine();
+            }
+
+            Encomenda e = u.getEncomendas().get(codigo);
+            u.getEncomendas().remove(codigo);
+
+            e.getLista().forEach(a-> {
+                v.getUtilizadores().get(a.getUser_id()).removeVendeu(a.getCodigo());
+                v.addArtigo(a);
+            });
+        }
     }
 }
