@@ -157,6 +157,7 @@ public abstract class Artigos implements Serializable {
                 le.getMarca().equals(this.marca) &&
                 le.getCodigo().equals(this.codigo) &&
                 le.getUser_id().equals(this.user_id) &&
+                le.getData_venda().equals(this.data_venda) &&
                 le.getTransportadora().equals(this.transportadora) &&
                 le.getPreco() == this.preco &&
                 le.getPrecoDesconto() == this.preco_desconto &&
@@ -174,6 +175,7 @@ public abstract class Artigos implements Serializable {
         sb.append(" Código: ").append(this.codigo);
         sb.append(" User_id: ").append(this.user_id);
         sb.append(" Transportadora: ").append(this.transportadora);
+        sb.append(" Data de venda: ").append(this.data_venda);
         sb.append(" Preço: ").append(this.preco);
         sb.append(" Preço com Desconto: ").append(this.preco_desconto).append("}");
         return sb.toString();

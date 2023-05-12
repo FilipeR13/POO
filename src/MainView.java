@@ -28,10 +28,12 @@ public class MainView {
     public void ViewAdmin () {
         Menu menuAdmin = new Menu(new String[] {
                 "Gerir Transportadoras",
+                "Queries",
                 "Avançar Tempo"
         });
         menuAdmin.setHandler(1, this ::menuTransportadoras);
-        menuAdmin.setHandler(2, v ::avancarTempo);
+        menuAdmin.setHandler(2,this ::menuEstatistica);
+        menuAdmin.setHandler(3, v ::avancarTempo);
         menuAdmin.run();
     }
 
@@ -47,5 +49,16 @@ public class MainView {
         menuTransportadoras.setHandler(3, v ::removeTransportadora);
         menuTransportadoras.setHandler(4, v ::alterarTransportadora);
         menuTransportadoras.run();
+    }
+
+    public void menuEstatistica() {
+        Menu menuEstatistica = new Menu(new String[] {
+                "Utilizador que mais rendeu",
+                "Transportadora que mais faturou",
+                "Encomendas emitidas por um vendedor",
+                "Maiores compradores/vendedores do sistema",
+                "Rendimento do Vintage"
+        });
+        menuEstatistica.setHandler(1,v :: utilizadorMaisRendeu);
     }
 }

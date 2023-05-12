@@ -229,6 +229,7 @@ public class Utilizador implements Serializable {
     public void decrementaValor (double preco) {
         this.preco_vendidos -= preco;
     }
+
     public void percorreCarrinho(LocalDate data){
         Map<Transportadora, List<Artigos>> enc = this.carrinho.stream().collect(Collectors.groupingBy(a -> a.getTransportadora()));
         for(Map.Entry<Transportadora, List<Artigos>> p : enc.entrySet()) {

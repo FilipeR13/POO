@@ -113,4 +113,20 @@ public class Vintage implements Serializable {
             value.atualizaEncomendas (localDate);
         });
     }
+
+    public String utilizadorMaisRendeu(LocalDate date) {
+        String codigo = null;
+        double rendeu = 0, max = 0;
+        for(Map.Entry<String, Utilizador> u : utilizadores.entrySet()) {
+            for(Map.Entry<String, Artigos> a : u.getValue().getVendeu().entrySet()) {
+                if(a.getValue().getData_venda() != null && date.isBefore(a.getValue().getData_venda())) rendeu += a.getValue().getPrecoDesconto();
+            }
+            if(rendeu > max){
+                max = rendeu;
+                codigo = u.getValue().getId();
+            }
+            rendeu = 0;
+        }
+        return codigo;
+    }
 }
