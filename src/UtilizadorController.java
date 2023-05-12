@@ -270,6 +270,7 @@ public class UtilizadorController {
 
     public void validaCarrinho() {
         LocalDate data = v.getCurrentDate();
+        u.getCarrinho().forEach(e -> v.getUtilizadores().get(e.getUser_id()).aumentaValor(e.getPrecoDesconto()));
         u.percorreCarrinho(data);
     }
 

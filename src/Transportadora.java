@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 public class Transportadora implements Serializable {
-    private double margemLucro, imposto,valorBasePeq, valorBaseMed, valorBaseGra;
+    private double margemLucro, imposto,valorBasePeq, valorBaseMed, valorBaseGra, totalObtido;
     private String transportadora;
 
     public Transportadora() {
@@ -10,6 +10,7 @@ public class Transportadora implements Serializable {
         valorBaseGra = -1;
         valorBasePeq = -1;
         valorBaseMed = -1;
+        totalObtido = 0;
         transportadora = null;
     }
 
@@ -19,6 +20,7 @@ public class Transportadora implements Serializable {
         this.valorBaseMed = valorBaseMed1;
         this.valorBaseGra = valorBaseGra1;
         this.valorBasePeq = valorBasePeq1;
+        this.totalObtido = 0;
         this.transportadora = transportadora1;
     }
 
@@ -28,6 +30,7 @@ public class Transportadora implements Serializable {
         this.valorBaseMed = t.getValorBaseMed();
         this.valorBaseGra = t.getValorBaseGra();
         this.valorBasePeq = t.getValorBasePeq();
+        this.totalObtido = t.getTotalObtido();
         this.transportadora = t.getTransportadora();
     }
 
@@ -55,6 +58,10 @@ public class Transportadora implements Serializable {
         this.valorBasePeq = valorBasePeq;
     }
 
+    public void setTotalObtido(double totalObtido) {
+        this.totalObtido = totalObtido;
+    }
+
     public double getMargemLucro() {
         return margemLucro;
     }
@@ -77,6 +84,10 @@ public class Transportadora implements Serializable {
 
     public String getTransportadora() {
         return transportadora;
+    }
+
+    public double getTotalObtido() {
+        return totalObtido;
     }
 
     public Transportadora clone() {
@@ -109,7 +120,23 @@ public class Transportadora implements Serializable {
         return sb.toString();
     }
 
-    public double custoExpedicao(double preco) {
-        return (preco *  margemLucro * (1+ imposto)) * 0.9;
+    public void custoExpedicao(Encomenda.Dimensao dimensao) {
+        switch (dimensao) {
+            case Pequena: {
+                this.totalObtido += (valorBasePeq *  margemLucro * (1+ imposto)) * 0.9;
+                break;
+            }
+            case Media: {
+                this.totalObtido += (valorBaseMed *  margemLucro * (1+ imposto)) * 0.9;
+                break;
+            }
+            case Grande: {
+                this.totalObtido += (valorBaseGra *  margemLucro * (1+ imposto)) * 0.9;
+                break;
+            }
+        }
+
     }
+
+
 }

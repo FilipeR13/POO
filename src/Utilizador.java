@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -231,13 +232,32 @@ public class Utilizador implements Serializable {
             else{
                 e.setDimensao(Encomenda.Dimensao.Media);
             }
-            e.setCodigo(Codigos.gerarCodigo());
+            String codigo;
+            do {
+                codigo = Codigos.gerarCodigo();
+            } while (this.encomendas.containsKey(codigo));
+            e.setCodigo(codigo);
             e.setData(data);
             e.setEstadoE(Encomenda.Estado.Pendente);
             e.setLista(l);
             e.setTransportadora(p.getKey());
             this.encomendas.put(e.getCodigo(),e);
+            p.getKey().custoExpedicao(e.getDimensao());
         }
     }
-}
 
+    public void atualizaEncomendas(LocalDate localDate) {
+        this.encomendas.forEach((key,value) -> {
+            if (value.getEstadoE() != Encomenda.Estado.Finalizada) {
+                if (ChronoUnit.DAYS.between(localDate, value.getData()) <= 3)
+                    value.setEstadoE(Encomenda.Estado.Expedida);
+                else
+                    value.setEstadoE(Encomenda.Estado.Finalizada);
+            }
+        });
+    }
+
+    public void aumentaValor (double preco){
+        this.preco_vendidos += preco;
+    }
+}

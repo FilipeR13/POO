@@ -53,6 +53,6 @@ public class AdminController {
         Scanner sc = new Scanner(System.in);
         System.out.print("Insira o número de dias para avançar");
         int dias = sc.nextInt();
-        v.setCurrentDate(v.getCurrentDate().plusDays(dias));
+        v.addDays(v.getCurrentDate().plusDays(dias));
     }
 }

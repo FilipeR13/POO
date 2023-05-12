@@ -91,4 +91,11 @@ public class Vintage implements Serializable {
         if (transportadoras.containsKey(id))
             transportadoras.remove(id);
     }
+
+    public void addDays(LocalDate localDate) {
+        this.currentDate = localDate;
+        this.utilizadores.forEach((key,value) -> {
+            value.atualizaEncomendas (localDate);
+        });
+    }
 }
