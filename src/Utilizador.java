@@ -129,8 +129,10 @@ public class Utilizador implements Serializable {
             this.venda.put(a.getKey(),a.getValue().clone());
     }
 
-    private void setCarrinho (List<Artigos> carrinho) {
-        this.carrinho = carrinho.stream().map(a -> a.clone()).collect(Collectors.toList());
+    public void setCarrinho (List<Artigos> carrinho) {
+        List <Artigos> l;
+        l = carrinho.stream().map(a -> a.clone()).collect(Collectors.toList());
+        this.carrinho = l;
     }
 
     public void setComprou(Map<String,Artigos> comprou) {

@@ -293,6 +293,7 @@ public class UtilizadorController {
         Map <String,Utilizador> ut = v.getUtilizadores();
         u.getCarrinho().forEach(e -> ut.get(e.getUser_id()).aumentaValor(e.getPrecoDesconto()));
         u.percorreCarrinho(data);
+        u.setCarrinho(new ArrayList<>());
     }
 
 

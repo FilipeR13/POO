@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -116,7 +118,7 @@ public class Vintage implements Serializable {
 
     public String utilizadorMaisRendeu(LocalDate date) {
         String email = null;
-        double rendeu = 0, max = 0;
+        double rendeu = 0, max = -1;
         for(Map.Entry<String, Utilizador> u : utilizadores.entrySet()) {
             for(Map.Entry<String, Artigos> a : u.getValue().getVendeu().entrySet()) {
                 if(a.getValue().getData_venda() != null && date.isBefore(a.getValue().getData_venda())) rendeu += a.getValue().getPrecoDesconto();
@@ -129,4 +131,33 @@ public class Vintage implements Serializable {
         }
         return email;
     }
+
+    public Transportadora maisFaturacao () {
+        double maior = -1;
+        Transportadora result = null;
+        for (Map.Entry <String,Transportadora> a : this.transportadoras.entrySet()) {
+            if (a.getValue().getTotalObtido() > maior) {
+                maior = a.getValue().getTotalObtido();
+                result = a.getValue();
+            }
+        }
+        return result;
+    }
+
+    public List<Encomenda> listarEncomendasVendedor (String email) {
+        List<Encomenda> l = new ArrayList<>();
+        this.utilizadores.forEach((key,value) -> {
+            Map<String, Encomenda> enc = value.getEncomendas();
+            enc.forEach((key1,value1) -> {
+                for (Artigos a : value1.getLista()) {
+                    if (a.getUser_id().equals(email)) {
+                        l.add(value1);
+                        break;
+                    }
+                };
+            });
+        });
+        return l;
+    }
+
 }

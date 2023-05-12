@@ -97,9 +97,7 @@ public class Encomenda implements Serializable {
     }
 
     public void setLista(List<Artigos> lista){
-        for (Artigos a : lista){
-            this.lista.add(a.clone());
-        }
+        this.lista = lista;
     }
 
     public void setTransportadora(Transportadora transportadora) { this.transportadora = transportadora; }

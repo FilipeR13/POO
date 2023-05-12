@@ -1,5 +1,6 @@
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicReference;
@@ -63,5 +64,32 @@ public class VintageController {
 
     public void alterarTransportadora() {
         admin.alterarTransportadora();
+    }
+
+    public void transportadoraMaisFaturou() {
+        Transportadora t = v.maisFaturacao();
+        System.out.println (t.getTransportadora() + "| Total Faturado:" + t.getTotalObtido());
+    }
+
+    public void encomendasVendedor() {
+        v.getUtilizadores().forEach((key,value) -> System.out.println(key + " -> " + value.getEmail()));
+        String codigo;
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ensira o email para obter a estatística: ");
+        codigo = sc.nextLine();
+        while (!v.getUtilizadores().containsKey(codigo)) {
+            System.out.println("Email inválido");
+            codigo = sc.nextLine();
+        }
+
+        List<Encomenda> l = v.listarEncomendasVendedor(codigo);
+        for (Encomenda e : l) {
+            System.out.println(e.getCodigo() + " -> Artigos: ");
+            String finalCodigo = codigo;
+            e.getLista().forEach(el->{
+                if (finalCodigo.equals(el.getUser_id()))
+                    System.out.println(el.getCodigo() + " -> "+ el.getClass() + ", Marca: " + el.getMarca() + ", Preco" + el.getPreco());
+            });
+        }
     }
 }

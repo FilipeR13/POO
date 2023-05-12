@@ -102,6 +102,7 @@ public class Transportadora implements Serializable {
         Transportadora x = (Transportadora) obj;
         return  x.getMargemLucro() == this.margemLucro &&
                 x.getImposto() == this.imposto &&
+                x.getTotalObtido() == this.totalObtido &&
                 x.getValorBaseGra() == this.valorBaseGra &&
                 x.getValorBaseMed() == this.valorBaseMed &&
                 x.getValorBasePeq() == this.valorBasePeq &&
@@ -111,6 +112,7 @@ public class Transportadora implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Transportadora:: {");
+        sb.append("Total faturado: ").append(this.totalObtido);
         sb.append("Margem de lucro: ").append(this.margemLucro);
         sb.append("Imposto: ").append(this.imposto);
         sb.append("Nome da Transportadora: ").append(this.transportadora);
