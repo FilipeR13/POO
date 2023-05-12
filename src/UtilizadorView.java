@@ -33,10 +33,12 @@ public class UtilizadorView {
 
     public void verCarrinho () {
         Menu efetuaCompra = new Menu (new String[] {
-                "Validar Carrinho"
+                "Validar Carrinho",
+                "Remover Artigo"
         });
         user.printCarrinho();
         efetuaCompra.setHandler(1,user :: validaCarrinho);
+        efetuaCompra.setHandler(2,user :: removeArtigoCarrinho);
         efetuaCompra.run();
     }
 

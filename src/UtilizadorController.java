@@ -44,7 +44,7 @@ public class UtilizadorController {
     public void adicionaSapatilha () {
         int atacador = -1, dia, mes,ano, estado = -1, premium = -1;
         Scanner sc = new Scanner(System.in);
-        while(premium != 1 && premium != 2) {
+        while(premium != 1 && premium != 0) {
             System.out.print("Premium (1 -> sim ou 0 -> não) :: ");
             premium = sc.nextInt();
             sc.nextLine();
@@ -116,8 +116,8 @@ public class UtilizadorController {
     public void adicionaMala () {
         int dimensao = -1, dia, mes,ano, estado = -1, material = -1, premium = -1;
         Scanner sc = new Scanner(System.in);
-        while(premium != 1 && premium != 2) {
-            System.out.print("Premium (1 -> sim ou 2 -> não) :: ");
+        while(premium != 1 && premium != 0) {
+            System.out.print("Premium (1 -> sim ou 0 -> não) :: ");
             premium = sc.nextInt();
             sc.nextLine();
         }
@@ -285,7 +285,8 @@ public class UtilizadorController {
 
     public void validaCarrinho() {
         LocalDate data = v.getCurrentDate();
-        u.getCarrinho().forEach(e -> v.getUtilizadores().get(e.getUser_id()).aumentaValor(e.getPrecoDesconto()));
+        Map <String,Utilizador> ut = v.getUtilizadores();
+        u.getCarrinho().forEach(e -> ut.get(e.getUser_id()).aumentaValor(e.getPrecoDesconto()));
         u.percorreCarrinho(data);
     }
 
@@ -314,6 +315,24 @@ public class UtilizadorController {
                 v.getUtilizadores().get(a.getUser_id()).removeVendeu(a.getCodigo());
                 v.addArtigo(a);
             });
+        }
+    }
+
+    public void removeArtigoCarrinho() {
+        System.out.print("Escolha o Artigo a remover: ");
+        Scanner sc = new Scanner(System.in);
+        String codigo = sc.nextLine();
+        boolean removeu = true;
+        Artigos add = null;
+        try {
+            add = u.removeCarrinho(codigo);
+        } catch (VintageException e) {
+            System.out.println(e.getMessage());
+            removeu = false;
+            removeArtigoCarrinho();
+        }
+        if (removeu) {
+            v.addArtigo(add);
         }
     }
 }

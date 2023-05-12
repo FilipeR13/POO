@@ -203,8 +203,20 @@ public class Utilizador implements Serializable {
         carrinho.add(a);
     }
 
-    public void removeCarrinho (String a) {
-        carrinho.removeIf(e -> e.getCodigo().equals(a));
+    public Artigos removeCarrinho (String s) throws VintageException {
+        Artigos remover = null;
+        for (Artigos a : carrinho) {
+            if (a.getCodigo().equals(s)) {
+                carrinho.remove(a);
+                remover = a;
+                break;
+            }
+        }
+
+        if (remover == null) {
+            throw new VintageException("O artigo não pertence ao carrinho");
+        }
+        return remover;
     }
 
     public void removeVendeu (String code) {
