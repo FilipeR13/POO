@@ -42,10 +42,16 @@ public class UtilizadorController {
     }
 
     public void adicionaSapatilha () {
-        int atacador = -1, dia, mes,ano, estado = -1;
-
-        Sapatilhas s = new Sapatilhas();
+        int atacador = -1, dia, mes,ano, estado = -1, premium = -1;
         Scanner sc = new Scanner(System.in);
+        while(premium != 1 && premium != 2) {
+            System.out.print("Premium (1 -> sim ou 0 -> não) :: ");
+            premium = sc.nextInt();
+            sc.nextLine();
+        }
+        Sapatilhas s;
+        if(premium == 1) s = new SapatilhasPremium();
+        else s = new Sapatilhas();
         System.out.print("Marca :: ");
         s.setMarca(sc.nextLine());
         System.out.print("Tamanho :: ");
@@ -108,14 +114,23 @@ public class UtilizadorController {
     }
 
     public void adicionaMala () {
-        int dimensao = -1, dia, mes,ano, estado = -1;
-
-        Malas m = new Malas();
+        int dimensao = -1, dia, mes,ano, estado = -1, material = -1, premium = -1;
         Scanner sc = new Scanner(System.in);
+        while(premium != 1 && premium != 2) {
+            System.out.print("Premium (1 -> sim ou 2 -> não) :: ");
+            premium = sc.nextInt();
+            sc.nextLine();
+        }
+        Malas m;
+        if(premium == 1) m = new MalasPremium();
+        else m = new Malas();
         System.out.print("Marca :: ");
         m.setMarca(sc.nextLine());
-        System.out.print("Material :: ");
-        m.setMaterial(sc.nextLine());
+        while (material != 0 && material != 1 && material != 2) {
+            System.out.print("Material (0 -> polipiel ou 1 -> couro ou 2 -> tecido) :: ");
+            material = sc.nextInt();
+        }
+        m.setMaterial(material);
 
         while (dimensao != 0 && dimensao != 1 && dimensao != 2) {
             System.out.print("Dimensão (0 -> pequena ou 1 -> media ou 2 -> grande) :: ");
@@ -183,7 +198,7 @@ public class UtilizadorController {
         }
         t.setTamanho(tamanho);
 
-        while (padrao != 0 && padrao != 1 && padrao != 2 && padrao != 3) {
+        while (padrao != 0 && padrao != 1 && padrao != 2) {
             System.out.print("Padrão (0 -> Liso ou 1 -> Riscas ou 2 -> Palmeiras) :: ");
             padrao = sc.nextInt();
         }
