@@ -57,4 +57,8 @@ public class VintageController {
     public void avancarTempo () {
         admin.avancaTempo();
     }
+
+    public void alterarTransportadora() {
+        admin.alterarTransportadora();
+    }
 }
