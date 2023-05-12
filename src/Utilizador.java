@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -216,6 +217,27 @@ public class Utilizador implements Serializable {
     public void decrementaValor (double preco) {
         this.preco_vendidos -= preco;
     }
-
+    public void percorreCarrinho(LocalDate data){
+        Map<Transportadora, List<Artigos>> enc = this.carrinho.stream().collect(Collectors.groupingBy(a -> a.getTransportadora()));
+        for(Map.Entry<Transportadora, List<Artigos>> p : enc.entrySet()) {
+            Encomenda e = new Encomenda();
+            List<Artigos> l = p.getValue();
+            if(l.size() == 1){
+                e.setDimensao(Encomenda.Dimensao.Pequena);
+            }
+            else if(l.size() > 5){
+                e.setDimensao(Encomenda.Dimensao.Grande);
+            }
+            else{
+                e.setDimensao(Encomenda.Dimensao.Media);
+            }
+            e.setCodigo(Codigos.gerarCodigo());
+            e.setData(data);
+            e.setEstadoE(Encomenda.Estado.Pendente);
+            e.setLista(l);
+            e.setTransportadora(p.getKey());
+            this.encomendas.put(e.getCodigo(),e);
+        }
+    }
 }
 

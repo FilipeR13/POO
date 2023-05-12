@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Encomenda implements Serializable {
     private double preco;
     private Dimensao dimensao;
     private Estado estado;
-    private Date data;
+    private LocalDate data;
     private List<Artigos> lista;
     private Transportadora transportadora;
 
@@ -33,7 +34,7 @@ public class Encomenda implements Serializable {
         transportadora = null;
     }
 
-    public Encomenda(String codigo, double preco, Dimensao dimensao, Estado estado, Date data, List<Artigos> lista, Transportadora transportadora){
+    public Encomenda(String codigo, double preco, Dimensao dimensao, Estado estado, LocalDate data, List<Artigos> lista, Transportadora transportadora){
         this.codigo = codigo;
         this.preco = preco;
         this.dimensao = dimensao;
@@ -67,7 +68,7 @@ public class Encomenda implements Serializable {
         return estado;
     }
 
-    public Date getData(){
+    public LocalDate getData(){
         return data;
     }
 
@@ -91,7 +92,7 @@ public class Encomenda implements Serializable {
         this.estado = estado;
     }
 
-    public void setData(Date data){
+    public void setData(LocalDate data){
         this.data = data;
     }
 

@@ -269,7 +269,8 @@ public class UtilizadorController {
     }
 
     public void validaCarrinho() {
-        //u.percoreCarrinho();
+        LocalDate data = v.getCurrentDate();
+        u.percorreCarrinho(data);
     }
 
 
