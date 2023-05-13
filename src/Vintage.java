@@ -4,13 +4,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Vintage implements Serializable {
-    LocalDate currentDate;
+    private LocalDate currentDate;
+    private double rendeu;
     private Map<String,Utilizador> utilizadores;
     private Map<String,Artigos> artigos;
     private Map<String,Artigos> artigosDisponiveis;
     private Map<String,Transportadora> transportadoras;
 
     public Vintage () {
+        rendeu = 0;
         utilizadores = new HashMap<>();
         artigos = new HashMap<>();
         artigosDisponiveis = new HashMap<>();
@@ -19,6 +21,7 @@ public class Vintage implements Serializable {
     }
 
     public Vintage (LocalDate date) {
+        rendeu = 0;
         utilizadores = new HashMap<>();
         artigos = new HashMap<>();
         artigosDisponiveis = new HashMap<>();
@@ -64,6 +67,10 @@ public class Vintage implements Serializable {
 
     public void setCurrentDate(LocalDate currentDate) {
         this.currentDate = currentDate;
+    }
+
+    public double getRendeu() {
+        return rendeu;
     }
 
     public void addUtilizador (Utilizador u) throws VintageException {
@@ -190,16 +197,7 @@ public class Vintage implements Serializable {
         return ordenado;
     }
 
-    public double lucrouVintage() {
-        double total = 0;
-        for(Map.Entry<String,Utilizador> u : utilizadores.entrySet()) {
-            for(Map.Entry<String,Encomenda> e : u.getValue().getEncomendas().entrySet()) {
-                for(Artigos a : e.getValue().getLista()) {
-                    if(a.getEstado().equals(Artigos.Estado.Novo)) total += 0.5;
-                    else total += 0.25;
-                }
-            }
-        }
-        return total;
+    public void addLucro(double rendeu) {
+        this.rendeu += rendeu;
     }
 }

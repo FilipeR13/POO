@@ -10,10 +10,11 @@ import java.util.stream.Collectors;
 public class UtilizadorController {
 
     private Vintage v;
-    Utilizador u;
+    private Utilizador u;
+
     public UtilizadorController(Vintage v) {
         this.v = v;
-        u = null;
+        this.u = null;
     }
 
     public Utilizador registerUtilizador() throws VintageException {
@@ -260,7 +261,8 @@ public class UtilizadorController {
         LocalDate data = v.getCurrentDate();
         Map <String,Utilizador> ut = v.getUtilizadores();
         u.getCarrinho().forEach(e -> ut.get(e.getUser_id()).aumentaValor(e.getPrecoDesconto()));
-        u.percorreCarrinho(data);
+        double rendeu = u.percorreCarrinho(data);
+        v.addLucro(rendeu);
         u.setCarrinho(new ArrayList<>());
     }
 

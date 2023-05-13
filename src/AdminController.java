@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class AdminController {
-    Vintage v;
+    private Vintage v;
 
     public AdminController (Vintage v) {
         this.v = v;
@@ -107,6 +107,6 @@ public class AdminController {
     }
 
     public void lucrouVintage() {
-        System.out.println("A Vintage lucrou : " + v.lucrouVintage());
+        System.out.println("A Vintage lucrou : " + v.getRendeu());
     }
 }
