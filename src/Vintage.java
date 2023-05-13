@@ -189,4 +189,17 @@ public class Vintage implements Serializable {
         }
         return ordenado;
     }
+
+    public double lucrouVintage() {
+        double total = 0;
+        for(Map.Entry<String,Utilizador> u : utilizadores.entrySet()) {
+            for(Map.Entry<String,Encomenda> e : u.getValue().getEncomendas().entrySet()) {
+                for(Artigos a : e.getValue().getLista()) {
+                    if(a.getEstado().equals(Artigos.Estado.Novo)) total += 0.5;
+                    else total += 0.25;
+                }
+            }
+        }
+        return total;
+    }
 }

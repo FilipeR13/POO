@@ -93,7 +93,7 @@ public class AdminController {
     public void utilizadorMaisRendeu() {
         Scanner sc = new Scanner(System.in);
         String email = null;
-        System.out.print("Deseja adicionar uma data limite (1 -> sim ou 0 -> não) :: ");
+        System.out.print("Deseja definir um intervalo de tempo (1 -> sim ou 0 -> não) :: ");
         if(Read_Scanner.getInt(sc) == 1) {
             sc.nextLine();
             System.out.print("Insira a data inicial: ");
@@ -104,5 +104,9 @@ public class AdminController {
         }
         else email = v.utilizadorMaisRendeu(null, null);
         System.out.println("O utilizador que mais rendeu foi :: " + email);
+    }
+
+    public void lucrouVintage() {
+        System.out.println("A Vintage lucrou : " + v.lucrouVintage());
     }
 }

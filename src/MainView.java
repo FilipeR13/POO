@@ -59,10 +59,11 @@ public class MainView {
                 "Maiores compradores/vendedores do sistema",
                 "Rendimento do Vintage"
         });
-        menuEstatistica.setHandler(1,v.getAdminController() :: utilizadorMaisRendeu);
+        menuEstatistica.setHandler(1,v :: utilizadorMaisRendeu);
         menuEstatistica.setHandler(2,v :: transportadoraMaisFaturou);
         menuEstatistica.setHandler(3,v :: encomendasVendedor);
         menuEstatistica.setHandler(4,v :: maioresComVen);
+        menuEstatistica.setHandler(5,v :: lucrouVintage);
         menuEstatistica.run();
     }
 }

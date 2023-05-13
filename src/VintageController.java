@@ -67,6 +67,9 @@ public class VintageController {
         admin.alterarTransportadora();
     }
 
+    public void utilizadorMaisRendeu() {
+        admin.utilizadorMaisRendeu();
+    }
     public void transportadoraMaisFaturou() {
         Transportadora t = v.maisFaturacao();
         System.out.println (t.getTransportadora() + "| Total Faturado:" + t.getTotalObtido());
@@ -116,8 +119,12 @@ public class VintageController {
 
         int n = 1;
         for (Map.Entry <Double,Utilizador> e : m.entrySet()) {
-            System.out.println(n + ". Email: " + e.getValue().getEmail() + " -> , Nome: " + e.getValue().getNome() + ", Total: " + e.getKey());
+            System.out.println(n + ". Email: " + e.getValue().getEmail() + ", Nome: " + e.getValue().getNome() + ", Total: " + e.getKey());
             n++;
         }
+    }
+
+    public void lucrouVintage() {
+        admin.lucrouVintage();
     }
 }
