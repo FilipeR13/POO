@@ -232,7 +232,8 @@ public class Utilizador implements Serializable {
         this.preco_vendidos -= preco;
     }
 
-    public void percorreCarrinho(LocalDate data){
+    public double percorreCarrinho(LocalDate data){
+        double rendeu = 0;
         Map<Transportadora, List<Artigos>> enc = this.carrinho.stream().collect(Collectors.groupingBy(a -> a.getTransportadora()));
         for(Map.Entry<Transportadora, List<Artigos>> p : enc.entrySet()) {
             Encomenda e = new Encomenda();
@@ -258,8 +259,9 @@ public class Utilizador implements Serializable {
             e.setTransportadora(p.getKey());
             this.encomendas.put(e.getCodigo(),e);
             p.getKey().custoExpedicao(e.getDimensao());
-            e.calculaPreco();
+            rendeu = e.calculaPreco();
         }
+        return rendeu;
     }
 
     public void atualizaEncomendas(LocalDate localDate) {

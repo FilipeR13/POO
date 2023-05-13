@@ -136,18 +136,24 @@ public class Encomenda implements Serializable {
         return sb.toString();
     }
 
-    public void calculaPreco(){
+    public double calculaPreco(){
         int r = 0;
+        double rendeu = 0;
         for (Artigos a : this.lista){
             if(a.getEstado().equals(Artigos.Estado.Novo)){
                 r += a.getPrecoDesconto() + 0.5; // + taxa da transportadora
+                rendeu += 0.5;
             }
-            else r += a.getPrecoDesconto() + 0.25; // + taxa da transportadora
+            else{
+                r += a.getPrecoDesconto() + 0.25; // + taxa da transportadora
+                rendeu += 0.25;
+            }
         }
         if(this.dimensao == Dimensao.Grande) r += this.transportadora.getValorBaseGra();
         if(this.dimensao == Dimensao.Media) r += this.transportadora.getValorBaseMed();
         if(this.dimensao == Dimensao.Pequena) r += this.transportadora.getValorBasePeq();
         this.preco = r;
+        return rendeu;
     }
 }
 
