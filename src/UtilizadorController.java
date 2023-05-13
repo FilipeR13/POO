@@ -285,7 +285,7 @@ public class UtilizadorController {
 
     public void printCarrinho() {
         u.getCarrinho().forEach(value -> System.out.println(value.getCodigo() + " -> "
-                + value.getClass() + ", " + value.getMarca() + "Descrição: " + value.getDescricao() + "Preço " + value.getPrecoDesconto()));
+                + value.getClass() + ", Marca: " + value.getMarca() + ", Descrição: " + value.getDescricao() + ", Preço: " + value.getPrecoDesconto()));
     }
 
     public void validaCarrinho() {
@@ -300,7 +300,7 @@ public class UtilizadorController {
     public void devolveEncomenda () {
         AtomicBoolean existe = new AtomicBoolean(false);
         u.getEncomendas().forEach((key,value) -> {
-            if (value.getEstadoE() == Encomenda.Estado.Finalizada && ChronoUnit.DAYS.between(v.getCurrentDate(),value.getData())<=2) {
+            if (value.getEstadoE() == Encomenda.Estado.Finalizada && Math.abs(ChronoUnit.DAYS.between(v.getCurrentDate(),value.getData()))<=2) {
                 System.out.println(value.getCodigo() + " -> " + value.getLista());
                 existe.set(true);
             }
@@ -341,5 +341,14 @@ public class UtilizadorController {
             v.getUtilizadores().get(add.getUser_id()).removeVendeu(codigo);
             v.addArtigoDisponivel(add);
         }
+    }
+
+    public void verEncomendaUser() {
+        u.getEncomendas().forEach((key,value) -> {
+            System.out.println(key + " -> " + "Transportadora: " + value.getTransportadora().getTransportadora()
+                    + ", Preco: " + value.getPrecoE() + " Data: "+ value.getData() + "Estado: " + value.getEstadoE() + " Artigos:");
+            value.getLista().forEach(e -> System.out.println("\t" + e.getCodigo() + " -> "
+                    + e.getClass() + ", Marca: " + e.getMarca() + ", Descrição: " + e.getDescricao() + ", Preço: " + e.getPrecoDesconto()));
+        });
     }
 }

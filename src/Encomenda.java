@@ -97,7 +97,9 @@ public class Encomenda implements Serializable {
     }
 
     public void setLista(List<Artigos> lista){
-        this.lista = lista;
+        for (Artigos a : lista){
+            this.lista.add(a.clone());
+        }
     }
 
     public void setTransportadora(Transportadora transportadora) { this.transportadora = transportadora; }
@@ -134,7 +136,7 @@ public class Encomenda implements Serializable {
         return sb.toString();
     }
 
-    public double calculaPreco(){
+    public void calculaPreco(){
         int r = 0;
         for (Artigos a : this.lista){
             if(a.getEstado().equals(Artigos.Estado.Novo)){
@@ -145,7 +147,7 @@ public class Encomenda implements Serializable {
         if(this.dimensao == Dimensao.Grande) r += this.transportadora.getValorBaseGra();
         if(this.dimensao == Dimensao.Media) r += this.transportadora.getValorBaseMed();
         if(this.dimensao == Dimensao.Pequena) r += this.transportadora.getValorBasePeq();
-        return r;
+        this.preco = r;
     }
 }
 

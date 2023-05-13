@@ -78,7 +78,7 @@ public class Vintage implements Serializable {
     }
 
     public void addArtigoDisponivel (Artigos a) {
-        artigosDisponiveis.put(a.getCodigo(), a.clone());
+        artigosDisponiveis.put(a.getCodigo(), a);
     }
     public void addArtigo (Artigos a) {
         String codigo;
@@ -86,7 +86,7 @@ public class Vintage implements Serializable {
             codigo = Codigos.gerarCodigo();
         } while (this.artigos.containsKey(codigo));
         a.setCodigo(codigo);
-        artigos.put(codigo, a.clone());
+        artigos.put(codigo, a);
     }
 
     public void addTransportadora (Transportadora t) {

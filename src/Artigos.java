@@ -47,7 +47,7 @@ public abstract class Artigos implements Serializable {
         this.data_venda = null;
     }
 
-    public Artigos( Artigos a) {
+    public Artigos(Artigos a) {
         this.estado = a.getEstado();
         this.danos = a.getDanos();
         this.descricao = a.getDescricao();
@@ -58,7 +58,7 @@ public abstract class Artigos implements Serializable {
         this.nDonos = a.getnDonos();
         this.preco = a.getPreco();
         this.preco_desconto = a.getPrecoDesconto();
-        this.data_venda = null;
+        this.data_venda = a.getData_venda();
     }
 
     public Estado getEstado() {

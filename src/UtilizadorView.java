@@ -16,6 +16,7 @@ public class UtilizadorView {
         conta.setHandler(1,user :: compraArtigo);
         conta.setHandler(2,this :: adicionaArtigo);
         conta.setHandler(3,this :: verCarrinho);
+        conta.setHandler(4,this :: verEncomendas);
         conta.run();
     }
 
@@ -46,6 +47,7 @@ public class UtilizadorView {
         Menu devolveEncomenda = new Menu (new String[] {
                 "Devolver Encomenda"
         });
+        user.verEncomendaUser();
         devolveEncomenda.setHandler(1,user :: devolveEncomenda);
         devolveEncomenda.run();
     }

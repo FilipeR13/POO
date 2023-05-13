@@ -137,15 +137,15 @@ public class Malas extends Artigos{
     public void calculaDesconto (LocalDate date) {
         switch (this.dimensao) {
             case Pequena: {
-                this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.3 + this.descontoMaterial  + 0.05 * (ChronoUnit.YEARS.between(this.date, date))));
+                this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.3 + this.descontoMaterial  + 0.05 * Math.abs(ChronoUnit.YEARS.between(this.date, date))));
                 break;
             }
             case Media: {
-                this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.2 + this.descontoMaterial  + 0.05 * (ChronoUnit.YEARS.between(this.date, date))));
+                this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.2 + this.descontoMaterial  + 0.05 * Math.abs(ChronoUnit.YEARS.between(this.date, date))));
                 break;
             }
             case Grande: {
-                this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.1 + this.descontoMaterial  + 0.05 * (ChronoUnit.YEARS.between(this.date, date))));
+                this.setPrecoDesconto(this.getPreco() - this.getPreco() * (0.1 + this.descontoMaterial  + 0.05 * Math.abs(ChronoUnit.YEARS.between(this.date, date))));
                 break;
             }
         }

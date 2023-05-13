@@ -92,9 +92,11 @@ public class Sapatilhas extends Artigos{
     }
 
     public void calculaDesconto (LocalDate date) {
-        if((this.getTamanho() > 45 && getnDonos() == 0) || getnDonos() > 0){
-            if(getEstado() == Estado.Usado) this.setPrecoDesconto( this.getPreco() - (this.getPreco()/this.getnDonos() * 0.40));
-            if(getEstado() == Estado.Novo) this.setPrecoDesconto( this.getPreco() - (this.getPreco()/this.getnDonos() * 0.20));
+        if(getnDonos() > 0){
+            this.setPrecoDesconto( this.getPreco() - (this.getPreco()/this.getnDonos() * 0.40));
+        }
+        else if(this.getTamanho() > 45 && getnDonos() == 0) {
+            this.setPrecoDesconto( this.getPreco() - (this.getPreco() * 0.20));
         }
         else this.setPrecoDesconto(this.getPreco());
     }

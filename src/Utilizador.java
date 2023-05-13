@@ -253,10 +253,10 @@ public class Utilizador implements Serializable {
             e.setCodigo(codigo);
             e.setData(data);
             e.setEstadoE(Encomenda.Estado.Pendente);
+            l.forEach(a -> a.setData_venda(data));
             e.setLista(l);
             e.setTransportadora(p.getKey());
             this.encomendas.put(e.getCodigo(),e);
-            l.forEach(a -> a.setData_venda(data));
             p.getKey().custoExpedicao(e.getDimensao());
             e.calculaPreco();
         }
@@ -265,7 +265,7 @@ public class Utilizador implements Serializable {
     public void atualizaEncomendas(LocalDate localDate) {
         this.encomendas.forEach((key,value) -> {
             if (value.getEstadoE() != Encomenda.Estado.Finalizada) {
-                if (ChronoUnit.DAYS.between(localDate, value.getData()) <= 3)
+                if (Math.abs(ChronoUnit.DAYS.between(localDate, value.getData())) <= 3)
                     value.setEstadoE(Encomenda.Estado.Expedida);
                 else
                     value.setEstadoE(Encomenda.Estado.Finalizada);
