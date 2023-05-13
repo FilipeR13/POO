@@ -43,6 +43,30 @@ public class UtilizadorController {
             throw new VintageException("Não existe nenhum utilizador com o email " + email);
     }
 
+    public void selecionaTransportadora (int premium, Artigos a) {
+        Scanner sc = new Scanner(System.in);
+        int index = 1;
+        Map<Integer,Transportadora> transp = new HashMap<>();
+        for (Map.Entry<String, Transportadora> t : v.getTransportadoras().entrySet()) {
+            Transportadora tr = t.getValue();
+            if (premium == 1 && tr instanceof TransportadoraPremium) {
+                transp.put(index, tr);
+                System.out.println(index + " -> " + tr.getTransportadora());
+                index++;
+            }
+            else if (premium == 0 && !(tr instanceof TransportadoraPremium)) {
+                transp.put(index, tr);
+                System.out.println(index + " -> " + tr.getTransportadora());
+                index++;
+            }
+        }
+        int choice;
+        do {
+            choice = Read_Scanner.getInt(sc);
+        } while(choice < 1 || choice > index);
+        a.setTransportadora(transp.get(choice));
+    }
+
     public void adicionaSapatilha () {
         int atacador = -1, dia, mes,ano, estado = -1, premium = -1;
         Scanner sc = new Scanner(System.in);
@@ -90,19 +114,7 @@ public class UtilizadorController {
         System.out.print("Preço ::");
         s.setPreco(Read_Scanner.getDouble(sc));
         System.out.println ("Escolha a Transportadora:");
-        int index = 1;
-        Map<Integer,Transportadora> transp = new HashMap<>();
-        for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
-            Transportadora t = a.getValue();
-            transp.put(index,t);
-            System.out.println(index + " -> " + t.getTransportadora());
-            index++;
-        }
-        int choice;
-        do {
-            choice = Read_Scanner.getInt(sc);
-        } while(choice < 1 || choice > index);
-        s.setTransportadora(transp.get(choice));
+        selecionaTransportadora(premium,s);
         s.setUser_id(this.u.getEmail());
 
         v.addArtigo(s);
@@ -134,7 +146,7 @@ public class UtilizadorController {
             dimensao = Read_Scanner.getInt(sc);
         }
         m.setDimensao(dimensao);
-
+        sc.nextLine();
         System.out.print("Data de lançamento (YYYY-MM-DD):: ");
         m.setDate(Read_Scanner.getData(sc));
         do {
@@ -155,19 +167,7 @@ public class UtilizadorController {
         System.out.print("Preço ::");
         m.setPreco(Read_Scanner.getDouble(sc));
         System.out.println ("Escolha a Transportadora:");
-        int index = 1;
-        Map<Integer,Transportadora> transp = new HashMap<>();
-        for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
-            Transportadora t = a.getValue();
-            transp.put(index,t);
-            System.out.println(index + " -> " + t.getTransportadora());
-            index++;
-        }
-        int choice;
-        do {
-            choice = Read_Scanner.getInt(sc);
-        } while(choice < 1 || choice > index);
-        m.setTransportadora(transp.get(choice));
+        selecionaTransportadora(premium,m);
         m.setUser_id(this.u.getEmail());
 
         v.addArtigo(m);
@@ -194,7 +194,7 @@ public class UtilizadorController {
             padrao = Read_Scanner.getInt(sc);
         }
         t.setPadrao(padrao);
-
+        sc.nextLine();
         System.out.print("Data de lançamento (YYYY-MM-DD):: ");
         t.setDate(Read_Scanner.getData(sc));
         do {
@@ -215,19 +215,7 @@ public class UtilizadorController {
         System.out.print("Preço ::");
         t.setPreco(Read_Scanner.getDouble(sc));
         System.out.println ("Escolha a Transportadora:");
-        int index = 1;
-        Map<Integer,Transportadora> transp = new HashMap<>();
-        for (Map.Entry<String, Transportadora> a : v.getTransportadoras().entrySet()) {
-            Transportadora tra = a.getValue();
-            transp.put(index,tra);
-            System.out.println(index + " -> " + tra.getTransportadora());
-            index++;
-        }
-        int choice;
-        do {
-            choice = Read_Scanner.getInt(sc);
-        } while (choice < 1 || choice > index);
-        t.setTransportadora(transp.get(choice));
+        selecionaTransportadora(0,t);
         t.setUser_id(this.u.getEmail());
 
         v.addArtigo(t);
@@ -243,7 +231,7 @@ public class UtilizadorController {
                 if (!value.getUser_id().equals(this.u.getEmail())) {
                     value.calculaDesconto(v.getCurrentDate());
                     System.out.println(value.getCodigo() + " -> "
-                            + value.getClass().toString() + ", " + value.getMarca() + ", Descrição: " + value.getDescricao() + ", Preço " + value.getPrecoDesconto());
+                            + value.getClass().toString() + ", Marca: " + value.getMarca() + ", Descrição: " + value.getDescricao() + ", Preço: " + value.getPrecoDesconto());
                 }
             });
 
@@ -280,7 +268,7 @@ public class UtilizadorController {
     public void devolveEncomenda () {
         AtomicBoolean existe = new AtomicBoolean(false);
         u.getEncomendas().forEach((key,value) -> {
-            if (value.getEstadoE() == Encomenda.Estado.Finalizada && Math.abs(ChronoUnit.DAYS.between(v.getCurrentDate(),value.getData()))<=2) {
+            if (value.getEstadoE() == Encomenda.Estado.Finalizada && Math.abs(ChronoUnit.DAYS.between(v.getCurrentDate(),value.getData()))<=5) {
                 System.out.println(value.getCodigo() + " -> " + value.getLista());
                 existe.set(true);
             }
@@ -331,4 +319,6 @@ public class UtilizadorController {
                     + e.getClass() + ", Marca: " + e.getMarca() + ", Descrição: " + e.getDescricao() + ", Preço: " + e.getPrecoDesconto()));
         });
     }
+
+
 }

@@ -10,7 +10,7 @@ public class Read_Scanner {
         try{
             n = sc.nextInt();
         } catch (InputMismatchException ex){
-            System.out.println("A informação introduzida não é válida: " + ex.getMessage());
+            System.out.println("A informação introduzida não é válida! Insira novamente: ");
             sc.nextLine();
             getInt(sc);
         }
@@ -22,9 +22,9 @@ public class Read_Scanner {
         try{
             n = sc.nextDouble();
         } catch (InputMismatchException ex){
-            System.out.println("A informação introduzida não é válida: " + ex.getMessage());
+            System.out.println("A informação introduzida não é válida! Insira novamente: ");
             sc.nextLine();
-            getDouble(sc);
+            n = getDouble(sc);
         }
         return n;
     }
@@ -32,13 +32,12 @@ public class Read_Scanner {
     public static LocalDate getData(Scanner sc){
         LocalDate d = null;
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-        System.out.print("Data a considerar (YYYY-MM-DD):: ");
         String input = sc.nextLine();
         try {
             d = LocalDate.parse(input, formatter);
         } catch (DateTimeParseException ex) {
-            System.out.println("A informação introduzida não é válida: " + ex.getMessage());
-            getData(sc);
+            System.out.println("A informação introduzida não é válida! Insira novamente: ");
+            d = getData(sc);
         }
         return d;
     }

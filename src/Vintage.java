@@ -1,9 +1,6 @@
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Vintage implements Serializable {
@@ -116,14 +113,19 @@ public class Vintage implements Serializable {
         });
     }
 
-    public String utilizadorMaisRendeu(LocalDate date) {
+    public String utilizadorMaisRendeu(LocalDate dateI, LocalDate dateF) {
         String email = null;
         double rendeu = 0, max = -1;
-        for(Map.Entry<String, Utilizador> u : utilizadores.entrySet()) {
-            for(Map.Entry<String, Artigos> a : u.getValue().getVendeu().entrySet()) {
-                if(a.getValue().getData_venda() != null && date.isBefore(a.getValue().getData_venda())) rendeu += a.getValue().getPrecoDesconto();
+        for (Map.Entry<String, Utilizador> u : utilizadores.entrySet()) {
+            for (Map.Entry<String, Artigos> a : u.getValue().getVendeu().entrySet()) {
+                    if (a.getValue().getData_venda() != null) {
+                        if (dateI != null && dateF != null && dateI.isBefore(a.getValue().getData_venda()) && dateF.isAfter(a.getValue().getData_venda()))
+                            rendeu += a.getValue().getPrecoDesconto();
+                        else
+                            rendeu += a.getValue().getPrecoDesconto();
+                    }
             }
-            if(rendeu > max){
+            if (rendeu > max) {
                 max = rendeu;
                 email = u.getValue().getEmail();
             }
@@ -160,4 +162,31 @@ public class Vintage implements Serializable {
         return l;
     }
 
+    public Map <Double, Utilizador> maioresVendedores (LocalDate dateI, LocalDate dateF) {
+        Map <Double,Utilizador> ordenado = new TreeMap<>(Comparator.reverseOrder());
+        double rendeu = 0;
+        for (Map.Entry<String, Utilizador> u : utilizadores.entrySet()) {
+            for (Map.Entry<String, Artigos> a : u.getValue().getVendeu().entrySet()) {
+                if (a.getValue().getData_venda() != null && dateI.isBefore(a.getValue().getData_venda()) && dateF.isAfter(a.getValue().getData_venda()))
+                        rendeu += a.getValue().getPrecoDesconto();
+            }
+            ordenado.put(rendeu,u.getValue());
+            rendeu = 0;
+        }
+        return ordenado;
+    }
+
+    public Map <Double, Utilizador> maioresCompradores(LocalDate dateI, LocalDate dateF) {
+        Map <Double,Utilizador> ordenado = new TreeMap<>(Comparator.reverseOrder());
+        double rendeu = 0;
+        for (Map.Entry<String, Utilizador> u : utilizadores.entrySet()) {
+            for (Map.Entry<String, Encomenda> a : u.getValue().getEncomendas().entrySet()) {
+                if (dateI.isBefore(a.getValue().getData()) && dateF.isAfter(a.getValue().getData()))
+                    rendeu += a.getValue().getPrecoE();
+            }
+            ordenado.put(rendeu,u.getValue());
+            rendeu = 0;
+        }
+        return ordenado;
+    }
 }

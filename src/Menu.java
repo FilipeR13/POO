@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Menu {
@@ -66,7 +63,7 @@ public class Menu {
         System.out.print("Choice: ");
         try {
             choice = sc.nextInt();
-        } catch (NumberFormatException e) {
+        } catch (InputMismatchException e) {
             choice = -1;
         }
         if (choice < 0 || choice > this.options.size()) {

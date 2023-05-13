@@ -62,6 +62,7 @@ public class MainView {
         menuEstatistica.setHandler(1,v.getAdminController() :: utilizadorMaisRendeu);
         menuEstatistica.setHandler(2,v :: transportadoraMaisFaturou);
         menuEstatistica.setHandler(3,v :: encomendasVendedor);
+        menuEstatistica.setHandler(4,v :: maioresComVen);
         menuEstatistica.run();
     }
 }

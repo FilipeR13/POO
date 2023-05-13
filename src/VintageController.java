@@ -1,3 +1,4 @@
+import javax.swing.event.MouseInputListener;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -90,6 +91,33 @@ public class VintageController {
                 if (finalCodigo.equals(el.getUser_id()))
                     System.out.println(el.getCodigo() + " -> "+ el.getClass() + ", Marca: " + el.getMarca() + ", Preco" + el.getPreco());
             });
+        }
+    }
+
+
+    public void maioresComVen() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Pretende verificar os maiores vendedores (0) ou maiores compradores (1): ");
+        int choice = -1;
+        while (choice != 0 && choice != 1) {
+            choice = Read_Scanner.getInt(sc);
+        }
+        sc.nextLine();
+        System.out.print("Insira a data inicial: ");
+        LocalDate dateI = Read_Scanner.getData(sc);
+        System.out.print("Insira a data final: ");
+        LocalDate dateF = Read_Scanner.getData(sc);
+
+        Map <Double,Utilizador> m = null;
+
+        if (choice == 0) m = v.maioresVendedores(dateI,dateF);
+        if (choice == 1) m = v.maioresCompradores(dateI,dateI);
+
+        int n = 1;
+        for (Map.Entry <Double,Utilizador> e : m.entrySet()) {
+            System.out.println(n + ". Email: " + e.getValue().getEmail() + " -> , Nome: " + e.getValue().getNome() + ", Total: " + e.getKey());
+            n++;
         }
     }
 }

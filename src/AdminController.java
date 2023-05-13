@@ -31,15 +31,15 @@ public class AdminController {
         System.out.print("Novo nome :: ");
         t.setTransportadora(sc.nextLine());
         System.out.print("Novo valor base para encomendas pequenas :: ");
-        t.setValorBasePeq(sc.nextInt());
+        t.setValorBasePeq(Read_Scanner.getInt(sc));
         System.out.print("Novo valor base para encomendas médias :: ");
-        t.setValorBaseMed(sc.nextInt());
+        t.setValorBaseMed(Read_Scanner.getInt(sc));
         System.out.print("Novo valor base para encomendas grandes :: ");
-        t.setValorBaseGra(sc.nextInt());
+        t.setValorBaseGra(Read_Scanner.getInt(sc));
         if(t instanceof TransportadoraPremium) System.out.println("Fórmula do preço de expedição :: (ValorBase - (ValorBase * Imposto)) * 0.2 + (margemlucrotransportadora * ValorBase)");
         else System.out.println("Fórmula do preço de expedição :: (ValorBase ∗ margemlucrotransportadora ∗ (1 + Imposto)) ∗ 0.9");
         System.out.print("Nova margem de lucro da transportadora :: ");
-        t.setMargemLucro(sc.nextDouble());
+        t.setMargemLucro(Read_Scanner.getDouble(sc));
     }
 
     public Transportadora registerTransportadora () {
@@ -47,7 +47,7 @@ public class AdminController {
         Scanner sc = new Scanner(System.in);
         do {
             System.out.print("Premium (sim -> 1 ou não -> 0) :: ");
-            premium = sc.nextInt();
+            premium = Read_Scanner.getInt(sc);
             sc.nextLine();
         }while(premium != 1 && premium != 0);
         Transportadora t;
@@ -56,15 +56,15 @@ public class AdminController {
         System.out.print("Nome :: ");
         t.setTransportadora(sc.nextLine());
         System.out.print("Valor base para encomendas pequenas :: ");
-        t.setValorBasePeq(sc.nextDouble());
+        t.setValorBasePeq(Read_Scanner.getDouble(sc));
         System.out.print("Valor base para encomendas médias :: ");
-        t.setValorBaseMed(sc.nextDouble());
+        t.setValorBaseMed(Read_Scanner.getDouble(sc));
         System.out.print("Valor base para encomendas grandes :: ");
-        t.setValorBaseGra(sc.nextDouble());
+        t.setValorBaseGra(Read_Scanner.getDouble(sc));
         if(premium == 1) System.out.println("Fórmula do preço de expedição :: (ValorBase - (ValorBase * Imposto)) * 0.2 + (margemlucrotransportadora * ValorBase)");
         else System.out.println("Fórmula do preço de expedição :: (ValorBase ∗ margemlucrotransportadora ∗ (1 + Imposto)) ∗ 0.9");
         System.out.print("Margem de lucro da transportadora :: ");
-        t.setMargemLucro(sc.nextDouble());
+        t.setMargemLucro(Read_Scanner.getDouble(sc));
         return t;
     }
 
@@ -86,7 +86,7 @@ public class AdminController {
     public void avancaTempo () {
         Scanner sc = new Scanner(System.in);
         System.out.print("Insira o número de dias para avançar :: ");
-        int dias = sc.nextInt();
+        int dias = Read_Scanner.getInt(sc);
         v.addDays(v.getCurrentDate().plusDays(dias));
     }
 
@@ -94,11 +94,15 @@ public class AdminController {
         Scanner sc = new Scanner(System.in);
         String email = null;
         System.out.print("Deseja adicionar uma data limite (1 -> sim ou 0 -> não) :: ");
-        if(sc.nextInt() == 1) {
+        if(Read_Scanner.getInt(sc) == 1) {
             sc.nextLine();
-            LocalDate date = Read_Scanner.getData(sc);
-            email = v.utilizadorMaisRendeu(date);
+            System.out.print("Insira a data inicial: ");
+            LocalDate dateI = Read_Scanner.getData(sc);
+            System.out.print("Insira a data final: ");
+            LocalDate dateF = Read_Scanner.getData(sc);
+            email = v.utilizadorMaisRendeu(dateI, dateF);
         }
+        else email = v.utilizadorMaisRendeu(null, null);
         System.out.println("O utilizador que mais rendeu foi :: " + email);
     }
 }
