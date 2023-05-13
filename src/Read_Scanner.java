@@ -7,26 +7,24 @@ import java.util.Scanner;
 public class Read_Scanner {
     public static int getInt(Scanner sc){
         int n = 0;
-        while (true){
-            try{
-                n = sc.nextInt();
-                break;
-            } catch (InputMismatchException ex){
-                System.out.println("A informação introduzida não é válida: " + ex.getMessage());
-            }
+        try{
+            n = sc.nextInt();
+        } catch (InputMismatchException ex){
+            System.out.println("A informação introduzida não é válida: " + ex.getMessage());
+            sc.nextLine();
+            getInt(sc);
         }
         return n;
     }
 
     public static double getDouble(Scanner sc){
         double n = 0;
-        while (true){
-            try{
-                n = sc.nextDouble();
-                break;
-            } catch (InputMismatchException ex){
-                System.out.println("A informação introduzida não é válida: " + ex.getMessage());
-            }
+        try{
+            n = sc.nextDouble();
+        } catch (InputMismatchException ex){
+            System.out.println("A informação introduzida não é válida: " + ex.getMessage());
+            sc.nextLine();
+            getDouble(sc);
         }
         return n;
     }
@@ -34,15 +32,13 @@ public class Read_Scanner {
     public static LocalDate getData(Scanner sc){
         LocalDate d = null;
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-        while(true){
-            System.out.print("Data a considerar :: ");
-            String input = sc.nextLine();
-            try {
-                d = LocalDate.parse(input, formatter);
-                break;
-            } catch (DateTimeParseException ex) {
-                System.out.println("A informação introduzida não é válida: " + ex.getMessage());
-            }
+        System.out.print("Data a considerar (YYYY-MM-DD):: ");
+        String input = sc.nextLine();
+        try {
+            d = LocalDate.parse(input, formatter);
+        } catch (DateTimeParseException ex) {
+            System.out.println("A informação introduzida não é válida: " + ex.getMessage());
+            getData(sc);
         }
         return d;
     }

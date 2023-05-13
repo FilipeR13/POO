@@ -28,7 +28,7 @@ public class UtilizadorController {
         System.out.print("Morada :: ");
         u.setMorada(sc.nextLine());
         System.out.print("NIF :: ");
-        u.setNif(sc.nextInt());
+        u.setNif(Read_Scanner.getInt(sc));
         u.setId(Codigos.gerarCodigo());
 
         return u;
@@ -48,7 +48,7 @@ public class UtilizadorController {
         Scanner sc = new Scanner(System.in);
         while(premium != 1 && premium != 0) {
             System.out.print("Premium (1 -> sim ou 0 -> não) :: ");
-            premium = sc.nextInt();
+            premium = Read_Scanner.getInt(sc);
             sc.nextLine();
         }
         Sapatilhas s;
@@ -57,7 +57,7 @@ public class UtilizadorController {
         System.out.print("Marca :: ");
         s.setMarca(sc.nextLine());
         System.out.print("Tamanho :: ");
-        s.setTamanho(sc.nextInt());
+        s.setTamanho(Read_Scanner.getInt(sc));
         sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
         System.out.print("Cor :: ");
         s.setCor(sc.nextLine());
@@ -65,28 +65,22 @@ public class UtilizadorController {
 
         while (atacador != 0 && atacador != 1) {
             System.out.print("Atacador (0 ou 1) :: ");
-            atacador = sc.nextInt();
+            atacador = Read_Scanner.getInt(sc);
         }
         s.setAtacador(atacador);
 
-        System.out.print("Ano de lançamento :: ");
-        ano = sc.nextInt();
-        System.out.print("Mes de lançamento :: ");
-        mes = sc.nextInt();
-        System.out.print("Dia de lançamento :: ");
-        dia = sc.nextInt();
-
-        LocalDate date = LocalDate.of(ano,mes,dia);
-        s.setDate(date);
+        System.out.print("Data de lançamento (YYYY-MM-DD):: ");
+        sc.nextLine();
+        s.setDate(Read_Scanner.getData(sc));
         do {
             System.out.print("Estado do Artigo (0->Novo, 1 -> Usado) :: ");
-            estado = sc.nextInt();
+            estado = Read_Scanner.getInt(sc);
         } while (estado != 0 && estado != 1);
         s.setEstado(estado);
         sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
         if (estado == 1) {
             System.out.print("Número de Donos ::");
-            s.setnDonos(sc.nextInt());
+            s.setnDonos(Read_Scanner.getInt(sc));
             sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
             System.out.print("Danos do Artigo ::");
             s.setDanos(sc.nextLine());
@@ -94,7 +88,7 @@ public class UtilizadorController {
         System.out.print("Descrição ::");
         s.setDescricao(sc.nextLine());
         System.out.print("Preço ::");
-        s.setPreco(sc.nextDouble());
+        s.setPreco(Read_Scanner.getDouble(sc));
         System.out.println ("Escolha a Transportadora:");
         int index = 1;
         Map<Integer,Transportadora> transp = new HashMap<>();
@@ -106,7 +100,7 @@ public class UtilizadorController {
         }
         int choice;
         do {
-            choice = sc.nextInt();
+            choice = Read_Scanner.getInt(sc);
         } while(choice < 1 || choice > index);
         s.setTransportadora(transp.get(choice));
         s.setUser_id(this.u.getEmail());
@@ -121,7 +115,7 @@ public class UtilizadorController {
         Scanner sc = new Scanner(System.in);
         while(premium != 1 && premium != 0) {
             System.out.print("Premium (1 -> sim ou 0 -> não) :: ");
-            premium = sc.nextInt();
+            premium = Read_Scanner.getInt(sc);
             sc.nextLine();
         }
         Malas m;
@@ -131,34 +125,27 @@ public class UtilizadorController {
         m.setMarca(sc.nextLine());
         while (material != 0 && material != 1 && material != 2) {
             System.out.print("Material (0 -> polipiel ou 1 -> couro ou 2 -> tecido) :: ");
-            material = sc.nextInt();
+            material = Read_Scanner.getInt(sc);
         }
         m.setMaterial(material);
 
         while (dimensao != 0 && dimensao != 1 && dimensao != 2) {
             System.out.print("Dimensão (0 -> pequena ou 1 -> media ou 2 -> grande) :: ");
-            dimensao = sc.nextInt();
+            dimensao = Read_Scanner.getInt(sc);
         }
         m.setDimensao(dimensao);
 
-        System.out.print("Ano de lançamento :: ");
-        ano = sc.nextInt();
-        System.out.print("Mes de lançamento :: ");
-        mes = sc.nextInt();
-        System.out.print("Dia de lançamento :: ");
-        dia = sc.nextInt();
-
-        LocalDate date = LocalDate.of(ano,mes,dia);
-        m.setDate(date);
+        System.out.print("Data de lançamento (YYYY-MM-DD):: ");
+        m.setDate(Read_Scanner.getData(sc));
         do {
             System.out.print("Estado do Artigo (0->Novo, 1 -> Usado) :: ");
-            estado = sc.nextInt();
+            estado = Read_Scanner.getInt(sc);
         } while (estado != 0 && estado != 1);
         m.setEstado(estado);
         sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
         if (estado == 1) {
             System.out.print("Número de Donos ::");
-            m.setnDonos(sc.nextInt());
+            m.setnDonos(Read_Scanner.getInt(sc));
             sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
             System.out.print("Danos do Artigo ::");
             m.setDanos(sc.nextLine());
@@ -166,7 +153,7 @@ public class UtilizadorController {
         System.out.print("Descrição ::");
         m.setDescricao(sc.nextLine());
         System.out.print("Preço ::");
-        m.setPreco(sc.nextDouble());
+        m.setPreco(Read_Scanner.getDouble(sc));
         System.out.println ("Escolha a Transportadora:");
         int index = 1;
         Map<Integer,Transportadora> transp = new HashMap<>();
@@ -178,7 +165,7 @@ public class UtilizadorController {
         }
         int choice;
         do {
-            choice = sc.nextInt();
+            choice = Read_Scanner.getInt(sc);
         } while(choice < 1 || choice > index);
         m.setTransportadora(transp.get(choice));
         m.setUser_id(this.u.getEmail());
@@ -198,34 +185,27 @@ public class UtilizadorController {
 
         while (tamanho != 0 && tamanho != 1 && tamanho != 2 && tamanho != 3) {
             System.out.print("Dimensão (0 -> S ou 1 -> M ou 2 -> L ou 3 -> XL) :: ");
-            tamanho = sc.nextInt();
+            tamanho = Read_Scanner.getInt(sc);
         }
         t.setTamanho(tamanho);
 
         while (padrao != 0 && padrao != 1 && padrao != 2) {
             System.out.print("Padrão (0 -> Liso ou 1 -> Riscas ou 2 -> Palmeiras) :: ");
-            padrao = sc.nextInt();
+            padrao = Read_Scanner.getInt(sc);
         }
         t.setPadrao(padrao);
 
-        System.out.print("Ano de lançamento :: ");
-        ano = sc.nextInt();
-        System.out.print("Mes de lançamento :: ");
-        mes = sc.nextInt();
-        System.out.print("Dia de lançamento :: ");
-        dia = sc.nextInt();
-
-        LocalDate date = LocalDate.of(ano,mes,dia);
-        t.setDate(date);
+        System.out.print("Data de lançamento (YYYY-MM-DD):: ");
+        t.setDate(Read_Scanner.getData(sc));
         do {
             System.out.print("Estado do Artigo (0->Novo, 1 -> Usado) :: ");
-            estado = sc.nextInt();
+            estado = Read_Scanner.getInt(sc);
         } while (estado != 0 && estado != 1);
         t.setEstado(estado);
         sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
         if (estado == 1) {
             System.out.print("Número de Donos ::");
-            t.setnDonos(sc.nextInt());
+            t.setnDonos(Read_Scanner.getInt(sc));
             sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
             System.out.print("Danos do Artigo ::");
             t.setDanos(sc.nextLine());
@@ -233,7 +213,7 @@ public class UtilizadorController {
         System.out.print("Descrição ::");
         t.setDescricao(sc.nextLine());
         System.out.print("Preço ::");
-        t.setPreco(sc.nextDouble());
+        t.setPreco(Read_Scanner.getDouble(sc));
         System.out.println ("Escolha a Transportadora:");
         int index = 1;
         Map<Integer,Transportadora> transp = new HashMap<>();
@@ -245,7 +225,7 @@ public class UtilizadorController {
         }
         int choice;
         do {
-            choice = sc.nextInt();
+            choice = Read_Scanner.getInt(sc);
         } while (choice < 1 || choice > index);
         t.setTransportadora(transp.get(choice));
         t.setUser_id(this.u.getEmail());
