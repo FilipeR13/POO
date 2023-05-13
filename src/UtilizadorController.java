@@ -77,7 +77,14 @@ public class UtilizadorController {
             sc.nextLine();
         }
         Sapatilhas s;
-        if(premium == 1) s = new SapatilhasPremium();
+        if(premium == 1) {
+            //verifica existencia de transportadoras premium
+            if (v.verificaTransportadorasPremium()) {
+                System.out.println("Não existem Transportadoras Premium.");
+                return;
+            }
+            s = new SapatilhasPremium();
+        }
         else s = new Sapatilhas();
         System.out.print("Marca :: ");
         s.setMarca(sc.nextLine());
@@ -104,17 +111,17 @@ public class UtilizadorController {
         s.setEstado(estado);
         sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
         if (estado == 1) {
-            System.out.print("Número de Donos ::");
+            System.out.print("Número de Donos :: ");
             s.setnDonos(Read_Scanner.getInt(sc));
             sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
-            System.out.print("Danos do Artigo ::");
+            System.out.print("Danos do Artigo :: ");
             s.setDanos(sc.nextLine());
         }
-        System.out.print("Descrição ::");
+        System.out.print("Descrição :: ");
         s.setDescricao(sc.nextLine());
-        System.out.print("Preço ::");
+        System.out.print("Preço :: ");
         s.setPreco(Read_Scanner.getDouble(sc));
-        System.out.println ("Escolha a Transportadora:");
+        System.out.println ("Escolha a Transportadora: ");
         selecionaTransportadora(premium,s);
         s.setUser_id(this.u.getEmail());
 
@@ -132,8 +139,18 @@ public class UtilizadorController {
             sc.nextLine();
         }
         Malas m;
-        if(premium == 1) m = new MalasPremium();
+        if(premium == 1) {
+            //verifica existencia de transportadoras premium
+            if (v.verificaTransportadorasPremium()) {
+                System.out.println("Não existem Transportadoras Premium.");
+                return;
+            }
+            m = new MalasPremium();
+        }
         else m = new Malas();
+
+
+
         System.out.print("Marca :: ");
         m.setMarca(sc.nextLine());
         while (material != 0 && material != 1 && material != 2) {
@@ -157,17 +174,17 @@ public class UtilizadorController {
         m.setEstado(estado);
         sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
         if (estado == 1) {
-            System.out.print("Número de Donos ::");
+            System.out.print("Número de Donos :: ");
             m.setnDonos(Read_Scanner.getInt(sc));
             sc.nextLine(); //O nextInt mete um \n no final, é preciso skippar este \n
-            System.out.print("Danos do Artigo ::");
+            System.out.print("Danos do Artigo :: ");
             m.setDanos(sc.nextLine());
         }
-        System.out.print("Descrição ::");
+        System.out.print("Descrição :: ");
         m.setDescricao(sc.nextLine());
-        System.out.print("Preço ::");
+        System.out.print("Preço :: ");
         m.setPreco(Read_Scanner.getDouble(sc));
-        System.out.println ("Escolha a Transportadora:");
+        System.out.println ("Escolha a Transportadora: ");
         selecionaTransportadora(premium,m);
         m.setUser_id(this.u.getEmail());
 
@@ -211,11 +228,11 @@ public class UtilizadorController {
             System.out.print("Danos do Artigo ::");
             t.setDanos(sc.nextLine());
         }
-        System.out.print("Descrição ::");
+        System.out.print("Descrição :: ");
         t.setDescricao(sc.nextLine());
-        System.out.print("Preço ::");
+        System.out.print("Preço :: ");
         t.setPreco(Read_Scanner.getDouble(sc));
-        System.out.println ("Escolha a Transportadora:");
+        System.out.println ("Escolha a Transportadora: ");
         selecionaTransportadora(0,t);
         t.setUser_id(this.u.getEmail());
 
@@ -237,6 +254,12 @@ public class UtilizadorController {
             });
 
             Scanner sc = new Scanner(System.in);
+            System.out.print("Quer adicionar um artigo ao carrinho? (0 ou 1): ");
+            int confirmacao = -1;
+            while (confirmacao != 0 && confirmacao != 1) {
+                confirmacao = Read_Scanner.getInt(sc);
+            }
+            if (confirmacao == 0) return;
 
             System.out.print("Escolha o artigo para adicionar ao carrinho: ");
             String codigo = sc.nextLine();
@@ -271,7 +294,10 @@ public class UtilizadorController {
         AtomicBoolean existe = new AtomicBoolean(false);
         u.getEncomendas().forEach((key,value) -> {
             if (value.getEstadoE() == Encomenda.Estado.Finalizada && Math.abs(ChronoUnit.DAYS.between(v.getCurrentDate(),value.getData()))<=5) {
-                System.out.println(value.getCodigo() + " -> " + value.getLista());
+                System.out.println(value.getCodigo() + " -> Artigos: ");
+                List<Artigos> l =  value.getLista();
+                l.forEach(e -> System.out.println("\t" + e.getCodigo() + " -> "
+                        + e.getClass() + ", Marca: " + e.getMarca() + ", Descrição: " + e.getDescricao() + ", Preço: " + e.getPrecoDesconto()));
                 existe.set(true);
             }
         });
@@ -316,11 +342,14 @@ public class UtilizadorController {
     public void verEncomendaUser() {
         u.getEncomendas().forEach((key,value) -> {
             System.out.println(key + " -> " + "Transportadora: " + value.getTransportadora().getTransportadora()
-                    + ", Preco: " + value.getPrecoE() + " Data: "+ value.getData() + "Estado: " + value.getEstadoE() + " Artigos:");
+                    + ", Preco: " + value.getPrecoE() + " Data: "+ value.getData() + " Estado: " + value.getEstadoE() + " Artigos:");
             value.getLista().forEach(e -> System.out.println("\t" + e.getCodigo() + " -> "
                     + e.getClass() + ", Marca: " + e.getMarca() + ", Descrição: " + e.getDescricao() + ", Preço: " + e.getPrecoDesconto()));
         });
     }
 
 
+    public boolean verificaExistenciaTransportadoras() {
+        return this.v.getTransportadoras().size() != 0;
+    }
 }

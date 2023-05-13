@@ -41,7 +41,7 @@ public class VintageController {
             user.login();
         } catch (VintageException e) {
             System.out.println(e.getMessage());
-            this.login();
+            return;
         }
         UtilizadorView account = new UtilizadorView(user);
         account.run();
@@ -70,61 +70,20 @@ public class VintageController {
     public void utilizadorMaisRendeu() {
         admin.utilizadorMaisRendeu();
     }
-    public void transportadoraMaisFaturou() {
-        Transportadora t = v.maisFaturacao();
-        System.out.println (t.getTransportadora() + "| Total Faturado:" + t.getTotalObtido());
-    }
-
-    public void encomendasVendedor() {
-        v.getUtilizadores().forEach((key,value) -> System.out.println(key + " -> " + value.getEmail()));
-        String codigo;
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Ensira o email para obter a estatística: ");
-        codigo = sc.nextLine();
-        while (!v.getUtilizadores().containsKey(codigo)) {
-            System.out.println("Email inválido");
-            codigo = sc.nextLine();
-        }
-
-        List<Encomenda> l = v.listarEncomendasVendedor(codigo);
-        for (Encomenda e : l) {
-            System.out.println(e.getCodigo() + " -> Artigos: ");
-            String finalCodigo = codigo;
-            e.getLista().forEach(el->{
-                if (finalCodigo.equals(el.getUser_id()))
-                    System.out.println(el.getCodigo() + " -> "+ el.getClass() + ", Marca: " + el.getMarca() + ", Preco" + el.getPreco());
-            });
-        }
-    }
-
-
-    public void maioresComVen() {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Pretende verificar os maiores vendedores (0) ou maiores compradores (1): ");
-        int choice = -1;
-        while (choice != 0 && choice != 1) {
-            choice = Read_Scanner.getInt(sc);
-        }
-        sc.nextLine();
-        System.out.print("Insira a data inicial: ");
-        LocalDate dateI = Read_Scanner.getData(sc);
-        System.out.print("Insira a data final: ");
-        LocalDate dateF = Read_Scanner.getData(sc);
-
-        Map <Double,Utilizador> m = null;
-
-        if (choice == 0) m = v.maioresVendedores(dateI,dateF);
-        if (choice == 1) m = v.maioresCompradores(dateI,dateI);
-
-        int n = 1;
-        for (Map.Entry <Double,Utilizador> e : m.entrySet()) {
-            System.out.println(n + ". Email: " + e.getValue().getEmail() + ", Nome: " + e.getValue().getNome() + ", Total: " + e.getKey());
-            n++;
-        }
-    }
 
     public void lucrouVintage() {
         admin.lucrouVintage();
+    }
+
+    public void transportadoraMaisFaturou() {
+        admin.transportadoraMaisFaturou();
+    }
+
+    public void encomendasVendedor() {
+        admin.encomendasVendedor();
+    }
+
+    public void maioresComVen() {
+        admin.maioresComVen();
     }
 }
