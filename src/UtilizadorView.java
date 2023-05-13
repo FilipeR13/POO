@@ -21,15 +21,18 @@ public class UtilizadorView {
     }
 
     public void adicionaArtigo () {
-        Menu tipoArtigo = new Menu(new String[] {
-                "Sapatilha",
-                "Mala",
-                "TShirt"
-        });
-        tipoArtigo.setHandler(1,user :: adicionaSapatilha);
-        tipoArtigo.setHandler(2,user :: adicionaMala);
-        tipoArtigo.setHandler(3,user :: adicionaTshirt);
-        tipoArtigo.run();
+        if (user.verificaExistenciaTransportadoras()) {
+            Menu tipoArtigo = new Menu(new String[]{
+                    "Sapatilha",
+                    "Mala",
+                    "TShirt"
+            });
+            tipoArtigo.setHandler(1, user::adicionaSapatilha);
+            tipoArtigo.setHandler(2, user::adicionaMala);
+            tipoArtigo.setHandler(3, user::adicionaTshirt);
+            tipoArtigo.run();
+        }
+        else System.out.println("Não existem transportadoras!");
     }
 
     public void verCarrinho () {

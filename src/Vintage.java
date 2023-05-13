@@ -162,29 +162,29 @@ public class Vintage implements Serializable {
         return l;
     }
 
-    public Map <Double, Utilizador> maioresVendedores (LocalDate dateI, LocalDate dateF) {
-        Map <Double,Utilizador> ordenado = new TreeMap<>(Comparator.reverseOrder());
+    public Map <String, Utilizador> maioresVendedores (LocalDate dateI, LocalDate dateF) {
+        Map <String,Utilizador> ordenado = new TreeMap<>(Comparator.reverseOrder());
         double rendeu = 0;
         for (Map.Entry<String, Utilizador> u : utilizadores.entrySet()) {
             for (Map.Entry<String, Artigos> a : u.getValue().getVendeu().entrySet()) {
                 if (a.getValue().getData_venda() != null && dateI.isBefore(a.getValue().getData_venda()) && dateF.isAfter(a.getValue().getData_venda()))
                         rendeu += a.getValue().getPrecoDesconto();
             }
-            ordenado.put(rendeu,u.getValue());
+            ordenado.put(rendeu + " " + u.getValue().getEmail(),u.getValue());
             rendeu = 0;
         }
         return ordenado;
     }
 
-    public Map <Double, Utilizador> maioresCompradores(LocalDate dateI, LocalDate dateF) {
-        Map <Double,Utilizador> ordenado = new TreeMap<>(Comparator.reverseOrder());
+    public Map <String, Utilizador> maioresCompradores(LocalDate dateI, LocalDate dateF) {
+        Map <String,Utilizador> ordenado = new TreeMap<>(Comparator.reverseOrder());
         double rendeu = 0;
         for (Map.Entry<String, Utilizador> u : utilizadores.entrySet()) {
             for (Map.Entry<String, Encomenda> a : u.getValue().getEncomendas().entrySet()) {
                 if (dateI.isBefore(a.getValue().getData()) && dateF.isAfter(a.getValue().getData()))
                     rendeu += a.getValue().getPrecoE();
             }
-            ordenado.put(rendeu,u.getValue());
+            ordenado.put(rendeu + " " + u.getValue().getEmail(),u.getValue());
             rendeu = 0;
         }
         return ordenado;
@@ -201,5 +201,12 @@ public class Vintage implements Serializable {
             }
         }
         return total;
+    }
+
+    public boolean verificaTransportadorasPremium() {
+        for (Map.Entry<String, Transportadora> t : this.transportadoras.entrySet()) {
+            if (t.getValue() instanceof TransportadoraPremium) return true;
+        }
+        return false;
     }
 }
