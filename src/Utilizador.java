@@ -29,19 +29,6 @@ public class Utilizador implements Serializable {
         encomendas = new HashMap<>();
     }
 
-    public Utilizador (String id) {
-        this.id = id;
-        nif = -1;
-        nome = morada = email = null;
-
-        preco_vendidos = 0;
-        venda = new HashMap<>();
-        vendeu = new HashMap<>();
-        carrinho = new ArrayList<>();
-        faturas = new ArrayList<>();
-        encomendas = new HashMap<>();
-    }
-
     public Utilizador (String id, int nif, String nome,String morada, String email) {
         this.id = id;
         this.nif = nif;

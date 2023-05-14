@@ -16,6 +16,15 @@ public class SapatilhasPremium extends Sapatilhas{
         super(s);
     }
 
+    public boolean equals(Object obj) {
+        if(obj==this)
+            return true;
+        if(obj==null || obj.getClass() != this.getClass())
+            return false;
+        SapatilhasPremium le = (SapatilhasPremium) obj;
+        return  super.equals(le);
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         return super.toString() + sb.toString();

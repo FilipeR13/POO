@@ -14,6 +14,15 @@ public class MalasPremium extends Malas {
         super(m);
     }
 
+    public boolean equals(Object obj) {
+        if(obj==this)
+            return true;
+        if(obj==null || obj.getClass() != this.getClass())
+            return false;
+        MalasPremium le = (MalasPremium) obj;
+        return  super.equals(le);
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         return super.toString() + sb.toString();
