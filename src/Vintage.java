@@ -203,7 +203,8 @@ public class Vintage implements Serializable {
 
     public boolean verificaTransportadorasPremium() {
         for (Map.Entry<String, Transportadora> t : this.transportadoras.entrySet()) {
-            if (t.getValue() instanceof TransportadoraPremium) return true;
+            Transportadora tr = t.getValue();
+            if (tr instanceof TransportadoraPremium) return true;
         }
         return false;
     }

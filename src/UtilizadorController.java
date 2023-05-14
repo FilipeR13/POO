@@ -79,7 +79,7 @@ public class UtilizadorController {
         Sapatilhas s;
         if(premium == 1) {
             //verifica existencia de transportadoras premium
-            if (v.verificaTransportadorasPremium()) {
+            if (!v.verificaTransportadorasPremium()) {
                 System.out.println("Não existem Transportadoras Premium.");
                 return;
             }
@@ -141,7 +141,7 @@ public class UtilizadorController {
         Malas m;
         if(premium == 1) {
             //verifica existencia de transportadoras premium
-            if (v.verificaTransportadorasPremium()) {
+            if (!v.verificaTransportadorasPremium()) {
                 System.out.println("Não existem Transportadoras Premium.");
                 return;
             }
