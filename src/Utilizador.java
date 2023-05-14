@@ -280,6 +280,7 @@ public class Utilizador implements Serializable {
             p.getKey().custoExpedicao(e.getDimensao());
             rendeu = e.calculaPreco();
             total+= e.getPrecoE();
+
             fatura.append("Encomenda: ").append(e.getCodigo()).append("| Preco Encomenda: ").append(e.getPrecoE());
             fatura.append("| Transportadora: ").append(e.getTransportadora().getTransportadora()).append("| Data: ");
             fatura.append(e.getData()).append("| Artigos: \n");

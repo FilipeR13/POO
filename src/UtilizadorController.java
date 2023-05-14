@@ -295,7 +295,7 @@ public class UtilizadorController {
         u.getEncomendas().forEach((key,value) -> {
             if (value.getEstadoE() == Encomenda.Estado.Finalizada && Math.abs(ChronoUnit.DAYS.between(v.getCurrentDate(),value.getData()))<=5) {
                 System.out.println(value.getCodigo() + " -> Artigos: ");
-                List<Artigos> l =  value.getLista();
+                List<Artigos> l = value.getLista();
                 l.forEach(e -> System.out.println("\t" + e.getCodigo() + " -> "
                         + e.getClass() + ", Marca: " + e.getMarca() + ", Descrição: " + e.getDescricao() + ", Preço: " + e.getPrecoDesconto()));
                 existe.set(true);

@@ -25,21 +25,30 @@ public class AdminController {
     }
 
     public void alterarTransportadora () {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Transportadora a alterar (nome) :: ");
-        Transportadora t = v.getTransportadoras().get(sc.nextLine());
-        System.out.print("Novo nome :: ");
-        t.setTransportadora(sc.nextLine());
-        System.out.print("Novo valor base para encomendas pequenas :: ");
-        t.setValorBasePeq(Read_Scanner.getInt(sc));
-        System.out.print("Novo valor base para encomendas médias :: ");
-        t.setValorBaseMed(Read_Scanner.getInt(sc));
-        System.out.print("Novo valor base para encomendas grandes :: ");
-        t.setValorBaseGra(Read_Scanner.getInt(sc));
-        if(t instanceof TransportadoraPremium) System.out.println("Fórmula do preço de expedição :: (ValorBase - (ValorBase * Imposto)) * 0.2 + (margemlucrotransportadora * ValorBase)");
-        else System.out.println("Fórmula do preço de expedição :: (ValorBase ∗ margemlucrotransportadora ∗ (1 + Imposto)) ∗ 0.9");
-        System.out.print("Nova margem de lucro da transportadora :: ");
-        t.setMargemLucro(Read_Scanner.getDouble(sc));
+        this.verTransportadoras();
+        if(!v.getTransportadoras().isEmpty()) {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Transportadora a alterar (nome) :: ");
+            Transportadora t = v.getTransportadoras().get(sc.nextLine());
+            if (t == null){
+                System.out.println("Não existe uma transportadora com esse nome.");
+                return;
+            }
+            System.out.print("Novo nome :: ");
+            t.setTransportadora(sc.nextLine());
+            System.out.print("Novo valor base para encomendas pequenas :: ");
+            t.setValorBasePeq(Read_Scanner.getInt(sc));
+            System.out.print("Novo valor base para encomendas médias :: ");
+            t.setValorBaseMed(Read_Scanner.getInt(sc));
+            System.out.print("Novo valor base para encomendas grandes :: ");
+            t.setValorBaseGra(Read_Scanner.getInt(sc));
+            if (t instanceof TransportadoraPremium)
+                System.out.println("Fórmula do preço de expedição :: (ValorBase - (ValorBase * Imposto)) * 0.2 + (margemlucrotransportadora * ValorBase)");
+            else
+                System.out.println("Fórmula do preço de expedição :: (ValorBase ∗ margemlucrotransportadora ∗ (1 + Imposto)) ∗ 0.9");
+            System.out.print("Nova margem de lucro da transportadora :: ");
+            t.setMargemLucro(Read_Scanner.getDouble(sc));
+        }
     }
 
     public Transportadora registerTransportadora () {
@@ -49,7 +58,7 @@ public class AdminController {
             System.out.print("Premium (sim -> 1 ou não -> 0) :: ");
             premium = Read_Scanner.getInt(sc);
             sc.nextLine();
-        }while(premium != 1 && premium != 0);
+        } while(premium != 1 && premium != 0);
         Transportadora t;
         if(premium == 1) t = new TransportadoraPremium();
         else t  = new Transportadora();
@@ -70,6 +79,7 @@ public class AdminController {
 
     public void removeTransportadora () {
         if(!v.getTransportadoras().isEmpty()) {
+            this.verTransportadoras();
             Scanner sc = new Scanner(System.in);
             System.out.print("Transportadora a remover (nome) :: ");
             String nome = sc.nextLine();

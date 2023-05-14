@@ -1,11 +1,3 @@
-import javax.swing.event.MouseInputListener;
-import java.net.URI;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicReference;
-
 public class VintageController {
     private Vintage v;
     private UtilizadorController user;
