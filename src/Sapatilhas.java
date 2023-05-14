@@ -4,7 +4,7 @@ import java.time.temporal.ChronoUnit;
 
 public class Sapatilhas extends Artigos{
     private int tamanho;
-    private int atacador;  //enum
+    private int atacador;
     private String cor;
     private LocalDate date;
 

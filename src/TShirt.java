@@ -17,7 +17,7 @@ public class TShirt extends Artigos{
     }
 
     private Tamanho tamanho;
-    private Padrao padrao; //enum
+    private Padrao padrao;
     private LocalDate date;
 
     public TShirt() {
