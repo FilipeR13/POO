@@ -14,6 +14,7 @@ public class Utilizador implements Serializable {
     private Map <String, Artigos> venda,vendeu;
     private List <Artigos> carrinho;
     private Map <String, Encomenda> encomendas;
+    private List <String> faturas;
 
     public Utilizador() {
         id = "";
@@ -24,6 +25,7 @@ public class Utilizador implements Serializable {
         venda = new HashMap<>();
         vendeu = new HashMap<>();
         carrinho = new ArrayList<>();
+        faturas = new ArrayList<>();
         encomendas = new HashMap<>();
     }
 
@@ -36,6 +38,7 @@ public class Utilizador implements Serializable {
         venda = new HashMap<>();
         vendeu = new HashMap<>();
         carrinho = new ArrayList<>();
+        faturas = new ArrayList<>();
         encomendas = new HashMap<>();
     }
 
@@ -50,6 +53,7 @@ public class Utilizador implements Serializable {
         venda = new HashMap<>();
         vendeu = new HashMap<>();
         carrinho = new ArrayList<>();
+        faturas = new ArrayList<>();
         encomendas = new HashMap<>();
     }
 
@@ -64,6 +68,7 @@ public class Utilizador implements Serializable {
         this.vendeu = a.getVendeu();
         this.venda = a.getVenda();
         this.carrinho = a.getCarrinho();
+        this.faturas = a.getFaturas();
         this.encomendas = a.getEncomendas();
     }
 
@@ -95,6 +100,10 @@ public class Utilizador implements Serializable {
         return this.carrinho.stream().map(a -> a.clone()).collect(Collectors.toList());
     }
 
+    public List<String> getFaturas () {
+        return new ArrayList<>(this.faturas);
+    }
+
     public void setNome (String nome1) {
         nome = nome1;
     }
@@ -120,13 +129,17 @@ public class Utilizador implements Serializable {
     }
 
     public void setVenda(Map<String,Artigos> venda) {
+        Map <String,Artigos> clone = new HashMap<>();
         for (Map.Entry<String, Artigos> a : venda.entrySet())
-            this.venda.put(a.getKey(),a.getValue().clone());
+            clone.put(a.getKey(),a.getValue().clone());
+        this.venda = clone;
     }
 
     public void setVendeu(Map<String,Artigos> vendeu) {
+        Map <String,Artigos> clone = new HashMap<>();
         for (Map.Entry<String, Artigos> a : vendeu.entrySet())
-            this.venda.put(a.getKey(),a.getValue().clone());
+            clone.put(a.getKey(),a.getValue().clone());
+        this.vendeu = clone;
     }
 
     public void setCarrinho (List<Artigos> carrinho) {
@@ -135,9 +148,14 @@ public class Utilizador implements Serializable {
         this.carrinho = l;
     }
 
-    public void setComprou(Map<String,Artigos> comprou) {
+    public void setFaturas (List<String> faturas) {
+        this.faturas = new ArrayList<>(faturas);
+    }
+    public void setEncomendas (Map<String,Encomenda> encomendas) {
+        Map <String,Encomenda> clone = new HashMap<>();
         for (Map.Entry<String, Encomenda> a : encomendas.entrySet())
-            this.encomendas.put(a.getKey(),a.getValue().clone());
+            clone.put(a.getKey(),a.getValue().clone());
+        this.encomendas = clone;
     }
 
     public Map<String,Encomenda> getEncomendas() {
@@ -233,7 +251,8 @@ public class Utilizador implements Serializable {
     }
 
     public double percorreCarrinho(LocalDate data){
-        double rendeu = 0;
+        double rendeu = 0, total = 0;
+        StringBuilder fatura = new StringBuilder();
         Map<Transportadora, List<Artigos>> enc = this.carrinho.stream().collect(Collectors.groupingBy(a -> a.getTransportadora()));
         for(Map.Entry<Transportadora, List<Artigos>> p : enc.entrySet()) {
             Encomenda e = new Encomenda();
@@ -260,7 +279,14 @@ public class Utilizador implements Serializable {
             this.encomendas.put(e.getCodigo(),e);
             p.getKey().custoExpedicao(e.getDimensao());
             rendeu = e.calculaPreco();
+            total+= e.getPrecoE();
+            fatura.append("Encomenda: ").append(e.getCodigo()).append("| Preco Encomenda: ").append(e.getPrecoE());
+            fatura.append("| Transportadora: ").append(e.getTransportadora().getTransportadora()).append("| Data: ");
+            fatura.append(e.getData()).append("| Artigos: \n");
+            l.forEach(a -> fatura.append("\t").append(a.getClass()).append("| Marca: ").append(a.getMarca()).append("| Preco: ").append(a.getPreco()).append("| Preco com Desconto: ").append(a.getPrecoDesconto()).append("\n"));
         }
+        fatura.append("Preco Total: ").append(total+"\n");
+        addFaturas(fatura.toString());
         return rendeu;
     }
 
@@ -278,4 +304,6 @@ public class Utilizador implements Serializable {
     public void aumentaValor (double preco){
         this.preco_vendidos += preco;
     }
+
+    public void addFaturas (String fatura) {this.faturas.add(fatura);}
 }

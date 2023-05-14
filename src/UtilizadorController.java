@@ -260,11 +260,11 @@ public class UtilizadorController {
                 confirmacao = Read_Scanner.getInt(sc);
             }
             if (confirmacao == 0) return;
-
+            sc.nextLine();
             System.out.print("Escolha o artigo para adicionar ao carrinho: ");
             String codigo = sc.nextLine();
             while (!this.v.getartigosDisponiveis().containsKey(codigo)) {
-                System.out.print("Artigo não Disponível!");
+                System.out.print("Artigo não Disponível! ");
                 System.out.print("Escolha o artigo para adicionar ao carrinho: ");
                 codigo = sc.nextLine();
             }
@@ -351,5 +351,10 @@ public class UtilizadorController {
 
     public boolean verificaExistenciaTransportadoras() {
         return this.v.getTransportadoras().size() != 0;
+    }
+
+    public void verFaturas() {
+        List<String> f = u.getFaturas();
+        f.forEach(e -> System.out.println((f.indexOf(e)+1) + ":: \n" + e));
     }
 }

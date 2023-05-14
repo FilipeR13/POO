@@ -10,13 +10,15 @@ public class UtilizadorView {
                 "Comprar Artigos",
                 "Vender Artigos",
                 "Ver Carrinho",
-                "Ver Encomendas"
+                "Ver Encomendas",
+                "Ver Faturas"
         });
 
         conta.setHandler(1,user :: compraArtigo);
         conta.setHandler(2,this :: adicionaArtigo);
         conta.setHandler(3,this :: verCarrinho);
         conta.setHandler(4,this :: verEncomendas);
+        conta.setHandler(5,user :: verFaturas);
         conta.run();
     }
 

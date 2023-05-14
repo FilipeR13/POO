@@ -12,7 +12,7 @@ public class Read_Scanner {
         } catch (InputMismatchException ex){
             System.out.println("A informação introduzida não é válida! Insira novamente: ");
             sc.nextLine();
-            getInt(sc);
+            n = getInt(sc);
         }
         return n;
     }
